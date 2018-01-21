@@ -22,6 +22,13 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::group(['prefix' => 'institution', 'namespace' => 'Institution'], function(){
 
 			Route::get('/', 'InstitutionController@indexView');
+
+			/**
+			 * Create new institution
+			 */
+			Route::get('create', 'InstitutionController@create');
+			Route::post('/save', 'InstitutionController@save');
+			Route::post('/delete', 'InstitutionController@delete');
 		});
 	});
 });

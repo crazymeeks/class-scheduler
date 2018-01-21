@@ -89,3 +89,18 @@ if (!function_exists('admin_view')) {
 		return view("scheduler.admin.$view", $data);
 	}
 }
+
+if (!function_exists('jsvendor')) {
+
+	/**
+	 * Get the jsvendor. This vendor is installable using npm
+	 * 
+	 * @param  string $path
+	 * 
+	 * @return string
+	 */
+	function jsvendor($path = '')
+	{
+		return asset('assets/jsvendor'. '/' . ltrim($path, '/'));
+	}
+}

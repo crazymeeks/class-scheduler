@@ -9,7 +9,7 @@ class Institution extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [];
+    protected $fillable = ['name'];
 
 
     /**
