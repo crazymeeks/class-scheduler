@@ -15,5 +15,13 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::group(['namespace' => 'Admin'], function(){
 		
 		Route::get('/', 'Dashboard\DashboardController@indexView');
+
+		/**
+		 * Manage institution
+		 */
+		Route::group(['prefix' => 'institution', 'namespace' => 'Institution'], function(){
+
+			Route::get('/', 'InstitutionController@indexView');
+		});
 	});
 });

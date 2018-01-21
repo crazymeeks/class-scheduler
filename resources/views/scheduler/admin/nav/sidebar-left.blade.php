@@ -45,7 +45,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="javascript:;">
+				<a href="{{url('admin/institution')}}">
 				<i class="icon-rocket"></i>
 				<span class="title">Institution</span>
 				<span class="arrow "></span>
