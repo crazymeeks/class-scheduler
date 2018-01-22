@@ -6,6 +6,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sweetalert": "^2.1.0"
+    "sweetalert": "^2.1.0",
+    "toastr": "^2.1.4"
   }
 }

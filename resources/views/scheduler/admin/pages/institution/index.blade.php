@@ -60,21 +60,12 @@
 
 @include('yajra.datatables.button')
 @if(session('success'))
-<script type="text/javascript">
-	var msg = "<?php echo session('success');?>";
-	swal("Success", msg, "success", {
-	  button: "Ok",
-	});
-</script>
-@endif
-
-@if(session('error'))
-<script type="text/javascript">
-	var msg = "<?php echo session('error');?>";
-	swal("Error", msg, "error", {
-	  button: "Ok",
-	});
-</script>
+	@section('js_page_level_scripts')
+	<script type="text/javascript">
+		var msg = "<?php echo session('success');?>";
+		toastr.success(msg);
+	</script>
+	@append
 @endif
 
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>

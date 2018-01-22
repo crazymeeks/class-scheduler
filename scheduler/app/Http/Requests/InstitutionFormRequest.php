@@ -24,7 +24,7 @@ class InstitutionFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:institutions'
+            'name' => 'required|unique:institutions,name,' . $this->id
         ];
     }
 }

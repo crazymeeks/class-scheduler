@@ -33,7 +33,10 @@ class InstitutionController extends Controller
      */
     public function create(Request $request)
     {
-    	$data = ['page_title' => 'Institution::Create'];
+    	$data = [
+            'page_title' => 'Institution::Create',
+            'url' => url('admin/institution/save'),
+        ];
     	return admin_view('pages.institution.form', $data);
     }
 
@@ -67,4 +70,42 @@ class InstitutionController extends Controller
 
         return false;
     }
+
+    /**
+     * Display edit page
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  int  $id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $data = [
+            'institution' => Institution::find($id),
+            'page_title' => 'Institution::Update',
+            'url' => url('admin/institution/' . $id . '/update')
+        ];
+        
+        return admin_view('pages.institution.form', $data);
+    }
+
+    /**
+     * Update the model
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  int  $id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function update(InstitutionFormRequest $request, InstitutionRepository $repo, $id)
+    {
+        $model = Institution::find($id);
+        if ($repo->saveFromRequest($request, $model)) {
+           return redirect('admin/institution')->with('success', 'Institution successfully updated.'); 
+        }
+
+        return redirect('admin/institution')->with('error', 'Error occured while updating Institution. Please try again.');
+    }
+
 }

@@ -28,6 +28,13 @@ let Institution = (function(){
 			});
 
 		});
+
+		/**
+		 * Cancel
+		 */
+		$('body').on('click', '.btn-cancel', function(){
+			window.location.href = appBaseUrl() + 'admin/institution';
+		});
 	};
 
 	/**
@@ -48,9 +55,15 @@ let Institution = (function(){
 			method: method,
 			data: {id: id},
 			success: function(response){
+
 				swal("Success", response, "success", {
 				  button: "Ok",
 				});
+
+				setTimeout(function(){
+					window.location.href = appBaseUrl() + 'admin/institution';
+				}, 3000);
+
 			},
 			error: function(xhr, error){
 				swal("Error", "Error occured while deleting an institution. Please try again", "error", {
