@@ -2159,3 +2159,24 @@
 <script src="{{ admin_asset('/pages/scripts/tasks.js') }}" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 @append
+
+
+@section('metronic_main_js')
+
+<script type="text/javascript">
+jQuery(document).ready(function() {    
+   Metronic.init(); // init metronic core componets
+   Layout.init(); // init layout
+   QuickSidebar.init(); // init quick sidebar
+   Demo.init(); // init demo features
+   Index.init();   
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+});
+</script>
+@append

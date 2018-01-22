@@ -2,16 +2,16 @@
 
 namespace Scheduler\App\DataTables;
 
+use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Institution;
 use Yajra\DataTables\Services\DataTable;
 
-class InstitutionDataTable extends DataTable
+class InstitutionProgramsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
      *
      * @param mixed $query Results from query() method.
-     * 
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
@@ -31,9 +31,7 @@ class InstitutionDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/institution/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
-        $buttons .= "<a href='" . url('admin/institution/' . $query->id) . "/view-program' class='btn btn-icon-only blue'><i class='fa fa-search'></i></a>";;
-        $buttons .= "<a href='javascript:void;' data-id='" . $query->id . "' class='btn btn-icon-only remove-institute red'><i class='fa fa-times'></i></a>";
+        $buttons = "<a href='" . url('admin/institution/program-manage-block/' . $query->id) . "' class='btn btn-icon-only blue'><i class='fa fa-file-o'></i></a>";;
         return $buttons;
     }
 
@@ -43,9 +41,10 @@ class InstitutionDataTable extends DataTable
      * @param \Scheduler\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Institution $model)
+    public function query(Program $model)
     {
-        return $model->newQuery()->select('id', 'name', 'created_at', 'updated_at');
+        return $model->newQuery()->with('institution');
+        return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
     }
 
     /**
@@ -58,7 +57,7 @@ class InstitutionDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '120px'])
+                    ->addAction(['width' => '80px'])
                     ->parameters($this->getBuilderParameters());
     }
 
@@ -70,8 +69,8 @@ class InstitutionDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'name',
-            
+            'code',
+            'short_description',
         ];
     }
 
@@ -82,6 +81,6 @@ class InstitutionDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Institution_' . date('YmdHis');
+        return 'InstitutionPrograms_' . date('YmdHis');
     }
 }

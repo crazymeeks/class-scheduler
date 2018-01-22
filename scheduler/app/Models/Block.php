@@ -5,12 +5,13 @@ namespace Scheduler\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Institution extends Model
+class Block extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name'];
-
+    protected $fillable = [
+    	'program_id', 'code',
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -20,11 +21,10 @@ class Institution extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Institution hasMany Program
+     * Belongs to Program
      */
-    public function programs()
+    public function program()
     {
-    	return $this->hasMany('Scheduler\App\Models\Program');
+    	return $this->belongsTo('Scheduler\App\Models\Program');
     }
-
 }

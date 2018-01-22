@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Scheduler\App\Models\Institution;
 use Scheduler\App\Http\Controllers\Controller;
 use Scheduler\App\DataTables\InstitutionDataTable;
+use Scheduler\App\DataTables\InstitutionProgramsDataTable;
 use Scheduler\App\Repositories\InstitutionRepository;
 use Scheduler\App\Http\Requests\InstitutionFormRequest;
 class InstitutionController extends Controller
@@ -20,8 +21,11 @@ class InstitutionController extends Controller
  	 */
     public function indexView(InstitutionDataTable $dataTable)
     {
-    	
-    	return $dataTable->render($this->admin_view . 'pages.institution.index', ['page_title' => 'Institution']);
+    	$data = [
+            'breadcrumb' => 'Institution',
+            'page_title' => 'Lists',
+        ];
+    	return $dataTable->render($this->admin_view . 'pages.institution.index', $data);
     }
 
     /**
@@ -88,6 +92,43 @@ class InstitutionController extends Controller
         ];
         
         return admin_view('pages.institution.form', $data);
+    }
+
+    /**
+     * Manage blocks of specific institution.
+     * e.g Computer Operation and Programming
+     * has Block COP1BLK1, COP1BLK2
+     *
+     * @param  Scheduler\App\DataTables\InstitutionProgramsDataTable
+     * @param  int $id
+     * 
+     * @return  \Illuminate\Http\Response
+     */
+    public function viewPrograms(InstitutionProgramsDataTable $dataTable, $id)
+    {
+
+        $institution = Institution::find($id);
+
+        $data = [
+            'breadcrumb' => 'Institution',
+            'page_title' => 'Programs',
+            'small_title' => $institution->name,
+        ];
+
+        return $dataTable->render($this->admin_view . 'pages.institution.programs.index', $data);
+    }
+
+    /**
+     * Display manage Program Institution's manage block page
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function viewManageBlocks(Request $request)
+    {
+        
     }
 
     /**

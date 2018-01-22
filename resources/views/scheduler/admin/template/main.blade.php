@@ -480,7 +480,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="#">{{isset($page_title) ? $page_title : ''}}</a>
+						<a href="#">{{isset($breadcrumb) ? $breadcrumb : ''}}</a>
 					</li>
 				</ul>
 				<div class="page-toolbar">
@@ -560,22 +560,9 @@ License: You must have a valid license purchased only from themeforest(the above
 </script>
 @yield('js_page_level_plugins')
 @yield('js_page_level_scripts')
-<script>
-jQuery(document).ready(function() {    
-   Metronic.init(); // init metronic core componets
-   Layout.init(); // init layout
-   QuickSidebar.init(); // init quick sidebar
-Demo.init(); // init demo features
-   Index.init();   
-   Index.initDashboardDaterange();
-   Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
-   Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
-   Index.initMiniCharts();
-   Tasks.initDashboardWidget();
-});
-</script>
+
+@yield('metronic_main_js')
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
