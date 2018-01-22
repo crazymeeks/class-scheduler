@@ -48,7 +48,7 @@
 				<a href="{{url('admin/institution')}}">
 				<i class="icon-rocket"></i>
 				<span class="title">Institution</span>
-				<span class="arrow "></span>
+				
 				</a>
 			</li>
 			<li>

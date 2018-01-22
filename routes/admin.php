@@ -28,11 +28,20 @@ Route::group(['prefix' => 'admin'], function(){
 			 */
 			Route::get('create', 'InstitutionController@create');
 			Route::get('{id}/edit', 'InstitutionController@edit');
+			Route::get('{id}/view-program', 'InstitutionController@viewPrograms');
+			Route::get('program-manage-block/{id}', 'InstitutionController@viewManageBlocks');
 
 			Route::post('/save', 'InstitutionController@save');
 			Route::post('/delete', 'InstitutionController@delete');
 			Route::post('{id}/update', 'InstitutionController@update');
 
+		});
+
+		/**
+		 * Manage Faculty
+		 */
+		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){
+			Route::get('/', 'FacultController@indexView');
 		});
 	});
 });
