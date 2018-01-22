@@ -27,8 +27,12 @@ Route::group(['prefix' => 'admin'], function(){
 			 * Create new institution
 			 */
 			Route::get('create', 'InstitutionController@create');
+			Route::get('{id}/edit', 'InstitutionController@edit');
+
 			Route::post('/save', 'InstitutionController@save');
 			Route::post('/delete', 'InstitutionController@delete');
+			Route::post('{id}/update', 'InstitutionController@update');
+
 		});
 	});
 });

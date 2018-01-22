@@ -34,7 +34,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-print-1.5.1/datatables.min.css"/>
-
+<link rel="stylesheet" type="text/css" href="{{jsvendor('/toastr/build/toastr.min.css')}}">
 @yield('css_page_level_plugins')
 @yield('css_page_level_styles')
 
@@ -526,8 +526,38 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END CORE PLUGINS -->
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-print-1.5.1/datatables.min.js"></script>
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/sweetalert.js')}}"></script>
+<script type="text/javascript" src="{{jsvendor('/toastr/build/toastr.min.js')}}"></script>
+<script type="text/javascript">
+	toastr.options = {
+	"closeButton": false,
+	"debug": false,
+	"newestOnTop": false,
+	"progressBar": false,
+	"positionClass": "toast-bottom-right",
+	"preventDuplicates": false,
+	"onclick": null,
+	"showDuration": "300",
+	"hideDuration": "1000",
+	"timeOut": "5000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+}
+  /**
+   * Get the application's base url
+   * 
+   * @return string
+   */
+  var appBaseUrl = function(){
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/";
 
-
+    return baseUrl;
+  };
+  
+</script>
 @yield('js_page_level_plugins')
 @yield('js_page_level_scripts')
 <script>

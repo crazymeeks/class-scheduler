@@ -101,6 +101,6 @@ if (!function_exists('jsvendor')) {
 	 */
 	function jsvendor($path = '')
 	{
-		return asset('assets/jsvendor'. '/' . ltrim($path, '/'));
+		return asset('assets/jsvendor/node_modules'. '/' . ltrim($path, '/'));
 	}
 }
