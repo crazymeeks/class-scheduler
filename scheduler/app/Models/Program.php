@@ -21,15 +21,25 @@ class Program extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Program belongsToMany Block
+     * Many to Many
      */
     public function blocks()
     {
     	return $this->belongsToMany('Scheduler\App\Models\Block');
     }
 
+    public function faculties()
+    {
+        return $this->belongsToMany('Scheduler\App\Models\Faculty', 'faculty_program', 'program_id', 'faculty_id_number');
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany('Scheduler\App\Models\Subject');
+    }
+
     /**
-     * Program belongsTo Institution
+     * 1 to Many
      */
     public function institution()
     {

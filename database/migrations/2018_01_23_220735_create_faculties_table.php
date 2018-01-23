@@ -14,14 +14,13 @@ class CreateFacultiesTable extends Migration
     public function up()
     {
         Schema::create('faculties', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id_number', 50)->comment('The faculty id number')->unique();
             $table->integer('faculty_type_id')->unsigned();
             $table->integer('institution_id')->unsigned();
-            $table->string('faculty_id_number', 50)->nullable()->unique();
             $table->string('lastname', 50);
             $table->string('firstname', 50);
             $table->string('middlename', 50)->nullable();
-            $table->integer('status')->default(1)->comment('0=inactive; 1=active; 2=locked')->unsigned();
+            $table->integer('status')->default(1)->unsigned();
             $table->softDeletes();
             $table->timestamps();
 

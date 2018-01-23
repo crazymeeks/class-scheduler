@@ -5,13 +5,14 @@ namespace Scheduler\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Block extends Model
+class Specialty extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-    	'code'
+    	'specialty', 'deleted_at',
     ];
+
 
     /**
      * The attributes that should be mutated to dates.
@@ -23,13 +24,8 @@ class Block extends Model
     /**
      * Many to Many
      */
-    public function programs()
+    public function faculties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Program');
-    }
-
-    public function levels()
-    {
-        return $this->belongsToMany('Scheduler\App\Models\Level');
+    	return $this->belongsToMany('Scheduler\App\Models\Faculty', 'faculty_specialty', 'specialty_id', 'faculty_id_number');
     }
 }
