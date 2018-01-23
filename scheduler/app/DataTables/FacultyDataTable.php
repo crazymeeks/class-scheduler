@@ -2,11 +2,10 @@
 
 namespace Scheduler\App\DataTables;
 
-use Scheduler\App\Models\Program;
-use Scheduler\App\Models\Institution;
+use Scheduler\App\Models\Faculty;
 use Yajra\DataTables\Services\DataTable;
 
-class InstitutionProgramsDataTable extends DataTable
+class FacultyDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,22 +16,16 @@ class InstitutionProgramsDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->addColumn('action', function($query){
-                return $this->dataTableActionButtons($query);
+            ->addColumn('action', 'facultydatatable.action')
+            ->editColumn('status', function(Faculty $faculty){
+                return $faculty->status == 1 ? 'Active' : 'Inactive';
+            })
+            ->editColumn('institution', function(Faculty $faculty){
+                return $faculty->institution->name;
+            })
+            ->editColumn('faculty_type', function(Faculty $faculty){
+                return $faculty->faculty_type->type;
             });
-    }
-
-    /**
-     * Datatable Action buttons
-     *
-     * @param mixed $query Results from query() method.
-     * 
-     * @return string
-     */
-    protected function dataTableActionButtons($query)
-    {
-        $buttons = "<a href='" . url('admin/institution/program-manage-block/' . $query->id) . "' class='btn btn-icon-only blue'><i class='fa fa-file-o'></i></a>";;
-        return $buttons;
     }
 
     /**
@@ -41,9 +34,12 @@ class InstitutionProgramsDataTable extends DataTable
      * @param \Scheduler\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Program $model)
+    public function query(Faculty $model)
     {
-        return $model->newQuery()->with('institution');
+        //return $model->newQuery()->select('id');
+        return $model->newQuery()
+                     ->active()
+                     ->with(['institution', 'faculty_type']);
     }
 
     /**
@@ -57,7 +53,7 @@ class InstitutionProgramsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addAction(['width' => '80px'])
-                    ->parameters($this->getBuilderParameters());
+                    ->parameters($this->getBuilderParameters());                
     }
 
     /**
@@ -68,8 +64,14 @@ class InstitutionProgramsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'code',
-            'short_description',
+            'id_number',
+            'lastname',
+            'firstname',
+            'status',
+            'institution',
+            'faculty_type',
+
+            
         ];
     }
 
@@ -80,6 +82,6 @@ class InstitutionProgramsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'InstitutionPrograms_' . date('YmdHis');
+        return 'Faculty_' . date('YmdHis');
     }
 }

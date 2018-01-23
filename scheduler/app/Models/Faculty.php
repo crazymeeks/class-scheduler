@@ -10,6 +10,8 @@ class Faculty extends Model
     
     use SoftDeletes;
 
+    public $incrementing = false;
+
     protected $primaryKey = 'id_number';
 
     protected $fillable = [
@@ -48,16 +50,29 @@ class Faculty extends Model
     	return $this->belongsToMany('Scheduler\App\Models\Level', 'faculty_level', 'faculty_id_number', 'level_id');
     }
 
+    public function year_actives()
+    {
+        return $this->belongsToMany('Scheduler\App\Models\YearActive', 'faculty_year_active', 'faculty_id_number', 'year_active_id');
+    }
+
     /**
      * 1 to Many
      */
-    public function facultyType()
+    public function faculty_type()
     {
-    	return $this->belongsTo('Scheduler\App\Models\FacultyType', 'faculty_type_id', 'id_number');
+    	return $this->belongsTo('Scheduler\App\Models\FacultyType');
     }
 
     public function institution()
     {
-    	return $this->belongsTo('Scheduler\App\Models\Institution', 'institution_id', 'id_number');
+    	return $this->belongsTo('Scheduler\App\Models\Institution');
+    }
+
+    /**
+     * Scope
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }

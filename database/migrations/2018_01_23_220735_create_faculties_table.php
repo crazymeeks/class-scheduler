@@ -20,7 +20,7 @@ class CreateFacultiesTable extends Migration
             $table->string('lastname', 50);
             $table->string('firstname', 50);
             $table->string('middlename', 50)->nullable();
-            $table->integer('status')->default(1)->unsigned();
+            $table->integer('status')->default(1)->comment('0=inactive; 1=active')->unsigned();
             $table->softDeletes();
             $table->timestamps();
 
