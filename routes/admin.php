@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin'], function(){
 		 * Manage Faculty
 		 */
 		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){
-			Route::get('/', 'FacultController@indexView');
+			Route::get('/', 'FacultyController@indexView');
 		});
 	});
 });

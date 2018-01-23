@@ -52,7 +52,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="javascript:;">
+				<a href="{{url('admin/faculty')}}">
 				<i class="icon-diamond"></i>
 				<span class="title">Faculty Management</span>
 				<span class="arrow "></span>

@@ -20,11 +20,16 @@ class Institution extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Institution hasMany Program
+     * 1 to Many
      */
     public function programs()
     {
     	return $this->hasMany('Scheduler\App\Models\Program');
+    }
+
+    public function faculties()
+    {
+        return $this->hasMany('Scheduler\App\Models\Faculty', 'faculty_id_number');
     }
 
 }

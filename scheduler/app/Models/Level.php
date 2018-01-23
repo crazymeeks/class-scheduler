@@ -5,12 +5,12 @@ namespace Scheduler\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Block extends Model
+class Level extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-    	'code'
+    	'level', 'deleted_at',
     ];
 
     /**
@@ -23,13 +23,13 @@ class Block extends Model
     /**
      * Many to Many
      */
-    public function programs()
+    public function faculties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Program');
+    	return $this->belongsToMany('Scheduler\App\Models\Faculty', 'faculty_level', 'level_id', 'faculty_id_number');
     }
 
-    public function levels()
+    public function blocks()
     {
-        return $this->belongsToMany('Scheduler\App\Models\Level');
+    	return $this->belongsToMany('Scheduler\App\Models\Block');
     }
 }
