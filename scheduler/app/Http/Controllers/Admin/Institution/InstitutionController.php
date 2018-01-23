@@ -3,6 +3,8 @@
 namespace Scheduler\App\Http\Controllers\Admin\Institution;
 
 use Illuminate\Http\Request;
+use Scheduler\App\Models\Block;
+use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Institution;
 use Scheduler\App\Http\Controllers\Controller;
 use Scheduler\App\DataTables\InstitutionDataTable;
@@ -122,13 +124,45 @@ class InstitutionController extends Controller
      * Display manage Program Institution's manage block page
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int $id       The block id
      * 
      * @return \Illuminate\Http\Response
      */
-    public function viewManageBlocks(Request $request)
+    public function viewManageBlocks(Request $request, $id)
     {
+
+        $program = Program::find($id);
+
+        $data = [
+            'breadcrumb'     => 'Institution',
+            'page_title'     => 'Programs',
+            'blocks'         => Block::all(),
+            'small_title'    => $program->short_description,
+            'url'            => url('admin/institution/program-block-save/' . $id),
+            'program_blocks' => $program->with('blocks')->get(),
+            'id'             => $id,
+        ];
+
         
+
+        return admin_view('pages.institution.institution-manage-blocks.index', $data);
+    }
+
+    /**
+     * Save/update block to program. This will save block_id & program_id to pivot table `block_program`
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id       The program id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function saveProgramBlock(Request $request, $id)
+    {
+        $program = Program::find($id);
+
+        $program->blocks()->sync($request->blocks);
+
+        return redirect('admin/institution/' . $id . '/view-program')->with('success', 'Blocks has been added to ' . $program->short_description);
     }
 
     /**

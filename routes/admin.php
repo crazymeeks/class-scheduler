@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::post('/save', 'InstitutionController@save');
 			Route::post('/delete', 'InstitutionController@delete');
 			Route::post('{id}/update', 'InstitutionController@update');
+			Route::post('program-block-save/{id}', 'InstitutionController@saveProgramBlock');
 
 		});
 

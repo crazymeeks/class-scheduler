@@ -22,7 +22,7 @@
 					<div class="portlet box green">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>Manage Blocks of
+								<i class="fa fa-gift"></i>Click on block to add
 							</div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse">
@@ -37,28 +37,33 @@
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
-							<form action="index.html" class="form-horizontal form-row-seperated">
+							<form action="{{$url}}" method="POST" class="form-horizontal form-row-seperated">
+
+								{!! csrf_field() !!}
 								<div class="form-body">
 									<div class="form-group">
-										<label class="control-label col-md-3">Default</label>
+										<label class="control-label col-md-3">Blocks</label>
 										<div class="col-md-9">
-											<select multiple="multiple" class="multi-select" id="my_multi_select1" name="my_multi_select1[]">
-												<option>Dallas Cowboys</option>
-												<option>New York Giants</option>
-												<option selected>Philadelphia Eagles</option>
-												<option selected>Washington Redskins</option>
-												<option>Chicago Bears</option>
-												<option>Detroit Lions</option>
-												<option>Green Bay Packers</option>
-												<option>Minnesota Vikings</option>
-												<option selected>Atlanta Falcons</option>
-												<option>Carolina Panthers</option>
-												<option>New Orleans Saints</option>
-												<option>Tampa Bay Buccaneers</option>
-												<option>Arizona Cardinals</option>
-												<option>St. Louis Rams</option>
-												<option>San Francisco 49ers</option>
-												<option>Seattle Seahawks</option>
+											<select multiple="multiple" class="multi-select" id="my_multi_select1" name="blocks[]">
+												@foreach($blocks as $block)
+													<?php
+													$selected = function($block) use ($program_blocks, $id){
+														$selected = '';
+
+														foreach($program_blocks as $pb):
+															foreach($pb->blocks as $b):
+																if ($b->pivot->program_id == $id && $block->id == $b->pivot->block_id):
+																	return $selected = 'selected';
+																	break;
+																endif;
+															endforeach;
+														endforeach;
+														return $selected;
+													};
+													?>
+													
+												<option {{$selected($block)}} value="{{$block->id}}">{{$block->code}}</option>
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -67,7 +72,8 @@
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
 											<button type="submit" class="btn green"><i class="fa fa-check"></i> Submit</button>
-											<button type="button" class="btn default">Cancel</button>
+											<a href="{{url('admin/institution/' . $id . '/view-program')}}" class="btn btn default">Cancel</a>
+											
 										</div>
 									</div>
 								</div>
@@ -108,10 +114,7 @@
 	@append
 @endif
 
-<script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>
-<script type="text/javascript">
-	Institution.initAll();
-</script>
+
 @append
 
 @section('metronic_main_js')

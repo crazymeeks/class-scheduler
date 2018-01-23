@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlocksTable extends Migration
+class CreateBlockProgramTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('blocks', function (Blueprint $table) {
+        Schema::create('block_program', function (Blueprint $table) {
             $table->increments('id');
-            //$table->integer('program_id')->unsigned();
-            $table->string('code')->unique();
-            $table->softDeletes();
+            $table->integer('block_id')->unsigned();
+            $table->integer('program_id')->unsigned();
             $table->timestamps();
 
-            //$table->foreign('program_id')->references('id')->on('programs');
+
+            $table->foreign('block_id')->references('id')->on('blocks');
+            $table->foreign('program_id')->references('id')->on('programs');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('block_program');
     }
 }

@@ -21,11 +21,11 @@ class Program extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Program hasMany Block
+     * Program belongsToMany Block
      */
     public function blocks()
     {
-    	return $this->hasMany('Scheduler\App\Models\Block');
+    	return $this->belongsToMany('Scheduler\App\Models\Block');
     }
 
     /**

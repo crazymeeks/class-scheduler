@@ -10,7 +10,7 @@ class Block extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'program_id', 'code',
+    	'code'
     ];
 
     /**
@@ -21,10 +21,10 @@ class Block extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * Belongs to Program
+     * BelongsToMany Program
      */
-    public function program()
+    public function programs()
     {
-    	return $this->belongsTo('Scheduler\App\Models\Program');
+    	return $this->belongsToMany('Scheduler\App\Models\Program');
     }
 }
