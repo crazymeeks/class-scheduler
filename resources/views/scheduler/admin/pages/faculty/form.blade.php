@@ -32,7 +32,8 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="#" class="form-horizontal" id="submit_form" method="POST">
+							<form action="" class="form-horizontal" id="submit_form" method="POST">
+								{!! csrf_field() !!}
 								<div class="form-wizard">
 									<div class="form-body">
 										<ul class="nav nav-pills nav-justified steps">
@@ -212,7 +213,7 @@
 													</label>
 													<div class="col-md-4">
 														<select multiple="multiple" class="multi-select" id="my_multi_select1" name="programs[]">
-															<option selected value="iit">Insititute of Information & Technology</option>
+															<option selected value="iit">Insititute of Information &amp; Technology</option>
 															<option value="civileng">Department of Civil Engineering</option>
 														</select>
 														<span class="help-block">
@@ -361,7 +362,7 @@
 													<label class="control-label col-md-3">Position
 													</label>
 													<div class="col-md-4">
-														<input type="text" class="form-control" name="assignment"/>
+														<input type="text" class="form-control" name="position"/>
 													</div>
 												</div>
 

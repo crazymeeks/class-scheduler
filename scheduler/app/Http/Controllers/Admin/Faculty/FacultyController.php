@@ -53,7 +53,7 @@ class FacultyController extends Controller
             'url' => url('admin/faculty/' . $id . '/update'),
             'form_title' => 'Update faculty',
         ];
-        //return $data;
+        return $data;
         return admin_view('pages.faculty.form', $data);
     }
 }
