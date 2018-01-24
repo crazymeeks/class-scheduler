@@ -20,5 +20,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SpecialtiesTableSeeder::class);
         $this->call(SubjectsTableSeeder::class);
         $this->call(YearActiveTableSeeder::class);
+        $this->call(CreateFacultyTableSeeder::class);
+        $this->call(CreateFacultySpecialtyTableSeeder::class);
+        $this->call(CreateFacultySubjectTableSeeder::class);
+        $this->call(CreateFacultyYearActiveTableSeeder::class);
+        $this->call(CreateFacultyYearLevelTableSeeder::class);
+        $this->call(CreateFacultyProgramTableSeeder::class);
     }
 }
