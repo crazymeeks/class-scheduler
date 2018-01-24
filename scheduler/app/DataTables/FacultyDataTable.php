@@ -16,7 +16,9 @@ class FacultyDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->addColumn('action', 'facultydatatable.action')
+            ->addColumn('action', function($query){
+                return $this->dataTableActionButtons($query);
+            })
             ->editColumn('status', function(Faculty $faculty){
                 return $faculty->status == 1 ? 'Active' : 'Inactive';
             })
@@ -26,6 +28,22 @@ class FacultyDataTable extends DataTable
             ->editColumn('faculty_type', function(Faculty $faculty){
                 return $faculty->faculty_type->type;
             });
+    }
+
+    /**
+     * Datatable Action buttons
+     *
+     * @param mixed $query Results from query() method.
+     * 
+     * @return string
+     */
+    protected function dataTableActionButtons($query)
+    {
+        $buttons = "<a href='" . url('admin/faculty/' . $query->id_number) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
+        $buttons .= "<a data-id='" . $query->id_number . "' href='javascript:void;' class='btn btn-view btn-icon-only blue'><i class='fa fa-search'></i></a>";;
+        $buttons .= "<a href='javascript:void;' data-id='" . $query->id_number . "' class='btn btn-icon-only remove-faculty red'><i class='fa fa-times'></i></a>";
+
+        return $buttons;
     }
 
     /**
@@ -52,7 +70,7 @@ class FacultyDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '80px'])
+                    ->addAction(['width' => '120px'])
                     ->parameters($this->getBuilderParameters());                
     }
 
