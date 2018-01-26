@@ -16,10 +16,10 @@ class CreateFacultySpecialtyTable extends Migration
         Schema::create('faculty_specialty', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('specialty_id')->unsigned();
-            $table->string('faculty_id_number');
+            $table->integer('faculty_id')->unsigned();
 
             $table->foreign('specialty_id')->references('id')->on('specialties');
-            $table->foreign('faculty_id_number')->references('id_number')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
 

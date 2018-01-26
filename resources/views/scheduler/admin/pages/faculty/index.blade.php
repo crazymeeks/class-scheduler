@@ -64,6 +64,14 @@
 		toastr.success(msg);
 	</script>
 	@append
+@elseif(session('error'))
+	@section('js_page_level_scripts')
+	<script type="text/javascript">
+		var msg = "<?php echo session('error');?>";
+		toastr.error(msg);
+	</script>
+	@append
+
 @endif
 
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>

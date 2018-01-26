@@ -1,4 +1,4 @@
-var FormWizard = function () {
+var FormWizardEdit = function () {
 
     return {
         //main function to initiate the module
@@ -39,15 +39,7 @@ var FormWizard = function () {
                         minlength: 5,
                         required: true
                     },
-                    password: {
-                        minlength: 5,
-                        required: true
-                    },
-                    rpassword: {
-                        minlength: 5,
-                        required: true,
-                        equalTo: "#submit_form_password"
-                    },
+
                     //profile
                     fullname: {
                         required: true

@@ -29,7 +29,7 @@ class Institution extends Model
 
     public function faculties()
     {
-        return $this->hasMany('Scheduler\App\Models\Faculty', 'faculty_id_number');
+        return $this->hasMany('Scheduler\App\Models\Faculty');//, 'faculty_id_number');
     }
 
 }

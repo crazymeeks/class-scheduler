@@ -18,6 +18,6 @@ class YearActive extends Model
      */
     public function faculties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Faculty', 'faculty_year_active', 'year_active_id', 'faculty_id_number');
+    	return $this->belongsToMany('Scheduler\App\Models\Faculty');//, 'faculty_year_active', 'year_active_id', 'faculty_id_number');
     }
 }

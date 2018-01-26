@@ -15,10 +15,10 @@ class CreateFacultyYearActiveTable extends Migration
     {
         Schema::create('faculty_year_active', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('faculty_id_number');
+            $table->integer('faculty_id')->unsigned();
             $table->integer('year_active_id')->unsigned();
 
-            $table->foreign('faculty_id_number')->references('id_number')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
             $table->foreign('year_active_id')->references('id')->on('year_active');
         });
     }

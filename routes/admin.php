@@ -44,6 +44,10 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){
 			Route::get('/', 'FacultyController@indexView');
 			Route::get('{id}/edit', 'FacultyController@edit');
+			Route::get('create', 'FacultyController@create');
+
+			Route::post('/save', 'FacultyController@save');
+			Route::post('{id}/update', 'FacultyController@update');
 		});
 	});
 });

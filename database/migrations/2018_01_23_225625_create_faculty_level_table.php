@@ -15,10 +15,10 @@ class CreateFacultyLevelTable extends Migration
     {
         Schema::create('faculty_level', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('faculty_id_number');
+            $table->integer('faculty_id')->unsigned();
             $table->integer('level_id')->unsigned();
 
-            $table->foreign('faculty_id_number')->references('id_number')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
 
             $table->foreign('level_id')->references('id')->on('levels');
         });
