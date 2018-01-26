@@ -16,10 +16,10 @@ class CreateFacultySubjectTable extends Migration
         Schema::create('faculty_subject', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('subject_id')->unsigned();
-            $table->string('faculty_id_number');
+            $table->integer('faculty_id')->unsigned();
 
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->foreign('faculty_id_number')->references('id_number')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
 

@@ -12,7 +12,7 @@ class CreateFacultyProgramTableSeeder extends Seeder
     public function run()
     {
         DB::table('faculty_program')->insert([
-            'faculty_id_number' => 'FA-0101-2018',
+            'faculty_id' => 1,
             'program_id' => 1,
         ]);
     }

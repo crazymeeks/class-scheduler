@@ -25,7 +25,7 @@ class Level extends Model
      */
     public function faculties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Faculty', 'faculty_level', 'level_id', 'faculty_id_number');
+    	return $this->belongsToMany('Scheduler\App\Models\Faculty');//, 'faculty_level', 'level_id', 'faculty_id_number');
     }
 
     public function blocks()

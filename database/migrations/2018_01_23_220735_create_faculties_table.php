@@ -14,7 +14,8 @@ class CreateFacultiesTable extends Migration
     public function up()
     {
         Schema::create('faculties', function (Blueprint $table) {
-            $table->string('id_number', 50)->comment('The faculty id number')->unique();
+            $table->increments('id');
+            $table->string('faculty_id_number', 50)->comment('The faculty id number')->unique();
             $table->integer('faculty_type_id')->unsigned();
             $table->integer('institution_id')->unsigned();
             $table->string('lastname', 50);

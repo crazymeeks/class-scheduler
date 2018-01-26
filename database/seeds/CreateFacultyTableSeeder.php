@@ -12,7 +12,7 @@ class CreateFacultyTableSeeder extends Seeder
     public function run()
     {
         DB::table('faculties')->insert([
-            'id_number' => 'FA-0101-2018',
+            'faculty_id_number' => 'FA-0101-2018',
             'faculty_type_id' => 1,
             'institution_id' => 1,
             'lastname' => 'Doe',
@@ -21,6 +21,7 @@ class CreateFacultyTableSeeder extends Seeder
             'address' => 'Odiongan, Romblon',
             'graduated_school_name' => 'Romblon State University',
             'other_school' => 'TIP Manila',
+            'degree' => 'Bachelor of Science in Information Technology',
             'major' => 'Math',
             'minor' => 'PE',
             'minimum_units' => 18.5,

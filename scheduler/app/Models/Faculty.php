@@ -10,14 +10,19 @@ class Faculty extends Model
     
     use SoftDeletes;
 
-    public $incrementing = false;
+    // public $incrementing = false;
 
-    protected $primaryKey = 'id_number';
+    // protected $primaryKey = 'id_number';
 
     protected $fillable = [
-    	'id_number', 'faculty_type_id', 'institution_id',
-    	'lastname', 'firstname', 'middlename', 'status',
-    	'deleted_at'
+    	'faculty_id_number', 'faculty_type_id', 'institution_id',
+    	'lastname', 'firstname', 'middlename', 'gender',
+        'address', 'graduated_school_name', 'other_school',
+        'degree', 'major', 'minor', 'minimum_units',
+        'maximum_units', 'earned_ma', 'ms_mba', 'phd',
+        'special_training', 'years_of_experience', 
+        'basic_salary', 'assignment', 'position',
+        'status', 'deleted_at'
     ];
 
      /**
@@ -32,27 +37,27 @@ class Faculty extends Model
      */
     public function subjects()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Subject', 'faculty_subject', 'faculty_id_number', 'subject_id');
+    	return $this->belongsToMany('Scheduler\App\Models\Subject');//, 'faculty_subject', 'faculty_id_number', 'subject_id');
     }
 
     public function specialties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Specialty', 'faculty_specialty', 'faculty_id_number', 'specialty_id');
+    	return $this->belongsToMany('Scheduler\App\Models\Specialty');//, 'faculty_specialty', 'faculty_id_number', 'specialty_id');
     }
 
     public function programs()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Program', 'faculty_program', 'faculty_id_number', 'program_id');
+    	return $this->belongsToMany('Scheduler\App\Models\Program');//, 'faculty_program', 'faculty_id_number', 'program_id');
     }
 
     public function levels()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Level', 'faculty_level', 'faculty_id_number', 'level_id');
+    	return $this->belongsToMany('Scheduler\App\Models\Level');//, 'faculty_level', 'faculty_id_number', 'level_id');
     }
 
     public function year_actives()
     {
-        return $this->belongsToMany('Scheduler\App\Models\YearActive', 'faculty_year_active', 'faculty_id_number', 'year_active_id');
+        return $this->belongsToMany('Scheduler\App\Models\YearActive');//, 'faculty_year_active', 'faculty_id_number', 'year_active_id');
     }
 
     /**
@@ -66,6 +71,14 @@ class Faculty extends Model
     public function institution()
     {
     	return $this->belongsTo('Scheduler\App\Models\Institution');
+    }
+
+    /**
+     * 1 to 1
+     */
+    public function user()
+    {
+        return $this->hasOne('App\User');//, 'faculty_id_number');
     }
 
     /**

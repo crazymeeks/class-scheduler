@@ -16,10 +16,10 @@ class CreateFacultyProgramTable extends Migration
         Schema::create('faculty_program', function (Blueprint $table) {
              $table->increments('id');
             $table->integer('program_id')->unsigned();
-            $table->string('faculty_id_number');
+            $table->integer('faculty_id')->unsigned();
 
             $table->foreign('program_id')->references('id')->on('programs');
-            $table->foreign('faculty_id_number')->references('id_number')->on('faculties');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
 

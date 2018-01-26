@@ -13,7 +13,7 @@ class CreateFacultyYearLevelTableSeeder extends Seeder
     public function run()
     {
         DB::table('faculty_level')->insert([
-            'faculty_id_number' => 'FA-0101-2018',
+            'faculty_id' => 1,
             'level_id' => 1,
         ]);
     }

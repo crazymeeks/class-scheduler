@@ -13,7 +13,7 @@ class CreateFacultyYearActiveTableSeeder extends Seeder
     public function run()
     {
         DB::table('faculty_year_active')->insert([
-            'faculty_id_number' => 'FA-0101-2018',
+            'faculty_id' => 1,
             'year_active_id' => 1,
         ]);
     }
