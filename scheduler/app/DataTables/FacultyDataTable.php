@@ -18,18 +18,6 @@ class FacultyDataTable extends DataTable
         return datatables($query)
             ->addColumn('action', function($query){
                 return $this->dataTableActionButtons($query);
-            })
-            ->editColumn('email', function(Faculty $faculty){
-                return $faculty->user->email;
-            })
-            ->editColumn('status', function(Faculty $faculty){
-                return $faculty->status == 1 ? 'Active' : 'Inactive';
-            })
-            ->editColumn('institution', function(Faculty $faculty){
-                return $faculty->institution->name;
-            })
-            ->editColumn('faculty_type', function(Faculty $faculty){
-                return $faculty->faculty_type->type;
             });
     }
 
@@ -83,14 +71,16 @@ class FacultyDataTable extends DataTable
      */
     protected function getColumns()
     {
+
         return [
-            'id',
-            'lastname',
-            'firstname',
-            'email',
-            'status',
-            'institution',
-            'faculty_type',
+
+            'faculty_id_number' => ['title' => 'ID #'],
+            'lastname' => ['title' => 'Lastname'],
+            'firstname' => ['firstname' => 'Firstname'],
+            'user.email' => ['title' => 'Email'],
+            'status' => ['title' => 'Status'],
+            'institution.name' => ['title' => 'Institution'],
+            'faculty_type.type' => ['title' => 'Faculty type'],
 
             
         ];
