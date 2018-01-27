@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin'], function(){
 
 			Route::post('/save', 'FacultyController@save');
 			Route::post('{id}/update', 'FacultyController@update');
+			Route::post('delete/{id}', 'FacultyController@delete');
 
 		});
 	});
