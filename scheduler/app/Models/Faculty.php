@@ -37,7 +37,7 @@ class Faculty extends Model
      */
     public function subjects()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Subject');//, 'faculty_subject', 'faculty_id_number', 'subject_id');
+    	return $this->belongsToMany('Scheduler\App\Models\Subject')->withPivot('year_created');//, 'faculty_subject', 'faculty_id_number', 'subject_id');
     }
 
     public function specialties()

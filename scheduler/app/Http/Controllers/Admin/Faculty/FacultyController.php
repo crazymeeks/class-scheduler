@@ -177,4 +177,28 @@ class FacultyController extends Controller
             'maximum_units' => 'required',
         ]);
     }
+
+    /**
+     * Get faculty load
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  Schedulers\App\Faculty $faculty
+     * @param  int  $id
+     * 
+     * @return \Illuminate\Database\Eloquent
+     */
+    public function ajaxViewFacultyLoad(Request $request, Faculty $faculty, $id)
+    {
+
+        $faculty = [];
+        if ($request->ajax()) {            
+        
+            $faculty = DataTables::of(Faculty::find($id)
+                            ->subjects()
+                            ->get())->make(true);
+        }
+
+        return $faculty;
+        
+    }
 }

@@ -15,6 +15,8 @@
 @append
 
 @section('content')
+
+	@include('scheduler.admin.pages.faculty.modal.view-faculty-load')
 	@include('scheduler.admin.pages.page-help')
 	<div class="portlet-body">
 		<div class="table-responsive">
@@ -26,23 +28,9 @@
 
 @section('js_page_level_plugins')
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="{{ global_plugins('/jqvmap/jqvmap/jquery.vmap.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/maps/jquery.vmap.russia.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/maps/jquery.vmap.world.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/maps/jquery.vmap.europe.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/maps/jquery.vmap.germany.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/maps/jquery.vmap.usa.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/flot/jquery.flot.resize.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/flot/jquery.flot.categories.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jquery.pulsate.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/bootstrap-daterangepicker/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+
 <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
-<script src="{{ global_plugins('/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jquery-easypiechart/jquery.easypiechart.min.js') }}" type="text/javascript"></script>
-<script src="{{ global_plugins('/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+
 <!-- END PAGE LEVEL PLUGINS -->
 @append
 
@@ -52,8 +40,6 @@
 <script src="{{ admin_layout('/scripts/layout.js') }}" type="text/javascript"></script>
 <script src="{{ admin_layout('/scripts/quick-sidebar.js') }}" type="text/javascript"></script>
 <script src="{{ admin_layout('/scripts/demo.js') }}" type="text/javascript"></script>
-<script src="{{ admin_asset('/pages/scripts/index.js') }}" type="text/javascript"></script>
-<script src="{{ admin_asset('/pages/scripts/tasks.js') }}" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
 @include('yajra.datatables.button')
@@ -74,8 +60,23 @@
 
 @endif
 
-<script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/faculty/form.js')}}"></script>
 <script type="text/javascript">
-	Institution.initAll();
+	Faculty.initAll();
 </script>
 @append
+
+@section('metronic_main_js')
+<script type="text/javascript">
+	
+jQuery(document).ready(function() {       
+   	// initiate layout and plugins
+   	Metronic.init(); // init metronic core components
+	Layout.init(); // init current layout
+	QuickSidebar.init(); // init quick sidebar
+	Demo.init(); // init demo features
+	
+});
+
+</script>
+@endsection
