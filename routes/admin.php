@@ -45,9 +45,11 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::get('/', 'FacultyController@indexView');
 			Route::get('{id}/edit', 'FacultyController@edit');
 			Route::get('create', 'FacultyController@create');
+			Route::get('{id}/view-faculty-load', 'FacultyController@ajaxViewFacultyLoad');
 
 			Route::post('/save', 'FacultyController@save');
 			Route::post('{id}/update', 'FacultyController@update');
+
 		});
 	});
 });

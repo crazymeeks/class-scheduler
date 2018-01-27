@@ -33,7 +33,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{ global_plugins('/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-print-1.5.1/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="{{global_css('/datatables.min.css')}}"/>
 <link rel="stylesheet" type="text/css" href="{{jsvendor('/toastr/build/toastr.min.css')}}">
 @yield('css_page_level_plugins')
 @yield('css_page_level_styles')
@@ -505,6 +505,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<i class="icon-arrow-up"></i>
 	</div>
 </div>
+
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
@@ -558,9 +559,9 @@ License: You must have a valid license purchased only from themeforest(the above
   };
   
 </script>
+
 @yield('js_page_level_plugins')
 @yield('js_page_level_scripts')
-
 @yield('metronic_main_js')
 
 <!-- END JAVASCRIPTS -->
