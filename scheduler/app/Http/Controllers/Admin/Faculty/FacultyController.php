@@ -146,6 +146,23 @@ class FacultyController extends Controller
         return redirect('admin/faculty')->with('error', 'Error while updating faculty. Please try again.');
     }
 
+    /**
+     * Soft delete the given model
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  int $id
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function delete(Request $request, Faculty $faculty, $id)
+    {
+        if ($faculty->find($id)->delete()) {
+            return response()->json(['message' => 'Faculty deleted'], 200);
+        }
+
+        return response()->json(['message' => 'Error deleting of faculty'], 500);
+    }
+
 
     /**
      * Validate request

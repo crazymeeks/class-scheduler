@@ -8,12 +8,13 @@ let Faculty = (function(){
 	let initEvents = function() {
 		
 
+		/**
+		 * Load faculty's subjects(load) in modal
+		 */
 		$('body').on('click', '.btn-view-faculty-load', function(){
 			var id = $(this).attr('data-id');
-
-
 			$('#table-faculty-load').DataTable({
-				
+				destroy: true,
 				processing: true,
 				serverSide: true,
 
@@ -38,31 +39,27 @@ let Faculty = (function(){
 					}
 				]
 			});
+		});
 
-			/*$.ajax({
+		$('body').on('click', '.remove-faculty', function(){
+			var id = $(this).attr('data-id');
 
-				url: '/admin/faculty/' + id + '/view-faculty-load',
-				method: 'GET',
-				success: function(response){
-					console.log(response);
-					var tbody = '';
-					if (response.length > 0) {
-						$.each(response, function(index, value){
-
-							tbody += '<tr><td>'
-							+ value.id +
-							'</td><td>'
-							+ value.name +
-							'</td><td>'
-							+ value.pivot.year_created +
-							'</td></tr>';
-							$('.table-faculty-load > tbody').html(tbody);
-						});
-						return;
-					}
-					$('.table-faculty-load > tbody').html('');
-				}
-			});*/
+			swal({
+			  title: "Are you sure?",
+			  text: "You will not be able to recover this imaginary file!",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonClass: "btn-danger",
+			  confirmButtonText: "Proceed",
+			  cancelButtonText: "No",
+			  closeOnConfirm: false,
+			  closeOnCancel: true
+			},
+			function(isConfirm) {
+			  if (isConfirm) {
+			    doAjax("/admin/faculty/delete", "POST", id);
+			  }
+			});
 		});
 	};
 
@@ -76,26 +73,26 @@ let Faculty = (function(){
 	 * @return response
 	 */
 	let doAjax = function(url, method, id) {
-		console.log(id);
+		
 		verifyCsrfToken();
 
 		$.ajax({
-			url: url,
+			url: url + '/' + id,
 			method: method,
 			data: {id: id},
-			success: function(response){
-
-				swal("Success", response, "success", {
+			success: function(response, textStatus, xhr){
+				
+				swal("Success", response.message, "success", {
 				  button: "Ok",
 				});
 
 				setTimeout(function(){
-					window.location.href = appBaseUrl() + 'admin/institution';
+					window.location.href = appBaseUrl() + 'admin/faculty';
 				}, 3000);
 
 			},
 			error: function(xhr, error){
-				swal("Error", "Error occured while deleting an institution. Please try again", "error", {
+				swal("Error", xhr.responseText, "error", {
 				  button: "Ok",
 				});
 			}
