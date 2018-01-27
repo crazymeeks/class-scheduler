@@ -52,5 +52,17 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::post('delete/{id}', 'FacultyController@delete');
 
 		});
+
+		/**
+		 * Manage Subject
+		 */
+		Route::group(['prefix' => 'subject', 'namespace' => 'Subject'], function(){
+			Route::get('/', 'SubjectController@indexView');
+			Route::get('{id}/edit', 'SubjectController@edit');
+			Route::get('{id}/view-subject-programs', 'SubjectController@ajaxViewSubjectPrograms');
+
+			Route::post('{id}/update', 'SubjectController@update');
+			Route::post('delete/{id}', 'SubjectController@delete');
+		});
 	});
 });
