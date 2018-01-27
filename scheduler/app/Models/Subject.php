@@ -10,7 +10,7 @@ class Subject extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'units', 'name', 'short_description', 'deleted_at',
+    	'units', 'hours', 'name', 'deleted_at',
     ];
 
     /**

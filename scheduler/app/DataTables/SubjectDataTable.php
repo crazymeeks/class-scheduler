@@ -2,10 +2,10 @@
 
 namespace Scheduler\App\DataTables;
 
-use Scheduler\App\Models\Faculty;
+use Scheduler\App\Models\Subject;
 use Yajra\DataTables\Services\DataTable;
 
-class FacultyDataTable extends DataTable
+class SubjectDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -18,8 +18,6 @@ class FacultyDataTable extends DataTable
         return datatables($query)
             ->addColumn('action', function($query){
                 return $this->dataTableActionButtons($query);
-            })->editColumn('status', function(Faculty $faculty){
-                return $faculty->status == 0 ? 'Inactive' : 'Active';
             });
     }
 
@@ -32,9 +30,9 @@ class FacultyDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
-        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-view-faculty-load btn-icon-only blue' data-toggle='modal'><i class='fa fa-search'></i></a>";
-        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-icon-only remove-faculty red'><i class='fa fa-times'></i></a>";
+        $buttons = "<a href='" . url('admin/subject/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
+        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-view-subject-programs btn-icon-only blue' data-toggle='modal'><i class='fa fa-search'></i></a>";
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-icon-only remove-subject red'><i class='fa fa-times'></i></a>";
 
         return $buttons;
 
@@ -47,10 +45,9 @@ class FacultyDataTable extends DataTable
      * @param \Scheduler\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Faculty $model)
+    public function query(Subject $model)
     {
-        return $model->newQuery()
-                     ->with(['institution', 'faculty_type', 'user']);
+        return $model->newQuery()->with(['programs']);
     }
 
     /**
@@ -63,8 +60,8 @@ class FacultyDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '130px'])
-                    ->parameters($this->getBuilderParameters());                
+                    ->addAction(['width' => '120px'])
+                    ->parameters($this->getBuilderParameters());
     }
 
     /**
@@ -74,18 +71,10 @@ class FacultyDataTable extends DataTable
      */
     protected function getColumns()
     {
-
         return [
-
-            'faculty_id_number' => ['title' => 'ID #'],
-            'lastname' => ['title' => 'Lastname'],
-            'firstname' => ['firstname' => 'Firstname'],
-            'user.email' => ['title' => 'Email'],
-            'status' => ['title' => 'Status'],
-            'institution.name' => ['title' => 'Institution'],
-            'faculty_type.type' => ['title' => 'Faculty type'],
-
-            
+            'name',
+            'units',
+            'hours',
         ];
     }
 
@@ -96,6 +85,6 @@ class FacultyDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Faculty_' . date('YmdHis');
+        return 'Subject_' . date('YmdHis');
     }
 }
