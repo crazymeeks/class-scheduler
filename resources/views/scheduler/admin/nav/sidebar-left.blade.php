@@ -48,21 +48,18 @@
 				<a href="{{url('admin/institution')}}">
 				<i class="icon-rocket"></i>
 				<span class="title">Institution</span>
-				
 				</a>
 			</li>
 			<li>
 				<a href="{{url('admin/faculty')}}">
 				<i class="icon-diamond"></i>
 				<span class="title">Faculty Management</span>
-				<span class="arrow "></span>
 				</a>
 			</li>
 			<li>
-				<a href="javascript:;">
+				<a href="{{url('admin/subject')}}">
 				<i class="icon-puzzle"></i>
 				<span class="title">Subject Management</span>
-				<span class="arrow "></span>
 				</a>
 			</li>
 			<!-- BEGIN ANGULARJS LINK -->

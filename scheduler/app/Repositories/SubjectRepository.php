@@ -24,13 +24,7 @@ class SubjectRepository
 			DB::transaction(function() use ($subject, $request){
 
 				$subject->fill($request->toArray());
-
-				if ($request->has('subject_name')) {
-					$subject_name = $request->subject_name;
-					$request->request->remove('subject_name');
-					$request->request->add(['name' => $subject_name]);
-				}
-
+				$subject->name = $request->subject_name;
 				$subject->save();
 			});	
 			

@@ -1,15 +1,6 @@
 @extends('scheduler.admin.template.main')
 
-@section('css_page_level_plugins')
-<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-
-<!--Start Multi Select-->
-<link rel="stylesheet" type="text/css" href="{{global_plugins('/bootstrap-select/bootstrap-select.min.css')}}"/>
-<link rel="stylesheet" type="text/css" href="{{global_plugins('/select2/select2.css')}}"/>
-<link rel="stylesheet" type="text/css" href="{{global_plugins('/jquery-multi-select/css/multi-select.css')}}"/>
-<!--End Multi Select-->
-<!-- END PAGE LEVEL PLUGIN STYLES -->
-@append
+@include('scheduler.admin.metronic_assets.css.multiselect')
 @section('content')
 <?php //dd($errors->all());?>
 <!-- BEGIN PAGE CONTENT-->
@@ -491,39 +482,23 @@
 <script type="text/javascript" src="{{global_plugins('/jquery-validation/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{global_plugins('/jquery-validation/js/additional-methods.min.js')}}"></script>
 <script type="text/javascript" src="{{global_plugins('/bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}"></script>
-
-
-
-<script type="text/javascript" src="{{global_plugins('/bootstrap-select/bootstrap-select.min.js')}}"></script>
-<script type="text/javascript" src="{{global_plugins('/select2/select2.min.js')}}"></script>
-<script type="text/javascript" src="{{global_plugins('/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 @append
 
-@section('js_page_level_scripts')
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="{{global_asset('/scripts/metronic.js')}}" type="text/javascript"></script>
-<script src="{{admin_layout('/scripts/layout.js')}}" type="text/javascript"></script>
-<script src="{{admin_layout('/scripts/quick-sidebar.js')}}" type="text/javascript"></script>
-<script src="{{admin_layout('/scripts/demo.js')}}" type="text/javascript"></script>
+@include('scheduler.admin.metronic_assets.js.always')
+@section('js_page_level_scripts')
 <script src="{{isset($faculty) ? admin_asset('/pages/scripts/form-wizard-edit-page.js') : admin_asset('/pages/scripts/form-wizard.js')}}"></script>
-
-<!--Start Multi Select-->
-<script src="{{admin_asset('/pages/scripts/components-dropdowns.js')}}"></script>
-<!--End Multi Select-->
-<!-- END PAGE LEVEL SCRIPTS -->
 @append
 
+@include('scheduler.admin.metronic_assets.js.multiselect')
+<!-- END PAGE LEVEL SCRIPTS -->
+
+@include('scheduler.admin.metronic_assets.js.metronic')
 
 @section('metronic_main_js')
-
 <script type="text/javascript">
 jQuery(document).ready(function() {       
-   // initiate layout and plugins
-   	Metronic.init(); // init metronic core components
-	Layout.init(); // init current layout
-	QuickSidebar.init(); // init quick sidebar
-	Demo.init(); // init demo features
 	<?php
 	if(!isset($faculty)):
 	?>

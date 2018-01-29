@@ -30,9 +30,9 @@ class SubjectDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/subject/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
-        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-view-subject-programs btn-icon-only blue' data-toggle='modal'><i class='fa fa-search'></i></a>";
-        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-icon-only remove-subject red'><i class='fa fa-times'></i></a>";
+        $buttons = "<a href='" . url('admin/subject/' . $query->id) . "/edit' class='btn btn-sm green'><i class='fa fa-edit'>Edit</i></a>";
+        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-sm btn-view-subject-programs blue' data-toggle='modal'>Programs<i class='fa fa-search'></i></a>";
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-sm remove-subject red'>Remove<i class='fa fa-times'></i></a>";
 
         return $buttons;
 
@@ -60,7 +60,7 @@ class SubjectDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '120px'])
+                    ->addAction(['width' => '250px'])
                     ->parameters($this->getBuilderParameters());
     }
 
