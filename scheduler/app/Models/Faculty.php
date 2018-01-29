@@ -16,12 +16,11 @@ class Faculty extends Model
 
     protected $fillable = [
     	'faculty_id_number', 'faculty_type_id', 'institution_id',
-    	'lastname', 'firstname', 'middlename', 'gender',
-        'address', 'graduated_school_name', 'other_school',
-        'degree', 'major', 'minor', 'minimum_units',
-        'maximum_units', 'earned_ma', 'ms_mba', 'phd',
-        'special_training', 'years_of_experience', 
-        'basic_salary', 'assignment', 'position',
+    	'lastname', 'firstname', 'middlename', 'email','password',
+        'remember_token', 'gender','address', 'graduated_school_name',
+        'other_school', 'degree', 'major', 'minor', 'minimum_units',
+        'maximum_units', 'earned_ma', 'ms_mba', 'phd', 'special_training',
+        'years_of_experience', 'basic_salary', 'assignment', 'position',
         'status', 'deleted_at'
     ];
 
@@ -71,14 +70,6 @@ class Faculty extends Model
     public function institution()
     {
     	return $this->belongsTo('Scheduler\App\Models\Institution');
-    }
-
-    /**
-     * 1 to 1
-     */
-    public function user()
-    {
-        return $this->hasOne('App\User');//, 'faculty_id_number');
     }
 
     /**

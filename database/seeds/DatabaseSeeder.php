@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /*$this->call(FacultyTypeUnitsTableSeeder::class);
+        $this->call(FacultyTypeUnitsTableSeeder::class);
         $this->call(FacultyTypesTableSeeder::class);
         $this->call(InstitutionTableSeeder::class);
         $this->call(CreateProgramsTableSeeder::class);
@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
         $this->call(SpecialtiesTableSeeder::class);
         $this->call(SubjectsTableSeeder::class);
         $this->call(YearActiveTableSeeder::class);
-        */
-        //$this->call(CreateFacultyTableSeeder::class);
-        //$this->call(CreateFacultySpecialtyTableSeeder::class);
+        
+        $this->call(CreateFacultyTableSeeder::class);
+        $this->call(CreateFacultySpecialtyTableSeeder::class);
         $this->call(CreateFacultySubjectTableSeeder::class);
-        //$this->call(CreateFacultyYearActiveTableSeeder::class);
-        //$this->call(CreateFacultyYearLevelTableSeeder::class);
-        //$this->call(CreateFacultyProgramTableSeeder::class);
+        $this->call(CreateFacultyYearActiveTableSeeder::class);
+        $this->call(CreateFacultyYearLevelTableSeeder::class);
+        $this->call(CreateFacultyProgramTableSeeder::class);
     }
 }

@@ -17,6 +17,8 @@ class CreateFacultyTableSeeder extends Seeder
             'institution_id' => 1,
             'lastname' => 'Doe',
             'firstname' => 'John',
+            'email'     => 'john.doe@gmail.com',
+            'password'     => bcrypt('secret'),
             'gender' => 'Male',
             'address' => 'Odiongan, Romblon',
             'graduated_school_name' => 'Romblon State University',

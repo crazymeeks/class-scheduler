@@ -21,6 +21,9 @@ class CreateFacultiesTable extends Migration
             $table->string('lastname', 50);
             $table->string('firstname', 50);
             $table->string('middlename', 50)->nullable();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->enum('gender', ['Male', 'Female'])->default('Male');
             $table->longText('address');
             $table->string('graduated_school_name', 255);
