@@ -163,7 +163,7 @@
 													* </span>
 													</label>
 													<div class="col-md-4">
-														<input type="text" class="form-control" name="email" value="{{isset($faculty) ? $faculty->user->email : (old('email') ? old('email') : '')}}"/>
+														<input type="text" class="form-control" name="email" value="{{isset($faculty) ? $faculty->email : (old('email') ? old('email') : '')}}"/>
 														<span class="help-block">
 														Provide your email address </span>
 													</div>

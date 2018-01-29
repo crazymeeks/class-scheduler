@@ -18,28 +18,28 @@ class FacultyRepository
 	 * 
 	 * @return bool
 	 */
-	public function saveFromRequest(Request $request, Faculty $faculty, User $user)
+	public function saveFromRequest(Request $request, Faculty $faculty)
 	{
 
-		try {
-			DB::transaction(function() use ($faculty, $request, $user){
+		//try {
+			DB::transaction(function() use ($faculty, $request){
 
 				$faculty->fill($request->toArray());
-				$user->fill($request->toArray());
+				//$user->fill($request->toArray());
 
 				$faculty->save();
 				
 				$faculty->programs()->sync($request->programs);
 				$faculty->specialties()->sync($request->specialties);
-				$user->faculty_id = $faculty->id;
-				$user->save();
+				//$user->faculty_id = $faculty->id;
+				//$user->save();
 				
 
 			});	
 			
-		} catch (\Exception $e) {
-			return false;
-		}
+		// } catch (\Exception $e) {
+		// 	return false;
+		// }
 
 		return true;
 

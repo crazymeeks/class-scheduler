@@ -50,7 +50,7 @@ class FacultyDataTable extends DataTable
     public function query(Faculty $model)
     {
         return $model->newQuery()
-                     ->with(['institution', 'faculty_type', 'user']);
+                     ->with(['institution', 'faculty_type']);
     }
 
     /**
@@ -80,7 +80,7 @@ class FacultyDataTable extends DataTable
             'faculty_id_number' => ['title' => 'ID #'],
             'lastname' => ['title' => 'Lastname'],
             'firstname' => ['firstname' => 'Firstname'],
-            'user.email' => ['title' => 'Email'],
+            'email' => ['title' => 'Email'],
             'status' => ['title' => 'Status'],
             'institution.name' => ['title' => 'Institution'],
             'faculty_type.type' => ['title' => 'Faculty type'],

@@ -69,7 +69,7 @@ class FacultyController extends Controller
                                     'institution', 'specialties',
                                     'subjects', 'faculty_type',
                                     'year_actives', 'levels',
-                                    'programs', 'user',
+                                    'programs',
                                 ])->first();
         
         $data = [
@@ -108,7 +108,7 @@ class FacultyController extends Controller
         $request->request->add(['institution_id' => (int) $institution_id]);
         
         //return $request->all();
-        if ($repo->saveFromRequest($request, new Faculty, new User)) {
+        if ($repo->saveFromRequest($request, new Faculty)) {
             return redirect('admin/faculty')->with('success', 'Faculty successfully updated.');
         }
         return redirect('admin/faculty')->with('error', 'Error while saving faculty. Please try again.');
@@ -137,10 +137,7 @@ class FacultyController extends Controller
         $request->request->add(['faculty_type_id' => (int) $faculty_type_id]);
         $request->request->add(['institution_id' => (int) $institution_id]);
         
-
-        $user = User::where('faculty_id', $id)->first();
-        
-        if ($repo->saveFromRequest($request, $faculty, $user)) {
+        if ($repo->saveFromRequest($request, $faculty)) {
             return redirect('admin/faculty')->with('success', 'Faculty successfully updated.');
         }
         return redirect('admin/faculty')->with('error', 'Error while updating faculty. Please try again.');
@@ -178,6 +175,13 @@ class FacultyController extends Controller
                     ? 'required|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number'
                     : 'required|unique:faculties';
         
+        $id_validate = 'required|unique:faculties';
+        $email_validate = 'required|email|unique:faculties';
+        if (!is_null($faculty_id_number)) {
+            $id_validate = 'required|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number';
+            $email_validate = 'required|email|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number';
+        }
+
 
         $request->validate([
             'faculty_id_number' => $id_validate,
@@ -185,6 +189,7 @@ class FacultyController extends Controller
             'institution' => 'required',
             'lastname' => 'required',
             'firstname' => 'required',
+            'email'     => $email_validate,
             'gender' => 'required',
             'graduated_school_name' => 'required',
             'degree' => 'required',

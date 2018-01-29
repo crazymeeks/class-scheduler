@@ -17,7 +17,7 @@ class CreateFacultySubjectTable extends Migration
             $table->increments('id');
             $table->integer('subject_id')->unsigned();
             $table->integer('faculty_id')->unsigned();
-            $table->year('created_at');
+            $table->year('year_created');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('faculty_id')->references('id')->on('faculties');
         });
