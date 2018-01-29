@@ -60,7 +60,9 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::get('/', 'SubjectController@indexView');
 			Route::get('{id}/edit', 'SubjectController@edit');
 			Route::get('{id}/view-subject-programs', 'SubjectController@ajaxViewSubjectPrograms');
+			Route::get('create', 'SubjectController@create');
 
+			Route::post('/save', 'SubjectController@save');
 			Route::post('{id}/update', 'SubjectController@update');
 			Route::post('delete/{id}', 'SubjectController@delete');
 		});
