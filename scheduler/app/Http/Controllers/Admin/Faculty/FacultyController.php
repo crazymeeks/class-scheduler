@@ -65,15 +65,17 @@ class FacultyController extends Controller
         $programs = Program::all();
         $facultytypes = FacultyType::all();
         $institutions = Institution::all();
-        $faculty_data = $faculty->with([
-                                    'institution', 'specialties',
-                                    'subjects', 'faculty_type',
-                                    'year_actives', 'levels',
-                                    'programs',
-                                ])->first();
+       
+       $faculty->institution;
+       $faculty->specialties;
+       $faculty->subjects;
+       $faculty->faculty_type;
+       $faculty->year_actives;
+       $faculty->levels;
+       $faculty->programs;
         
         $data = [
-            'faculty'     => $faculty_data,
+            'faculty'     => $faculty,
             'page_title'  => 'Faculty::Update',
             'url'         => url('admin/faculty/' . $id . '/update'),
             'form_title'  => 'Update faculty',
@@ -83,8 +85,7 @@ class FacultyController extends Controller
             'facultytypes' => $facultytypes,
             'institutes' => $institutions,
         ];
-
-
+        
         return admin_view('pages.faculty.form', $data);
     }
 
@@ -122,7 +123,7 @@ class FacultyController extends Controller
         
         $faculty = Faculty::find($id);
 
-        $this->validateRequestFacultyData($request, $faculty->faculty_id_number);
+        $this->validateRequestFacultyData($request, $id);
         if (is_null($request->password)) {
             $request->request->remove('password');
         }
@@ -169,24 +170,27 @@ class FacultyController extends Controller
      * 
      * @return \Illuminate\Http\Request
      */
-    private function validateRequestFacultyData(Request $request, $faculty_id_number = null)
+    private function validateRequestFacultyData(Request $request, $id = null)
     {
-        $id_validate = !is_null($faculty_id_number)
-                    ? 'required|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number'
-                    : 'required|unique:faculties';
+        // $id_validate = !is_null($id)
+        //             ? 'required|unique:faculties,faculty_id_number,' . $id . ',id'
+        //             : 'required|unique:faculties';
         
         $id_validate = 'required|unique:faculties';
         $email_validate = 'required|email|unique:faculties';
-        if (!is_null($faculty_id_number)) {
-            $id_validate = 'required|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number';
-            $email_validate = 'required|email|unique:faculties,faculty_id_number,' . $faculty_id_number . ',faculty_id_number';
+
+        if (!is_null($id)) {
+            $id_validate = 'required|unique:faculties,faculty_id_number,' . $id . ',id';
+            $email_validate = 'required|email|unique:faculties,email,' . $id . ',id';
         }
 
+        //echo $id_validate;exit;
 
         $request->validate([
             'faculty_id_number' => $id_validate,
             'faculty_type' => 'required',
             'institution' => 'required',
+            'profile_photo' => 'nullable|image|mimes:jpeg,bmp,png,jpg',
             'lastname' => 'required',
             'firstname' => 'required',
             'email'     => $email_validate,

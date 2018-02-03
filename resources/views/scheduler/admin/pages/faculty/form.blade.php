@@ -1,8 +1,13 @@
 @extends('scheduler.admin.template.main')
 
 @include('scheduler.admin.metronic_assets.css.multiselect')
+
+@section('css_page_level_styles')
+<link href="{{global_plugins('/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+@append
+
 @section('content')
-<?php //dd($errors->all());?>
+
 <!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-12">
@@ -24,7 +29,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="{{$url}}" class="form-horizontal" id="submit_form" method="POST">
+							<form action="{{$url}}" class="form-horizontal" id="submit_form" method="POST" enctype="multipart/form-data">
 								{!! csrf_field() !!}
 								<div class="form-wizard">
 									<div class="form-body">
@@ -77,14 +82,43 @@
 											</div-->
 											<div class="tab-pane active" id="tab1">
 												<h3 class="block">Provide your account details</h3>
+												<div class="form-group ">
+                                                    <label class="control-label col-md-3">Profile photo</label>
+                                                    <div class="col-md-4">
+                                                        <div class="fileinput <?php echo isset($faculty) && isset($faculty->profile_photo) ? 'fileinput-exists' : 'fileinput-new';?>" data-provides="fileinput">
+                                                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                                            	<?php if(isset($faculty) && isset($faculty->profile_photo)):?>
+                                                            		<img src="{{asset('assets/uploads/' . $faculty->profile_photo)}}">
+                                                            	<?php endif;?>
+                                                            </div>
+                                                            <div>
+                                                                <span class="btn red btn-outline btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="file" name="profile_photo"> </span>
+                                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                            </div>
+                                                        </div>
+                                                        <?php if ($errors->first('profile_photo')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('profile_photo'); ?>
+															</div>
+														<?php endif;?>
+                                                    </div>
+                                                </div>
 												<div class="form-group">
 													<label class="control-label col-md-3">ID Number <span class="required">
 													* </span>
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="faculty_id_number" value="{{isset($faculty) ? $faculty->faculty_id_number : (old('faculty_id_number') ? old('faculty_id_number') : '')}}"/>
-														<span class="help-block">
-														<?php echo $errors->first('faculty_id_number') ? $errors->first('faculty_id_number') : 'Please provide id number'; ?></span>
+														<?php if ($errors->first('faculty_id_number')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('faculty_id_number'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide id number</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -94,8 +128,14 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="lastname" value="{{isset($faculty) ? $faculty->lastname : (old('lastname') ? old('lastname') : '')}}"/>
-														<span class="help-block">
-														Please provide lastname </span>
+
+														<?php if ($errors->first('lastname')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('lastname'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide lastname</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -105,19 +145,26 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="firstname" value="{{isset($faculty) ? $faculty->firstname : (old('firstname') ? old('firstname') : '')}}"/>
-														<span class="help-block">
-														Please provide firstname </span>
+														<?php if ($errors->first('firstname')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('firstname'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide firstname</span>
+														<?php endif;?>
 													</div>
 												</div>
 
 												<div class="form-group">
-													<label class="control-label col-md-3">Middlename <span class="not-required">
-													* </span>
+													<label class="control-label col-md-3">Middlename
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="middlename" value="{{isset($faculty) ? $faculty->middlename : (old('middlename') ? old('middlename') : '')}}"/>
-														<span class="help-block">
-														Please provide firstname </span>
+														<?php if ($errors->first('middlename')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('middlename'); ?>
+															</div>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -144,8 +191,13 @@
 																<option {{$st($value)}}>{{$value}}</option>
 															@endforeach
 														</select>
-														<span class="help-block">
-														Please select status </span>
+														<?php if ($errors->first('status')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('status'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide status</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -155,8 +207,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="email" value="{{isset($faculty) ? $faculty->email : (old('email') ? old('email') : '')}}"/>
-														<span class="help-block">
-														Provide your email address </span>
+														<?php if ($errors->first('email')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('email'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide email</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -175,6 +232,13 @@
 														</div>
 														<div id="form_gender_error">
 														</div>
+														<?php if ($errors->first('gender')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('gender'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide gender</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<div class="form-group">
@@ -183,8 +247,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="address" value="{{isset($faculty) ? $faculty->address : (old('address') ? old('address') : '')}}"/>
-														<span class="help-block">
-														Provide your street address </span>
+														<?php if ($errors->first('address')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('address'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide your street address</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -194,8 +263,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="password" class="form-control" name="password" id="submit_form_password"/>
-														<span class="help-block">
-														Provide your password. </span>
+														<?php if ($errors->first('password')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('password'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide password</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<div class="form-group">
@@ -204,8 +278,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="password" class="form-control" name="confirm_password"/>
-														<span class="help-block">
-														Confirm your password </span>
+														<?php if ($errors->first('confirm_password')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('confirm_password'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Confirm your password</span>
+														<?php endif;?>
 													</div>
 												</div>
 												
@@ -232,8 +311,13 @@
 																<option <?php echo isset($faculty) && in_array($program->id, $faculty_programs($faculty->programs)) ? 'selected' : ''; ?> value="{{$program->id}}">{{$program->short_description}}</option>
 															@endforeach
 														</select>
-														<span class="help-block">
-														Provide select programs </span>
+														<?php if ($errors->first('programs')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('programs'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please select programs</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -243,8 +327,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="graduated_school_name" value="{{isset($faculty) ? $faculty->graduated_school_name : (old('graduated_school_name') ? old('graduated_school_name') : '')}}"/>
-														<span class="help-block">
-														Provide school name </span>
+														<?php if ($errors->first('graduated_school_name')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('graduated_school_name'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide school name</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -267,6 +356,13 @@
 																
 															@endforeach
 														</select>
+														<?php if ($errors->first('faculty_type')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('faculty_type'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please select faculty_type</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -289,6 +385,13 @@
 																
 															@endforeach
 														</select>
+														<?php if ($errors->first('institution')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('institution'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please select institution</span>
+														<?php endif;?>
 													</div>
 												</div>
 
@@ -306,8 +409,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="degree" value="{{isset($faculty) ? $faculty->degree : (old('degree') ? old('degree') : '')}}"/>
-														<span class="help-block">
-														Provide degree </span>
+														<?php if ($errors->first('degree')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('degree'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide degree</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<div class="form-group">
@@ -316,8 +424,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="major" value="{{isset($faculty) ? $faculty->major : (old('major') ? old('major') : '')}}"/>
-														<span class="help-block">
-														Provide major subject</span>
+														<?php if ($errors->first('major')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('major'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide major subject</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<div class="form-group">
@@ -326,8 +439,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="minor" value="{{isset($faculty) ? $faculty->minor : (old('minor') ? old('minor') : '')}}"/>
-														<span class="help-block">
-														Provide minor subject </span>
+														<?php if ($errors->first('minor')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('minor'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide minor subject</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<h4 class="form-section">Units</h4>
@@ -337,8 +455,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="minimum_units" value="{{isset($faculty) ? $faculty->minimum_units : (old('minimum_units') ? old('minimum_units') : '')}}"/>
-														<span class="help-block">
-														Provide minimum units </span>
+														<?php if ($errors->first('minimum_units')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('minimum_units'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide minimum units</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<div class="form-group">
@@ -347,8 +470,13 @@
 													</label>
 													<div class="col-md-4">
 														<input type="text" class="form-control" name="maximum_units" value="{{isset($faculty) ? $faculty->maximum_units : (old('maximum_units') ? old('maximum_units') : '')}}"/>
-														<span class="help-block">
-														Provide maximum units </span>
+														<?php if ($errors->first('maximum_units')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('maximum_units'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide maximum units</span>
+														<?php endif;?>
 													</div>
 												</div>
 												<h4 class="form-section">Masterals</h4>
@@ -397,8 +525,14 @@
 																<option <?php echo isset($faculty) && in_array($specialty->id, $faculty_specialties($faculty->specialties)) ? 'selected' : ''; ?> value="{{$specialty->id}}">{{$specialty->specialty}}</option>
 															@endforeach
 														</select>
-														<span class="help-block">
-														Provide select specialties </span>
+														
+														<?php if ($errors->first('specialties')):?>
+															<div class="alert alert-danger"><strong>Error!</strong>
+																<?php echo $errors->first('specialties'); ?>
+															</div>
+														<?php else:?>
+															<span class="help-block">Please provide specialties</span>
+														<?php endif;?>
 													</div>
 												</div>
 											</div>
@@ -482,6 +616,7 @@
 <script type="text/javascript" src="{{global_plugins('/jquery-validation/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{global_plugins('/jquery-validation/js/additional-methods.min.js')}}"></script>
 <script type="text/javascript" src="{{global_plugins('/bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}"></script>
+<script src="{{global_plugins('/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 @append
 
