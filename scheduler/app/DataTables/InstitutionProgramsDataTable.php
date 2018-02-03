@@ -31,7 +31,8 @@ class InstitutionProgramsDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/institution/program-manage-block/' . $query->id) . "' class='btn btn-icon-only blue'><i class='fa fa-file-o'></i></a>";;
+        $buttons = "<a href='" . url('admin/institution/program-manage-block/' . $query->id) . "' class='btn btn-sm blue'>Add Blocks</a>";
+
         return $buttons;
     }
 
@@ -39,11 +40,14 @@ class InstitutionProgramsDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param \Scheduler\App\User $model
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Program $model)
     {
-        return $model->newQuery()->with('institution');
+        $id = $this->id;
+
+        return $model->where('institution_id', $id)->with('institution');
     }
 
     /**

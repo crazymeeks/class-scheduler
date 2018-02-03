@@ -10,7 +10,7 @@ class Program extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'institution_id', 'code', 'short_description'
+    	'institution_id', 'code', 'short_description',
     ];
 
     /**
