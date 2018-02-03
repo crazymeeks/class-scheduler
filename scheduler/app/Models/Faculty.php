@@ -12,19 +12,13 @@ class Faculty extends Authenticatable
 {
     
     use SoftDeletes, Notifiable;
-
-    // public $incrementing = false;
-
-    // protected $primaryKey = 'id_number';
-
+    
     protected $fillable = [
-    	'faculty_id_number', 'faculty_type_id', 'institution_id',
-    	'lastname', 'firstname', 'middlename', 'email','password',
-        'remember_token', 'gender','address', 'graduated_school_name',
-        'other_school', 'degree', 'major', 'minor', 'minimum_units',
-        'maximum_units', 'earned_ma', 'ms_mba', 'phd', 'special_training',
-        'years_of_experience', 'basic_salary', 'assignment', 'position',
-        'status', 'deleted_at'
+    	'faculty_id_number', 'faculty_type_id', 'institution_id','profile_photo',
+        'lastname', 'firstname', 'middlename', 'email','password','remember_token',
+        'gender','address', 'graduated_school_name','other_school', 'degree', 'major',
+        'minor', 'minimum_units','maximum_units', 'earned_ma', 'ms_mba', 'phd', 'special_training',
+        'years_of_experience', 'basic_salary', 'assignment', 'position','status', 'deleted_at'
     ];
 
      /**

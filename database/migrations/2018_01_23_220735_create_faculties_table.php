@@ -18,6 +18,7 @@ class CreateFacultiesTable extends Migration
             $table->string('faculty_id_number', 50)->comment('The faculty id number')->unique();
             $table->integer('faculty_type_id')->unsigned();
             $table->integer('institution_id')->unsigned();
+            $table->string('profile_photo', 60)->nullable();
             $table->string('lastname', 50);
             $table->string('firstname', 50);
             $table->string('middlename', 50)->nullable();
