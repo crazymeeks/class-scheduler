@@ -66,8 +66,8 @@
 	@append
 @endif
 
-<script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/programs/form.js')}}"></script>
 <script type="text/javascript">
-	Institution.initAll();
+	Programs.initAll();
 </script>
 @append

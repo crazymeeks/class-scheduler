@@ -13,25 +13,6 @@
 			{!!csrf_field()!!}
 			<div class="form-body">
 				<h3 class="form-section">Add program to institution here</h3>
-				@if(isset($id))
-				<input type="hidden" name="institution" value="{{$id}}">
-				<!--Flag we use to determine where the page should redirect after saving-->
-				<input type="hidden" name="redirect_flag" value="1">
-				@else
-				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Institution <span class="required">*</span></label>
-					<div class="col-md-4">
-						<select name="institution">
-							<option></option>
-							@foreach($institutions as $institution)
-							<option value="{{$institution->id}}">{{$institution->name}}</option>
-							@endforeach
-						</select>
-						<div class="has-error"><span class="help-block">{{$errors->first('institution')}}</span></div>						
-						<span class="help-block">Select institution </span>
-					</div>
-				</div>
-				@endif
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Code <span class="required">*</span></label>
 					<div class="col-md-4">
@@ -49,6 +30,32 @@
 						<span class="help-block">e.g Computer Operation &amp; Programming </span>
 					</div>
 				</div>
+
+				@if(isset($id))
+				<input type="hidden" name="institution" value="{{$id}}">
+				<!--Flag we use to determine where the page should redirect after saving-->
+				<input type="hidden" name="redirect_flag" value="1">
+				@else
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Institution <span class="required">*</span></label>
+					<div class="col-md-4">
+						<select name="institution" class="form-control">
+							<option></option>
+							<?php
+
+							$selected = function($institution) use($program){
+								return $program->institution_id == $institution->id ? 'selected' : '';
+							};
+							?>
+							@foreach($institutions as $institution)
+							<option {{$selected($institution)}} value="{{$institution->id}}">{{$institution->name}}</option>
+							@endforeach
+						</select>
+						<div class="has-error"><span class="help-block">{{$errors->first('institution')}}</span></div>						
+						<span class="help-block">Select institution </span>
+					</div>
+				</div>
+				@endif
 
 			</div>
 			<div class="form-actions">
