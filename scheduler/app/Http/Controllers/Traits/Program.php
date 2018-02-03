@@ -23,8 +23,8 @@ trait Program
 	public function createProgram(Request $request, $id = null)
 	{
 		$data = [
-            'page_title' => 'Institution::Create',
-            'url' => url('admin/program/save'),
+            'page_title' => 'Institution::Add program',
+            'url' => url('admin/programs/save'),
             'id'  => $id,
         ];
 
@@ -34,13 +34,23 @@ trait Program
 	/**
 	 * Create new program
 	 */
-	public function saveProgram(Request $request)
+	public function saveProgram(Request $request, $id = null)
 	{
 
 
-		$this->validateData($request);
+		$this->validateData($request, $id);
 
 		$program = new ProgramModel;
+
+		$successMessage = 'New program has been saved.';
+		$errorMessage = 'Error occured while saving program. Please try again';
+
+		if (!is_null($id)) {
+			$program = ProgramModel::find($id);
+
+			$successMessage = 'Program has been updated.';
+			$errorMessage = 'Error occured while updating program. Please try again';
+		}
 
 		$program->fill($request->toArray());
 
@@ -49,10 +59,10 @@ trait Program
 		$location = $request->has('redirect_flag') ? 'admin/institution/' . $request->institution . '/view-program' : 'admin/programs';
 
 		if ($program->save()) {
-    		return redirect($location)->with('success', 'New program has been saved.');
+    		return redirect($location)->with('success', $successMessage);
 		}
 		
-    	return redirect($location)->with('error', 'Error occured while saving program. Please try again.');
+    	return redirect($location)->with('error', $errorMessage);
 	}
 
 	/**
@@ -62,11 +72,16 @@ trait Program
 	 * 
 	 * @return \Illuminate\Http\Response
 	 */
-	private function validateData(Request $request)
+	private function validateData(Request $request, $program_id = null)
 	{
+		
+		$code_validate = !is_null($program_id)
+                    ? 'required|unique:programs,code,' . $program_id . ',id'
+                    : 'required|unique:programs';
+
 		$request->validate([
             'institution' => 'required',
-            'code' => 'required',
+            'code' => $code_validate,
             'short_description' => 'required',
         ]);
 	}

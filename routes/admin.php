@@ -75,8 +75,12 @@ Route::group(['prefix' => 'admin'], function(){
 		/**
 		 * Manage Program
 		 */
-		Route::group(['prefix' => 'program', 'namespace' => 'Program'], function(){
-			Route::post('/save', 'ProgramController@saveProgram');
+		Route::group(['prefix' => 'programs', 'namespace' => 'Program'], function(){
+			Route::get('/', 'ProgramController@indexView');
+			Route::get('{id}/edit', 'ProgramController@edit');
+
+			Route::post('save/{id?}', 'ProgramController@saveProgram');
+			Route::post('delete/{id}', 'ProgramController@delete');
 		});
 	});
 });

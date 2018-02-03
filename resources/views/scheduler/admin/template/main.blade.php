@@ -18,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Metronic | Dashboard</title>
+<title>Admin</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
@@ -557,9 +557,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
     return baseUrl;
   };
-  
 </script>
-
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/sidebar.js')}}"></script>
 @yield('js_page_level_plugins')
 @yield('js_page_level_scripts')
 @yield('metronic_main_js')

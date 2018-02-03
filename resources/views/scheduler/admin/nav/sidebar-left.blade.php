@@ -10,7 +10,7 @@
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 		<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-		<ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+		<ul class="page-sidebar-menu auto-select-sidebar-nav" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
 			<li class="sidebar-toggler-wrapper">
 				<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -60,6 +60,12 @@
 				<a href="{{url('admin/subject')}}">
 				<i class="icon-puzzle"></i>
 				<span class="title">Subject Management</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('admin/programs')}}">
+				<i class="icon-puzzle"></i>
+				<span class="title">Program Management</span>
 				</a>
 			</li>
 			<!-- BEGIN ANGULARJS LINK -->
