@@ -40,11 +40,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 
 <!-- BEGIN THEME STYLES -->
-<link href="{{ global_css('/components.css') }}" id="style_components" rel="stylesheet" type="text/css"/>
-<link href="{{ global_css('/plugins.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ admin_layout('/css/layout.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ admin_layout('/css/themes/darkblue.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="{{ admin_layout('/css/custom.css') }}" rel="stylesheet" type="text/css"/>
+@include('scheduler.admin.metronic_assets.css.themestyles')
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 <link rel="stylesheet" type="text/css" href="{{admin_asset('/pages/css/sweetalert.css')}}">
@@ -385,7 +381,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" class="img-circle" src="../../assets/admin/layout/img/avatar3_small.jpg"/>
 					<span class="username username-hide-on-mobile">
-					Nick </span>
+					{{Auth::guard('admin')->user()->firstname}} </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
@@ -416,7 +412,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<i class="icon-lock"></i> Lock Screen </a>
 						</li>
 						<li>
-							<a href="login.html">
+							<a href="javascript:void(0);" id="logout">
 							<i class="icon-key"></i> Log Out </a>
 						</li>
 					</ul>
@@ -557,6 +553,28 @@ License: You must have a valid license purchased only from themeforest(the above
 
     return baseUrl;
   };
+
+  $(function(){
+  	$('#logout').on('click', function(){
+  		verifyCsrf();
+  		$.ajax({
+  			url: '/logout',
+  			type: 'POST',
+  			success: function(response, textStatus, xhr){
+  				window.location.href = appBaseUrl();
+  			}
+  		});
+  	});
+
+  	let verifyCsrf = function(){
+
+  		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+  	};
+  });
 </script>
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/sidebar.js')}}"></script>
 @yield('js_page_level_plugins')
