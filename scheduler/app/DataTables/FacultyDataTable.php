@@ -32,9 +32,13 @@ class FacultyDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
+        /*$buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
         $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-view-faculty-load btn-icon-only blue' data-toggle='modal'><i class='fa fa-search'></i></a>";
-        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-icon-only remove-faculty red'><i class='fa fa-times'></i></a>";
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-icon-only remove-faculty red'><i class='fa fa-times'></i></a>";*/
+
+        $buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-sm green'><i class='fa fa-edit'>Edit</i></a>";
+        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-sm btn-view-faculty-load blue' data-toggle='modal'>View Load<i class='fa fa-search'></i></a>";
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-sm remove-faculty red'>Remove<i class='fa fa-times'></i></a>";
 
         return $buttons;
 

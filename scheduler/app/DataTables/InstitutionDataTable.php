@@ -31,9 +31,16 @@ class InstitutionDataTable extends DataTable
      */
     protected function dataTableActionButtons($query)
     {
-        $buttons = "<a href='" . url('admin/institution/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
-        $buttons .= "<a href='" . url('admin/institution/' . $query->id) . "/view-program' class='btn btn-icon-only blue'><i class='fa fa-search'></i></a>";;
-        $buttons .= "<a href='javascript:void;' data-id='" . $query->id . "' class='btn btn-icon-only remove-institute red'><i class='fa fa-times'></i></a>";
+        /*$buttons = "<a href='" . url('admin/institution/' . $query->id) . "/edit' class='btn btn-icon-only green'><i class='fa fa-edit'></i></a>";
+        $buttons .= "<a href='" . url('admin/institution/' . $query->id) . "/view-program' class='btn btn-icon-only blue'><i class='fa fa-search'></i></a>";
+        $buttons .= "<a href='javascript:void;' data-id='" . $query->id . "' class='btn btn-icon-only remove-institute red'><i class='fa fa-times'></i></a>";*/
+
+        $buttons = "<a href='" . url('admin/institution/' . $query->id) . "/edit' class='btn btn-sm green'><i class='fa fa-edit'>Edit</i></a>";
+
+        $buttons .= "<a href='" . url('admin/institution/' . $query->id) . "/view-program' class='btn btn-sm blue'>View Programs<i class='fa fa-search'></i></a>";
+
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-sm remove-institute red'>Remove<i class='fa fa-times'></i></a>";
+
         return $buttons;
     }
 

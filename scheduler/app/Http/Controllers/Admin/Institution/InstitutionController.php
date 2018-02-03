@@ -7,12 +7,15 @@ use Scheduler\App\Models\Block;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Institution;
 use Scheduler\App\Http\Controllers\Controller;
+use Scheduler\App\Http\Controllers\Traits\Program as ProgramTrait;
 use Scheduler\App\DataTables\InstitutionDataTable;
 use Scheduler\App\DataTables\InstitutionProgramsDataTable;
 use Scheduler\App\Repositories\InstitutionRepository;
 use Scheduler\App\Http\Requests\InstitutionFormRequest;
 class InstitutionController extends Controller
 {
+
+    use ProgramTrait;
     
  	/**
  	 * Display instution index page
@@ -108,7 +111,6 @@ class InstitutionController extends Controller
      */
     public function viewPrograms(InstitutionProgramsDataTable $dataTable, $id)
     {
-
         $institution = Institution::find($id);
 
         $data = [
@@ -117,7 +119,7 @@ class InstitutionController extends Controller
             'small_title' => $institution->name,
         ];
 
-        return $dataTable->render($this->admin_view . 'pages.institution.programs.index', $data);
+        return $dataTable->with('id', $id)->render($this->admin_view . 'pages.institution.programs.index', $data);
     }
 
     /**
@@ -142,8 +144,6 @@ class InstitutionController extends Controller
             'program_blocks' => $program->with('blocks')->get(),
             'id'             => $id,
         ];
-
-        
 
         return admin_view('pages.institution.institution-manage-blocks.index', $data);
     }

@@ -36,6 +36,11 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::post('{id}/update', 'InstitutionController@update');
 			Route::post('program-block-save/{id}', 'InstitutionController@saveProgramBlock');
 
+			/**
+			 * Create new Program under an institution
+			 */
+			Route::get('{id}/view-program/create', 'InstitutionController@createProgram');			
+
 		});
 
 		/**
@@ -65,6 +70,13 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::post('/save', 'SubjectController@save');
 			Route::post('{id}/update', 'SubjectController@update');
 			Route::post('delete/{id}', 'SubjectController@delete');
+		});
+
+		/**
+		 * Manage Program
+		 */
+		Route::group(['prefix' => 'program', 'namespace' => 'Program'], function(){
+			Route::post('/save', 'ProgramController@saveProgram');
 		});
 	});
 });

@@ -4,7 +4,6 @@ namespace Scheduler\App\Http\Controllers\Admin\Subject;
 
 use DB;
 use Closure;
-use App\User;
 use Illuminate\Http\Request;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\Program;
