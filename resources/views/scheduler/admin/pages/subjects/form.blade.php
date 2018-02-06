@@ -46,11 +46,23 @@
 							<option></option>
 							@foreach($programs as $program)
 							<?php
-							$callback = function($program, $subject_programs){
+
+							$subject = isset($subject) ? $subject : null;
+
+							$callback = function($program) use($subject){
+								if (is_null($subject)) {
+									return;
+								}
+								$subject_programs = [];
+
+								foreach($subject->programs as $s){
+									$subject_programs[] = $s->id;
+								}
+
 								return in_array($program->id, $subject_programs) ? 'selected' : '';
 							};
 							?>
-							<option <?php if(isset($subject_programs)): $callback($program, $subject_programs); endif;?> value="{{$program->id}}">{{$program->code}}</option>
+							<option <?php echo $callback($program);?> value="{{$program->id}}">{{$program->code}}</option>
 							@endforeach
 						</select>
 						<span class="help-block">

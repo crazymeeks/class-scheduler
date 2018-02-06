@@ -26,6 +26,8 @@ class SubjectRepository
 				$subject->fill($request->toArray());
 				$subject->name = $request->subject_name;
 				$subject->save();
+				
+				$subject->programs()->sync($request->programs);
 			});	
 			
 		} catch (\Exception $e) {

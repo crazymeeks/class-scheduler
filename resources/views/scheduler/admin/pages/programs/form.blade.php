@@ -12,7 +12,7 @@
 		<form action="{{$url}}" class="form-horizontal" method="POST">
 			{!!csrf_field()!!}
 			<div class="form-body">
-				<h3 class="form-section">Add program to institution here</h3>
+				<h3 class="form-section">{{$page_title}}</h3>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Code <span class="required">*</span></label>
 					<div class="col-md-4">
@@ -42,8 +42,11 @@
 						<select name="institution" class="form-control">
 							<option></option>
 							<?php
-
+							$program = isset($program) ? $program : null;
 							$selected = function($institution) use($program){
+								if (is_null($program)) {
+									return '';
+								}
 								return $program->institution_id == $institution->id ? 'selected' : '';
 							};
 							?>
