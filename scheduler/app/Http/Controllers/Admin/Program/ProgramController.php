@@ -15,6 +15,11 @@ class ProgramController extends Controller
     use ProgramTrait;
 
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display list of programs
      *
@@ -31,6 +36,19 @@ class ProgramController extends Controller
         return $dataTable->render($this->admin_view . 'pages.programs.index', $data);
     }
 
+    public function create(Request $request)
+    {
+        $institutions = Institution::all();
+        $data = [
+            'breadcrumb'   => 'Program',
+            'page_title'   => 'Program::create',
+            'institutions' => $institutions,
+            'url'          => url('admin/programs/save/'),
+        ];
+
+        return admin_view('pages.programs.form', $data);
+    }
+
     /**
      * Edit Program
      *
@@ -43,7 +61,8 @@ class ProgramController extends Controller
         $program = Program::find($id);
         $institutions = Institution::all();
         $data = [
-            'page_title'   => 'Program::Create',
+            'breadcrumb'   => 'Program',
+            'page_title'   => 'Program::update',
             'program'      => $program,
             'institutions' => $institutions,
             'url'          => url('admin/programs/save/' . $id),

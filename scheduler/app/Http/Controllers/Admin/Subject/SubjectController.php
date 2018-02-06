@@ -22,7 +22,9 @@ class SubjectController extends Controller
     	$data = [
             'breadcrumb' => 'Subject Management',
             'page_title' => 'Lists',
+            'subjects'   => Subject::count(),
         ];
+        
     	return $dataTable->render($this->admin_view . 'pages.subjects.index', $data);
     }
 
@@ -56,14 +58,10 @@ class SubjectController extends Controller
         // this will automatically add programs object
         // in subject model
         $subject->programs;
-        $subject_programs = [];
-        foreach($subject->programs as $program){
-            $subject_programs[] = $program->id;
-        }
-        
+
         $data = [
             'subject'          => $subject,
-            'subject_programs' => $subject_programs,
+            //'subject_programs' => $subject_programs,
             'page_title'       => 'Subject::Update',
             'url'              => url('admin/subject/' . $id . '/update'),
             'form_title'       => 'Update subject',
@@ -71,7 +69,7 @@ class SubjectController extends Controller
             'programs'         => Program::all(),
         ];
 
-        
+        //return $data;
         return admin_view('pages.subjects.form', $data);
     }
 
@@ -85,7 +83,6 @@ class SubjectController extends Controller
      */
     public function save(Request $request, SubjectRepository $repo)
     {
-
         $this->validateRequestSubjectData($request);
         
 
@@ -100,7 +97,6 @@ class SubjectController extends Controller
      */
     public function update(Request $request, SubjectRepository $repo, $id)
     {
-        
         $subject = Subject::find($id);
 
         $this->validateRequestSubjectData($request, $id);
@@ -115,6 +111,7 @@ class SubjectController extends Controller
      * Soft delete the given model
      *
      * @param \Illuminate\Http\Request $request
+     * @param  Scheduler\App\Models\Subject
      * @param  int $id
      *
      * @return  \Illuminate\Http\Response
@@ -131,6 +128,32 @@ class SubjectController extends Controller
         return response()->json(['message' => 'Error deleting of faculty'], 500);
     }
 
+
+    /**
+     * Soft delete all given model
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param  Scheduler\App\Models\Subject
+     * 
+     * @return  \Illuminate\Http\Response
+     */
+    public function deleteAll(Request $request, Subject $subject)
+    {
+        if ($request->ajax()) {
+
+            // @todo implement checking of roles
+            // here before allowing to delete
+            if ($subject->newQuery()->delete()) {
+
+                return response()->json(['message' => 'All subject(s) has been removed!'], 200);
+            }
+
+            return response()->json(['error' => 'Unable to remove all subjects. Please try again.'], 500);
+
+        }
+
+        return response()->json(['Resource not found!'], 500);
+    }
 
 
     /**

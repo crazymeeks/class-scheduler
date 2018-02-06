@@ -162,7 +162,7 @@ class InstitutionController extends Controller
 
         $program->blocks()->sync($request->blocks);
 
-        return redirect('admin/institution/' . $id . '/view-program')->with('success', 'Blocks has been added to ' . $program->short_description);
+        return redirect('admin/institution/program-manage-block/' . $id)->with('success', $program->short_description . ' has been updated.');
     }
 
     /**

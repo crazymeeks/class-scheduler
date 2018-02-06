@@ -70,6 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			Route::post('/save', 'SubjectController@save');
 			Route::post('{id}/update', 'SubjectController@update');
 			Route::post('delete/{id}', 'SubjectController@delete');
+			Route::post('delete-all', 'SubjectController@deleteAll');
 		});
 
 		/**
@@ -78,6 +79,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		Route::group(['prefix' => 'programs', 'namespace' => 'Program'], function(){
 			Route::get('/', 'ProgramController@indexView');
 			Route::get('{id}/edit', 'ProgramController@edit');
+			Route::get('create', 'ProgramController@create');
 
 			Route::post('save/{id?}', 'ProgramController@saveProgram');
 			Route::post('delete/{id}', 'ProgramController@delete');
