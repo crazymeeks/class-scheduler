@@ -56,6 +56,11 @@ class Faculty extends Authenticatable
         return $this->belongsToMany('Scheduler\App\Models\YearActive');//, 'faculty_year_active', 'faculty_id_number', 'year_active_id');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany('Scheduler\App\Models\Role');
+    }
+
     /**
      * 1 to Many
      */
