@@ -69,46 +69,31 @@
 				</a>
 			</li>
 			<!-- BEGIN ANGULARJS LINK -->
-			<li class="tooltips" data-container="body" data-placement="right" data-html="true" data-original-title="AngularJS version demo">
-				<a href="angularjs" target="_blank">
+			<li>
+				<a href="javascript:;">
 				<i class="icon-paper-plane"></i>
 				<span class="title">
 				Set Priority </span>
-				</a>
-			</li>
-			<li>
-				<a href="javascript:;">
-				<i class="icon-basket"></i>
-				<span class="title">Schedules</span>
 				<span class="arrow "></span>
 				</a>
 				<ul class="sub-menu">
 					<li>
 						<a href="ecommerce_index.html">
 						<i class="icon-home"></i>
-						Dashboard</a>
+						Assign Faculty</a>
 					</li>
 					<li>
 						<a href="ecommerce_orders.html">
 						<i class="icon-basket"></i>
-						Orders</a>
-					</li>
-					<li>
-						<a href="ecommerce_orders_view.html">
-						<i class="icon-tag"></i>
-						Order View</a>
-					</li>
-					<li>
-						<a href="ecommerce_products.html">
-						<i class="icon-handbag"></i>
-						Products</a>
-					</li>
-					<li>
-						<a href="ecommerce_products_edit.html">
-						<i class="icon-pencil"></i>
-						Product Edit</a>
+						Assign Subject</a>
 					</li>
 				</ul>
+			</li>
+			<li>
+				<a href="javascript:;">
+				<i class="icon-basket"></i>
+				<span class="title">Schedules</span>
+				</a>
 			</li>
 			<!-- END ANGULARJS LINK -->
 			<li class="heading">

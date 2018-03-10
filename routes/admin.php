@@ -56,6 +56,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			Route::post('{id}/update', 'FacultyController@update');
 			Route::post('delete/{id}', 'FacultyController@delete');
 
+			// Add faculty load/subject
+			Route::get('{id}/load', 'FacultyController@addFacultyLoad');
+			Route::post('/update-load', 'FacultyController@updateLoad');
+
 		});
 
 		/**
