@@ -14,7 +14,7 @@ class AddHoursFieldToSubjectsTable extends Migration
     public function up()
     {
         Schema::table('subjects', function (Blueprint $table) {
-            $table->decimal('hours', 4, 2)->default(0)->after('code');
+            $table->decimal('hours', 4, 2)->default(0)->nullable()->after('code');
         });
     }
 

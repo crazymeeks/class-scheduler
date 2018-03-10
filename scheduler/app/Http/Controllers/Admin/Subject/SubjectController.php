@@ -5,8 +5,10 @@ namespace Scheduler\App\Http\Controllers\Admin\Subject;
 use DB;
 use Closure;
 use Illuminate\Http\Request;
+use Scheduler\App\Models\Level;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\Program;
+use Scheduler\App\Models\SubjectType;
 use Yajra\DataTables\Facades\DataTables;
 use Scheduler\App\DataTables\SubjectDataTable;
 use Scheduler\App\Http\Controllers\Controller;
@@ -36,6 +38,8 @@ class SubjectController extends Controller
             'url'         => url('admin/subject/save'),
             'form_title'  => 'Create Subject',
             'programs'         => Program::all(),
+            'levels'           => Level::all(),
+            'subject_types'    => SubjectType::all(),
         ];
             return admin_view('pages.subjects.form', $data);
 
@@ -67,6 +71,8 @@ class SubjectController extends Controller
             'form_title'       => 'Update subject',
             'breadcrumb'       => 'Subject Management',
             'programs'         => Program::all(),
+            'levels'           => Level::all(),
+            'subject_types'    => SubjectType::all(),
         ];
 
         //return $data;
@@ -168,9 +174,14 @@ class SubjectController extends Controller
     {
 
         $request->validate([
-            'units' => 'required|numeric',
-            'subject_name' => 'required',
-            'hours' => 'required|numeric',
+            'units'             => 'required|numeric',
+            'subject_name'      => 'required',
+            'code'              => 'required',
+            //'hours'             => 'required|numeric',
+            'short_description' => 'required',
+            'type'              => 'required',
+            'status'            => 'required',
+            'year_level'        => 'required',
         ]);
     }
 
