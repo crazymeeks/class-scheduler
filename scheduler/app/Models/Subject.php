@@ -33,4 +33,14 @@ class Subject extends Model
     {
     	return $this->belongsToMany('Scheduler\App\Models\Faculty');//, 'faculty_subject', 'subject_id', 'faculty_id_number');
     }
+
+    public function level()
+    {
+        return $this->belongsTo('Scheduler\App\Models\Level');
+    }
+
+    public function subject_type()
+    {
+        return $this->belongsTo('Scheduler\App\Models\SubjectType');
+    }
 }

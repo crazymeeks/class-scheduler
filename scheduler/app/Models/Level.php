@@ -32,4 +32,9 @@ class Level extends Model
     {
     	return $this->belongsToMany('Scheduler\App\Models\Block');
     }
+
+    public function subject()
+    {
+        return $this->hasMany('Scheduler\App\Models\Subject');
+    }
 }

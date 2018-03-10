@@ -47,7 +47,7 @@ class SubjectDataTable extends DataTable
      */
     public function query(Subject $model)
     {
-        return $model->newQuery()->with(['programs']);
+        return $model->newQuery()->with(['programs', 'level', 'subject_type']);
     }
 
     /**
@@ -73,8 +73,13 @@ class SubjectDataTable extends DataTable
     {
         return [
             'name',
+            'code',
+            'short_description',
+            'level.level' => ['title' => 'Level'],
+            'subject_type.name' => ['title' => 'Type'],
             'units',
             'hours',
+            'status',
         ];
     }
 

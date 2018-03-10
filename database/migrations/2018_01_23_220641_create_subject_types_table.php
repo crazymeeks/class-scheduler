@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHoursFieldToSubjectsTable extends Migration
+class CreateSubjectTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddHoursFieldToSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::table('subjects', function (Blueprint $table) {
-            $table->decimal('hours', 4, 2)->default(0)->after('code');
+        Schema::create('subject_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 15);
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class AddHoursFieldToSubjectsTable extends Migration
      */
     public function down()
     {
-
+        Schema::dropIfExists('subject_types');
     }
 }

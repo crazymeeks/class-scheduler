@@ -15,7 +15,7 @@ class CreateFacultySubjectTableSeeder extends Seeder
         DB::table('faculty_subject')->insert([
             'faculty_id' => 1,
             'subject_id' => 1,
-            'created_at' => date('Y'),
+            'year_created' => date('Y'),
         ]);
     }
 }

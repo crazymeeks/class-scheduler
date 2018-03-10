@@ -13,13 +13,19 @@ class SubjectsTableSeeder extends Seeder
     public function run()
     {
         DB::table('subjects')->insert([
+            'level_id'          => 1,
+            'subject_type_id'   => 1,
             'units'             => '3',
-            'name'              => 'Turbo C',
+            'name'              => 'Programming Language 1',
+            'code'              => 'PL 1',
         ]);
 
         DB::table('subjects')->insert([
+            'level_id'          => 1,
+            'subject_type_id'   => 1,
             'units'             => '6',
-            'name'              => 'Thesis',
+            'name'              => 'Programming Language 2',
+            'code'              => 'PL 2',
         ]);
     }
 }

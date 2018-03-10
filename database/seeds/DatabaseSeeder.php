@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateBlocksTableSeeder::class);
         $this->call(LevelsTableSeeder::class);
         $this->call(SpecialtiesTableSeeder::class);
+        $this->call(SubjectTypeTableSeeder::class);
         $this->call(SubjectsTableSeeder::class);
         $this->call(YearActiveTableSeeder::class);
         
