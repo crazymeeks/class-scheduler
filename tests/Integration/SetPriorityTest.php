@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class FacultyAddLoadTest extends TestCase
+class SetPriorityTest extends TestCase
 {
 
 	use WithoutMiddleware;
@@ -14,7 +14,7 @@ class FacultyAddLoadTest extends TestCase
     /**
      * @test
      */
-   	public function it_can_add_load_to_faculty()
+   	public function it_can_assign_faculty_to_subject()
    	{
    		
    		$data = $this->getData();
@@ -27,14 +27,14 @@ class FacultyAddLoadTest extends TestCase
 
    	private function apiUrl()
    	{
-   		return '/admin/faculty/update-load';
+   		return '/admin/set-priority/subject';
    	}
 
    	private function getData()
    	{
    		$data = [
    			'id' => 1,
-   			'subject'           => 2,
+   			'faculties'         => [1, 3],
    			'year_created'      => date('Y'),
    			'api'               => true,
    		];

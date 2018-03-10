@@ -63,29 +63,6 @@ class FacultyRepository
 	}
 
 	/**
-	 * Update faculty load
-	 * 
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  Faculty $faculty
-	 * 
-	 * @return bool
-	 */
-	public function updateFacultyLoad(Request $request, Faculty $faculty)
-	{
-		try {
-			DB::transaction(function() use ($faculty, $request){
-				
-				$faculty->subjects()->sync([$request->subject => ['year_created' => $request->year_created]]);
-			});
-
-		} catch (\Exception $e) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Register the event to fire later
 	 * 
 	 * @param  string $name      The event name to be fire
