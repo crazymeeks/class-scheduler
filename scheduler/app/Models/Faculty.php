@@ -21,6 +21,10 @@ class Faculty extends Authenticatable
         'years_of_experience', 'basic_salary', 'assignment', 'position','status', 'deleted_at'
     ];
 
+    protected $hidden = [
+        'remember_token'
+    ];
+
      /**
      * The attributes that should be mutated to dates.
      *

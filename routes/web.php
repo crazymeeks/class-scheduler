@@ -13,9 +13,23 @@
 
 Route::group(['namespace' => 'Auth'], function(){
 
+	// Route::get('/', function(){
+	// 	return bcrypt('password');
+	// });
+
 	Route::get('/', 'LoginController@loginView');
 
 	Route::post('post-login', 'LoginController@postAuthenticate');
 
 	Route::post('logout', 'LoginController@logout');
+});
+
+Route::group(['namespace' => 'Api', 'prefix' => 'api'], function(){
+	Route::group(['prefix' => 'v1'], function(){
+
+		Route::group(['prefix' => 'users'], function(){
+
+			Route::get('verify-password', 'UsersController@verifyPassword');
+		});
+	});
 });

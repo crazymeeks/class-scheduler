@@ -23,7 +23,7 @@
 			{!! $dataTable->table(['class' => 'table table-bordered'], true) !!}
 			
 			@if($subjects > 0)
-			<a href="#" data-id="1" class="btn btn-sm remove-all-subject red">Remove all<i class="fa fa-times"></i></a>
+			<a href="#" class="btn btn-sm remove-all-subject red">Remove all<i class="fa fa-times"></i></a>
 			@endif
 		</div>
 	</div>
