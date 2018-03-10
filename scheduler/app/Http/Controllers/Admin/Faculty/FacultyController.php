@@ -4,6 +4,8 @@ namespace Scheduler\App\Http\Controllers\Admin\Faculty;
 
 use App\User;
 use Illuminate\Http\Request;
+use Scheduler\App\Models\Level;
+use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\Faculty;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Specialty;
@@ -236,5 +238,73 @@ class FacultyController extends Controller
 
         return $faculty;
         
+    }
+
+    /**
+     * Add load/subject to faculty
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function addFacultyLoad(Request $request, $id)
+    {
+
+        if (! $this->can('can_edit_faculty')) {
+            return admin_view('pages.no-permission');
+        }
+
+        $faculty = Faculty::find($id);
+       
+        $faculty->institution;
+        $faculty->specialties;
+        $faculty->subjects;
+        $faculty->faculty_type;
+        $faculty->year_actives;
+        $faculty->levels;
+        $faculty->programs;
+        
+        $data = [
+            'faculty'     => $faculty,
+            'page_title'  => 'Faculty::Update',
+            'url'         => url('admin/faculty/' . $id . '/update'),
+            'form_title'  => 'Update faculty load',
+            'status'      => ['Inactive', 'Active'],
+            'programs'     => Program::all(),
+            'facultytypes' => FacultyType::all(),
+            'levels'       => Level::all(),
+            'subjects'     => Subject::all(),
+        ];
+        //return $data;
+        return admin_view('pages.faculty.load.form', $data);
+    }
+
+    /**
+     * Update faculty load
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Scheduler\App\Repositories\FacultyRepository $repo
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLoad(Request $request, FacultyRepository $repo)
+    {
+        $request->validate(['subject' => 'required']);
+
+        $faculty = Faculty::find($request->id);
+
+        if ($repo->updateFacultyLoad($request, $faculty)) {
+            if ($request->has('api')) {
+                return response()->json(['message' => 'Faculty load has been updated'], 200);
+            }
+
+            return redirect('admin/faculty')->with('success', 'Faculty load has been updated.');
+        }
+
+        if ($request->has('api')) {
+            return response()->json(['message' => 'Can not update faculty load.'], 422);
+        }
+
+        return redirect('admin/faculty')->with('error', 'Can not update faculty load');
     }
 }
