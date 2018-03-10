@@ -36,9 +36,9 @@ class FacultyDataTable extends DataTable
     protected function dataTableActionButtons($query)
     {
 
-        //$buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-xs green'><i class='fa fa-edit'>Edit</i></a>";
-        $buttons = "<a data-id='" . $query->id . "' href='#basic' class='btn btn-xs blue btn-view-faculty-load' data-toggle='modal'>View Load<i class='fa fa-search'></i></a>";
-        $buttons .= "<a href='" . url('admin/faculty/' . $query->id) . "/load' class='btn btn-xs green faculty-assign-load'>Assign Load<i class='fa fa-plus'></i></a>";
+        $buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-xs green'><i class='fa fa-edit'>Edit</i></a>";
+        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-xs blue btn-view-faculty-load' data-toggle='modal'>View Load<i class='fa fa-search'></i></a>";
+        // $buttons .= "<a href='" . url('admin/faculty/' . $query->id) . "/load' class='btn btn-xs green faculty-assign-load'>Assign Load<i class='fa fa-plus'></i></a>";
 
         $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-xs red remove-faculty'>Remove<i class='fa fa-times'></i></a>";
 

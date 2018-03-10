@@ -56,10 +56,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			Route::post('{id}/update', 'FacultyController@update');
 			Route::post('delete/{id}', 'FacultyController@delete');
 
-			// Add faculty load/subject
-			Route::get('{id}/load', 'FacultyController@addFacultyLoad');
-			Route::post('/update-load', 'FacultyController@updateLoad');
-
 		});
 
 		/**
@@ -87,6 +83,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 
 			Route::post('save/{id?}', 'ProgramController@saveProgram');
 			Route::post('delete/{id}', 'ProgramController@delete');
+		});
+
+		/**
+		 * Set Priority
+		 */
+		Route::group(['prefix' => 'set-priority', 'namespace' => 'Priority'], function(){
+
+			Route::get('/', 'SetPriorityController@subjectToFacultyView');
+			Route::get('/faculties', 'SetPriorityController@getFaculties');
+			// Add faculty load/subject
+			Route::get('subject/{id}', 'SetPriorityController@assignSubjectToFacultyView');
+			Route::post('subject', 'SetPriorityController@assignSubjectToFaculty');
 		});
 	});
 });

@@ -46,8 +46,8 @@
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Programs</label>
 					<div class="col-md-4">
-						<select class="form-control" name="programs">
-							<option>All Programs</option>
+						<select class="form-control programs" name="programs">
+							<option>-Select-</option>
 							@foreach($programs as $program)
 							<option value="{{$program->id}}">{{$program->code}}</option>
 							@endforeach
@@ -57,8 +57,8 @@
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Year Level</label>
 					<div class="col-md-4">
-						<select class="form-control" name="levels">
-							<option>All Levels</option>
+						<select class="form-control levels" name="levels">
+							<option>-Select-</option>
 							@foreach($levels as $level)
 							<option value="{{$level->id}}">{{$level->level}}</option>
 							@endforeach
