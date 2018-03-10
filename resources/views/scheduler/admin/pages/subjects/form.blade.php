@@ -16,14 +16,113 @@
 			<div class="form-body">
 				<h3 class="form-section">{{$form_title}}</h3>
 				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Subject name</label>
+					<label class="control-label col-md-3" for="inputSuccess">Subject name <span class="required">
+					* </span></label>
 					<div class="col-md-4">
 						<input type="text" class="form-control" name="subject_name" value="@if(isset($subject)){{$subject->name}}@else{{old('subject_name')}}@endif">
 						<div class="has-error"><span class="help-block">{{$errors->first('subject_name')}}</span></div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Units</label>
+					<label class="control-label col-md-3" for="inputSuccess">Code <span class="required">
+					* </span></label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="code" value="@if(isset($subject)){{$subject->code}}@else{{old('code')}}@endif">
+						<div class="has-error"><span class="help-block">{{$errors->first('code')}}</span></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Description <span class="required">
+					* </span></label>
+					<div class="col-md-4">
+						<textarea class="form-control" name="short_description"><?php if(isset($subject)):echo $subject->short_description;else: echo old('short_description');?><?php endif;?></textarea>
+						<div class="has-error"><span class="help-block">{{$errors->first('code')}}</span></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">Type <span class="required">
+					* </span>
+					</label>
+					<div class="col-md-4">
+						<select class="form-control" name="type">
+							<option></option>
+							@foreach($subject_types as $type)
+							<?php
+
+							$subject = isset($subject) ? $subject : null;
+
+							$callback = function($type) use($subject){
+								if (is_null($subject)) {
+									return;
+								}
+
+								return $subject->subject_type_id == $type->id ? 'selected' : '';
+							};
+							?>
+							<option <?php echo $callback($type);?> value="{{$type->id}}">{{$type->name}}</option>
+							@endforeach
+						</select>
+						<span class="help-block">
+						Provide select programs </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">Status <span class="required">
+					* </span>
+					</label>
+					<div class="col-md-4">
+						<select class="form-control" name="status">
+							<option></option>
+							@foreach(['Active', 'Inactive'] as $status)
+							<?php
+
+							$subject = isset($subject) ? $subject : null;
+
+							$callback = function($status) use($subject){
+								if (is_null($subject)) {
+									return;
+								}
+
+								return $subject->status == $status ? 'selected' : '';
+							};
+							?>
+							<option <?php echo $callback($status);?> value="{{$status}}">{{$status}}</option>
+							@endforeach
+						</select>
+						<span class="help-block">
+						Provide select programs </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">Year Level <span class="required">
+					* </span>
+					</label>
+					<div class="col-md-4">
+						<select class="form-control" name="year_level">
+							<option></option>
+							@foreach($levels as $level)
+							<?php
+
+							$subject = isset($subject) ? $subject : null;
+
+							$callback = function($level) use($subject){
+								if (is_null($subject)) {
+									return;
+								}
+
+								return $subject->level_id == $level->id ? 'selected' : '';
+							};
+							?>
+							<option <?php echo $callback($level);?> value="{{$level->id}}">{{$level->level}}</option>
+							@endforeach
+						</select>
+						<span class="help-block">
+						Provide select programs </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Units <span class="required">
+					* </span></label>
 					<div class="col-md-4">
 						<input type="number" class="form-control" name="units" value="@if(isset($subject)){{$subject->units}}@else{{old('units')}}@endif">
 						<div class="has-error"><span class="help-block">{{$errors->first('units')}}</span></div>
