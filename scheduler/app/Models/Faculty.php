@@ -21,6 +21,10 @@ class Faculty extends Authenticatable
         'years_of_experience', 'basic_salary', 'assignment', 'position','status', 'deleted_at'
     ];
 
+    protected $hidden = [
+        'remember_token'
+    ];
+
      /**
      * The attributes that should be mutated to dates.
      *
@@ -54,6 +58,11 @@ class Faculty extends Authenticatable
     public function year_actives()
     {
         return $this->belongsToMany('Scheduler\App\Models\YearActive');//, 'faculty_year_active', 'faculty_id_number', 'year_active_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('Scheduler\App\Models\Role');
     }
 
     /**

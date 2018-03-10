@@ -49,7 +49,20 @@ let Subject = (function(){
 			    swal.showInputError("You need to write something!");
 			    return false;
 			  }
-			  doAjaxDeleteAll("/admin/subject/delete-all", "POST", inputValue);
+			  $.ajax({
+			  	url: '/api/v1/users/verify-password',
+			  	type: 'GET',
+			  	data: {password: inputValue},
+			  	success: function(response){
+			  		doAjaxDeleteAll("/admin/subject/delete-all", "POST", inputValue);
+			  	},
+			  	error: function(xhr, error){
+			  		var response = JSON.parse(xhr.responseText);
+			  		swal("Error", response.message, "error", {
+					  button: "Ok",
+					});
+			  	}
+			  });
 			});
 
 		});
@@ -136,7 +149,7 @@ let Subject = (function(){
 			method: method,
 			data: {password: inputValue},
 			success: function(response, textStatus, xhr){
-				console.log(response);return;
+				
 				swal("Success", response.message, "success", {
 				  button: "Ok",
 				});

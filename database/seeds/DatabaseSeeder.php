@@ -27,5 +27,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateFacultyYearActiveTableSeeder::class);
         $this->call(CreateFacultyYearLevelTableSeeder::class);
         $this->call(CreateFacultyProgramTableSeeder::class);
+
+        $this->call(RolesTableSeeder::class);        
+        $this->call(PermissionsTableSeeder::class);        
+        $this->call(PermissionRoleTableSeeder::class);        
+        $this->call(FacultyRoleTableSeeder::class);        
     }
 }

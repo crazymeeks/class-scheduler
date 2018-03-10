@@ -19,7 +19,6 @@ class FacultyController extends Controller
 
     public function indexView(FacultyDataTable $dataTable)
     {
-
     	$data = [
             'breadcrumb' => 'Faculty Management',
             'page_title' => 'Lists',
@@ -29,6 +28,11 @@ class FacultyController extends Controller
 
     public function create()
     {
+
+        if (! $this->can('can_add_faculty')) {
+            return admin_view('pages.no-permission');
+        }
+
         $specialties = Specialty::all();
         $programs = Program::all();
         $facultytypes = FacultyType::all();
@@ -45,7 +49,8 @@ class FacultyController extends Controller
             'facultytypes' => $facultytypes,
             'institutes' => $institutions,
         ];
-            return admin_view('pages.faculty.form', $data);
+
+         return admin_view('pages.faculty.form', $data);
 
     }
 
@@ -59,20 +64,23 @@ class FacultyController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        
+        if (! $this->can('can_edit_faculty')) {
+            return admin_view('pages.no-permission');
+        }
+
         $faculty = Faculty::find($id);
         $specialties = Specialty::all();
         $programs = Program::all();
         $facultytypes = FacultyType::all();
         $institutions = Institution::all();
        
-       $faculty->institution;
-       $faculty->specialties;
-       $faculty->subjects;
-       $faculty->faculty_type;
-       $faculty->year_actives;
-       $faculty->levels;
-       $faculty->programs;
+        $faculty->institution;
+        $faculty->specialties;
+        $faculty->subjects;
+        $faculty->faculty_type;
+        $faculty->year_actives;
+        $faculty->levels;
+        $faculty->programs;
         
         $data = [
             'faculty'     => $faculty,
@@ -218,7 +226,9 @@ class FacultyController extends Controller
 
         $faculty = [];
         if ($request->ajax()) {            
-        
+            // if (! $this->can('can_add_faculty')) {
+            //     return response()->json(['message' => 'Sorry you have no permission to view this resource.'], 500);
+            // }
             $faculty = DataTables::of(Faculty::find($id)
                             ->subjects()
                             ->get())->make(true);
