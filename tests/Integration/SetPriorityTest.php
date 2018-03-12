@@ -16,7 +16,6 @@ class SetPriorityTest extends TestCase
      */
    	public function it_can_assign_faculty_to_subject()
    	{
-   		
    		$data = $this->getData();
 
    		$response = $this->json('POST', $this->apiUrl(), $data);

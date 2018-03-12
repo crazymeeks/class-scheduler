@@ -70,6 +70,7 @@
             <th>Email</th>
             <th>Contract Type</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
     </thead>
 </table>
@@ -133,7 +134,8 @@
             {data: 'firstname', name: 'firstname'},
             {data: 'email', name: 'email'},
             {data: 'faculty_type.type', name: 'faculty_type.type'},
-            {data: 'status', name: 'status'}
+            {data: 'status', name: 'status'},
+            {data: 'id', name: 'id'}
         ],
         columnDefs:[
         	{
@@ -141,7 +143,13 @@
         		render: function(status){
         			return status == '1' ? 'Active' : 'Inactive';
         		}
-        	}
+        	},
+            {
+                targets: 6,
+                render: function(id){
+                    return '<a href="set-priority/' + id + '/assign-subject">Set Priority</a>';
+                }
+            }
         ]
     });
 
