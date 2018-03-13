@@ -11,8 +11,8 @@ use Scheduler\App\Models\Faculty;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\FacultyType;
+use Illuminate\Database\Eloquent\Model;
 use Scheduler\App\Http\Controllers\Controller;
-
 class SetPriorityController extends Controller
 {
     
@@ -39,7 +39,7 @@ class SetPriorityController extends Controller
 
 	public function getFaculties(Request $request)
 	{
-		$faculties = Faculty::with(['faculty_type', 'programs', 'subjects', 'levels'])->get();
+		$faculties = Faculty::with(['faculty_type', 'programs', 'subjects', 'levels'])->active()->get();
 
 		return DataTables::of($faculties)
 						->filter(function($instance) use($request){
@@ -86,15 +86,16 @@ class SetPriorityController extends Controller
         $data = [
             'faculty'     => $faculty,
             'page_title'  => 'Faculty::Update',
-            'url'         => url('admin/faculty/' . $id . '/update'),
+            'url'         => url('/admin/set-priority'),
             'form_title'  => 'Update faculty load',
             'status'      => ['Inactive', 'Active'],
             'programs'     => Program::all(),
             'facultytypes' => FacultyType::all(),
             'levels'       => Level::all(),
-            'subjects'     => Subject::all(),
+            'subjects'     => Subject::with(['subject_type'])->active()->get(),
+            'id'           => $id,
         ];
-        //return $data;
+        
         return admin_view('pages.set-priority.subject-faculty', $data);
     }
 
@@ -106,25 +107,49 @@ class SetPriorityController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function assignSubjectToFaculty(Request $request)
+    public function assign(Request $request)
     {
-        $request->validate(['faculties' => 'required']);
 
-        $subject = Subject::find($request->id);
+        // assign faculty to subject
+        if ($request->has('faculties')) {
+            $request->validate(['faculties' => 'required|array']);
+            $model = Subject::find($request->id);
+            $relation = 'faculties';
+        }elseif($request->has('subjects')) {
+            $request->validate(['subjects' => 'required|array']);
+            $model = Faculty::find($request->id);
+            $relation = 'subjects';
+        }
 
-        if ($this->updateFacultyLoad($request, $subject)) {
+        $redirect = $relation == 'subjects' ? 'faculties' : $relation;
+
+        if ($this->updateFacultyLoad($request, $model, $relation)) {
             if ($request->has('api')) {
                 return response()->json(['message' => 'Faculty load has been updated'], 200);
             }
-
-            return redirect('admin/set-priority/subject/' . $request->id)->with('success', 'Faculty load has been updated.');
+            
+            return redirect("admin/set-priority/$redirect")->with('success', 'Priority has been set to ' . $model->firstname . ' ' . $model->lastname);
         }
 
         if ($request->has('api')) {
             return response()->json(['message' => 'Can not update faculty load.'], 422);
         }
 
-        return redirect('admin/set-priority/subject/' . $request->id)->with('error', 'Can not update faculty load');
+        return redirect("admin/set-priority/$redirect")->with('error', 'Can not update faculty load');
+
+        
+    }
+
+    /**
+     * Assign subject to faculty
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    protected function faculty(Request $request)
+    {
+        
     }
 
 
@@ -132,21 +157,24 @@ class SetPriorityController extends Controller
 	 * Update faculty load
 	 * 
 	 * @param  \Illuminate\Http\Request $request
-	 * @param  Faculty $faculty
-	 * 
+	 * @param  \Illuminate\Database\Eloquent\Model $model
+	 * @param  string $relation    The model's relation
+     * 
 	 * @return bool
 	 */
-	public function updateFacultyLoad(Request $request, Subject $subject)
+	private function updateFacultyLoad(Request $request, Model $model, $relation)
 	{
 
 		try {
-			$faculties = [];
-			foreach($request->faculties as $faculty){
-				$faculties[$faculty] = ['year_created' => date('Y')];
-			}
 
-			DB::transaction(function() use ($subject, $request, $faculties){
-				$subject->faculties()->sync($faculties);
+            $ids = [];
+
+             foreach($request->{$relation} as $id){
+                $ids[$id] = ['year_created' => date('Y')];
+            }
+
+			DB::transaction(function() use ($model, $request, $ids, $relation){
+				$model->{$relation}()->sync($ids);
 			});
 
 
@@ -156,4 +184,5 @@ class SetPriorityController extends Controller
 
 		return true;
 	}
+
 }

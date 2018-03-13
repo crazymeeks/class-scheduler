@@ -120,7 +120,7 @@
         processing: true,
         serverSide: true,
         ajax: {
-            url: '{{ url("admin/set-priority/faculties")  }}',
+            url: '{{ url("admin/set-priority/get-faculties")  }}',
             data: function (d) {
                 d.programs = $('select[name=programs]').val();
                 d.levels = $('select[name=levels]').val();
@@ -147,7 +147,7 @@
             {
                 targets: 6,
                 render: function(id){
-                    return '<a href="set-priority/' + id + '/assign-subject">Set Priority</a>';
+                    return '<a href="faculty/' + id + '">Set Priority</a>';
                 }
             }
         ]

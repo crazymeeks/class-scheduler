@@ -90,11 +90,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		 */
 		Route::group(['prefix' => 'set-priority', 'namespace' => 'Priority'], function(){
 
-			Route::get('/', 'SetPriorityController@subjectToFacultyView');
-			Route::get('/faculties', 'SetPriorityController@getFaculties');
+			Route::get('/faculties', 'SetPriorityController@subjectToFacultyView');
+			Route::get('/get-faculties', 'SetPriorityController@getFaculties');
 			// Add faculty load/subject
-			Route::get('subject/{id}', 'SetPriorityController@assignSubjectToFacultyView');
-			Route::post('subject', 'SetPriorityController@assignSubjectToFaculty');
+			Route::get('faculty/{id}', 'SetPriorityController@assignSubjectToFacultyView');
+			Route::post('/', 'SetPriorityController@assign');
 		});
 	});
 });

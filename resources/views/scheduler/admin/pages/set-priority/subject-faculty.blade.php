@@ -13,6 +13,7 @@
 		<!-- BEGIN FORM-->
 		<form action="{{$url}}" class="form-horizontal" method="POST">
 			{!!csrf_field()!!}
+			<input type="hidden" name="id" value="{{$id}}">
 			<div class="form-body">
 				<h3 class="form-section">{{$form_title}}</h3>
 				<div class="form-group">
@@ -43,7 +44,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<!--div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Programs</label>
 					<div class="col-md-4">
 						<select class="form-control programs" name="programs">
@@ -64,7 +65,7 @@
 							@endforeach
 						</select>
 					</div>
-				</div>
+				</div-->
 				<div class="form-group">
 					<label class="control-label col-md-3">Subjects <span class="required">
 					* </span>
@@ -90,7 +91,7 @@
 								return in_array($subject->id, $subject_faculty) ? 'selected' : '';
 							};
 							?>
-							<option <?php echo $callback($subject);?> value="{{$subject->id}}">{{$subject->name}}</option>
+							<option <?php echo $callback($subject);?> value="{{$subject->id}}">{{$subject->code . ' | ' . $subject->subject_type->name}}</option>
 							@endforeach
 						</select>
 						<span class="help-block">

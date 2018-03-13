@@ -78,7 +78,7 @@
 				</a>
 				<ul class="sub-menu">
 					<li>
-						<a href="{{url('/admin/set-priority/')}}">
+						<a href="{{url('/admin/set-priority/faculties')}}">
 						<i class="icon-home"></i>
 						Assign Faculty</a>
 					</li>

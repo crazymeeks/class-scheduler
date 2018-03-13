@@ -24,9 +24,27 @@ class SetPriorityTest extends TestCase
 
    	}
 
+    /**
+     * @test
+     */
+    public function it_can_assign_subject_to_faculty()
+    {
+      $data = [
+        'id' => 1,
+        'subjects' => [1],
+        'year_created' => date('Y'),
+        'api'          => true,
+      ];
+
+      $response = $this->json('POST', '/admin/set-priority/', $data);
+
+      $response->assertStatus(200);
+      
+    }
+
    	private function apiUrl()
    	{
-   		return '/admin/set-priority/subject';
+   		return '/admin/set-priority';
    	}
 
    	private function getData()
