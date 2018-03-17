@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class SetPriorityTest extends TestCase
+class FacultySetPriorityTest extends TestCase
 {
 
 	use WithoutMiddleware;
