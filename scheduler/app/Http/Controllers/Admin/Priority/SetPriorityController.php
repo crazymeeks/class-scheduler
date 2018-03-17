@@ -3,20 +3,37 @@
 namespace Scheduler\App\Http\Controllers\Admin\Priority;
 
 use DB;
-use Illuminate\Support\Str;
+use Closure;
 use DataTables;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Scheduler\App\Models\Level;
 use Scheduler\App\Models\Faculty;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Subject;
+use Illuminate\Support\Collection;
 use Scheduler\App\Models\FacultyType;
-use Scheduler\App\Models\FacultyPrioritySubject;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Scheduler\App\Models\FacultyPrioritySubject;
 use Scheduler\App\Http\Controllers\Controller;
 class SetPriorityController extends Controller
 {
     
+    /**
+     * The value of this is faculty_id|subject_id
+     * 
+     * @var int
+     */
+    protected $primaryId;
+
+    /**
+     * The value of this is faculty_id|secondary_id
+     * 
+     * @var int
+     */
+    protected $secondaryId;
+
     /**
      * Index view page of assign subject to faculties
      * 
@@ -78,7 +95,7 @@ class SetPriorityController extends Controller
        
         $faculty->institution;
         $faculty->specialties;
-        $faculty->subjects;
+        //$faculty->subjects;
         $faculty->faculty_type;
         $faculty->year_actives;
         $faculty->levels;
@@ -95,6 +112,8 @@ class SetPriorityController extends Controller
             'levels'       => Level::all(),
             'subjects'     => Subject::with(['subject_type'])->active()->get(),
             'id'           => $id,
+            // faculty_priority_subject
+            'fps'          => FacultyPrioritySubject::where('faculty_id', $id)->get(),
         ];
         
         return admin_view('pages.set-priority.subject-faculty', $data);
@@ -174,52 +193,33 @@ class SetPriorityController extends Controller
     private function setPrioritySubject(Request $request, $entity)
     {
 
-
-        $lists = DB::table('faculty_priority_subject');
-
-        if ( $entity == 'subjects' ) {
-            $lists = $lists->whereIn('subject_id', $request->{$entity})
-                  ->where('faculty_id', $request->id)
-                  ->get();
-
-            $nameId = 'subject_id';
-            $primaryId = 'faculty_id';
-            $ids = $this->getIds($lists, $nameId);
-
-        }else{
-             $lists = $lists->whereIn('faculty_id', $request->{$entity})
-                ->where('subject_id', $request->id)
-                ->get();
-
-            $nameId = 'faculty_id';
-            $primaryId = 'subject_id';
-            $ids = $this->getIds($lists, $nameId);
-        }
-
-        $collectionIds = $this->collectIds($request, $ids, $entity);
+        $ids = $this->getIdsFromDb($request, $entity);
         
+        $this->delete($request);
+
+        $collectionIds = array_merge($ids,$this->collectUniqueIdsFromArray($request, $ids, $entity));
+
         $data = [];
         // prepare the data for bulk insert
         foreach($collectionIds as $id){
-            $data[] = array($primaryId => $request->id, $nameId => $id);
+            $data[] = array($this->primaryId => $request->id, $this->secondaryId => $id);
         }
-
         if (count($data) > 0) {
             FacultyPrioritySubject::insert($data);
 
             if ($request->has('api')) {
                 return response()->json(['message' => 'Faculty load priority has been updated'], 200);
             }
-            
-            return redirect("admin/set-priority/$redirect")->with('success', 'Priority has been set to ' . $model->firstname . ' ' . $model->lastname);
+            $redirect = $entity == 'subjects' ? 'faculties' : 'subjects';
+            return redirect("admin/set-priority/$redirect")->with('success', 'Priority has been updated');
         }
 
         // no information is process
         if ($request->has('api')) {
-            return response()->json(['message' => 'No priority has has been set'], 422);
+            return response()->json(['message' => 'No priority has been set'], 422);
         }
 
-        return redirect("admin/set-priority/$redirect")->with('success', 'No priority has has been set ' . $model->firstname . ' ' . $model->lastname);
+        return redirect("admin/set-priority/$redirect")->with('success', 'Priority has not updated');
         
     }
 
@@ -232,9 +232,9 @@ class SetPriorityController extends Controller
      * 
      * @return array
      */
-    private function collectIds(Request $request, $ids, $entity)
+    private function collectUniqueIdsFromArray(Request $request, $ids, $entity)
     {
-         if (count($ids) > count($request->{$entity})) {
+        if (count($ids) > count($request->{$entity})) {
             $collection = collect($ids);
             $diff = $collection->diff($request->{$entity});
         }else{
@@ -248,19 +248,113 @@ class SetPriorityController extends Controller
      * Get the ids to be inserted
      * in faculty_priority_subject table
      * 
-     * @param  \Illumiate\Database\Query\Builder $lists
+     * @param  \Illumiate\Database\Query\Builder|Closure $lists
      * @param  string $nameId The foreign key name in the faculty_priority_subject table
+     * 
+     * @return mixed
+     */
+    private function getIdsFromDb($request, $entity = null)
+    {
+
+        $lists = DB::table('faculty_priority_subject');
+        
+        if ( $request instanceof Closure ) {
+            return $request($lists);
+        }
+
+        if ( $entity == 'subjects' ) {
+            $lists = $lists->whereIn('subject_id', $request->{$entity})
+                  ->where('faculty_id', $request->id)
+                  ->get();
+
+            $this->secondaryId = 'subject_id';
+            $this->primaryId = 'faculty_id';
+
+        } else {
+             $lists = $lists->whereIn('faculty_id', $request->{$entity})
+                ->where('subject_id', $request->id)
+                ->get();
+
+            $this->secondaryId = 'faculty_id';
+            $this->primaryId = 'subject_id';
+        }
+
+        return $this->getIds($lists);
+    }
+
+    /**
+     * Format the ids get from DB and return it
+     * 
+     * @param  \Illuminate\Support\Collection $collections
      * 
      * @return array
      */
-    private function getIds($lists, $nameId)
+    private function getIds(Collection $collections)
     {
-        $ids = [];
-        foreach($lists as $list){
-            $ids[] = $list->{$nameId};
+         $ids = [];
+        foreach($collections as $collection){
+            $ids[] = $collection->{$this->secondaryId};
+        }
+        return $ids;
+    }
+
+    /**
+     * Remove assign subject prioritization
+     *
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return mixed
+     */
+    public function delete(Request $request)
+    {
+        
+        if ($request->has('subjects')) {
+            $this->primaryId = 'faculty_id';
+            $this->secondaryId = 'subject_id';
+            $entity = 'subjects';
+        } else {
+            $this->primaryId = 'subject_id';
+            $this->secondaryId = 'faculty_id';
+            $entity = 'faculties';
         }
 
-        return $ids;
+
+        FacultyPrioritySubject::where($this->primaryId, $request->id)
+                                        ->delete();  
+
+        if ($request->has('api')) {
+            return response()->json(['message' => 'Faculty load priority has been all deleted'], 200);
+        }
+        /*$ids = $this->getIdsFromDb(function(Builder $builder) use($request, $entity){
+            $collections = $builder->where($this->primaryId, $request->id)->get();
+            return $this->getIds($collections);
+        });
+
+        $collectionIds = $this->collectUniqueIdsFromArray($request, $ids, $entity);
+        // @todo need to optimize this
+        // it will be a bottleneck once record
+        // reach more or atleast 500
+        if ( count($collectionIds) > 0 ) {
+            foreach($collectionIds as $id){
+                FacultyPrioritySubject::where($this->primaryId, $request->id)
+                                        ->where($this->secondaryId, '!=', $id)
+                                        ->delete();    
+            }
+
+            if ($request->has('api')) {
+                return response()->json(['message' => 'Faculty load priority has been updated'], 200);
+            }
+            
+            return true;
+        }
+
+        // no information is process
+        if ($request->has('api')) {
+            return response()->json(['message' => 'No priority has been set'], 422);
+        }
+
+        return false;*/
+        
     }
 
     /**

@@ -49,7 +49,7 @@ class SetPriorityTest extends TestCase
     {
       $data = [
         'id' => 1,
-        'subjects' => [1,2,3],
+        'subjects' => [1,2],
         'api'          => true,
       ];
 
@@ -105,9 +105,25 @@ class SetPriorityTest extends TestCase
       ];
 
       $response = $this->json('POST', $this->apiUrl(), $data);
-      
+
       $response->assertStatus(422);
 
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_remove_all_assign_subject_to_faculty()
+    {
+       $data = [
+        'id' => 1,
+        'subjects' => [2],
+        'api'          => true,
+      ];
+
+      $response = $this->json('POST', $this->apiUrl() . '/delete', $data);
+      
+      $response->assertStatus(200);
     }
 
    	private function apiUrl()

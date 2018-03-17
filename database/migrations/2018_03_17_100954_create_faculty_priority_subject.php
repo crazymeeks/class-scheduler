@@ -20,7 +20,7 @@ class CreateFacultyPrioritySubject extends Migration
 
             $table->foreign('faculty_id')->references('id')->on('faculties');
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

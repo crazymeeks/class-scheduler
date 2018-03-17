@@ -95,6 +95,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			// Add faculty load/subject
 			Route::get('faculty/{id}', 'SetPriorityController@assignSubjectToFacultyView');
 			Route::post('/', 'SetPriorityController@assign');
+
+			// this is for Integration test only
+			// Remove this
+			Route::post('/delete', 'SetPriorityController@delete');
 		});
 	});
 });

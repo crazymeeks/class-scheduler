@@ -76,16 +76,16 @@
 							@foreach($subjects as $subject)
 							<?php
 
-							$faculty = isset($faculty) ? $faculty : null;
+							$fps = isset($fps) ? $fps : null;
 
-							$callback = function($subject) use($faculty){
+							$callback = function($subject) use($fps){
 								if (is_null($subject)) {
 									return;
 								}
 								$subject_faculty = [];
 
-								foreach($faculty->subjects as $fs){
-									$subject_faculty[] = $fs->id;
+								foreach($fps as $fs){
+									$subject_faculty[] = $fs->subject_id;
 								}
 
 								return in_array($subject->id, $subject_faculty) ? 'selected' : '';
