@@ -14,7 +14,7 @@ class AddDegreeFieldToFacultiesTable extends Migration
     public function up()
     {
         Schema::table('faculties', function (Blueprint $table) {
-            $table->string('degree', 255)->after('other_school');
+            $table->string('degree', 255)->after('other_school')->nullable();
         });
     }
 

@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'testing_db_class_scheduler' => [
+            'driver' => 'mysql',
+            'host' => '192.168.1.1',
+            'port' => '3306',
+            'database' => 'testing_db_class_scheduler',
+            'username' => 'root',
+            'password' => 'root',
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -77,6 +92,12 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
         ],
+
+        'sqlite_testing' => [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]
 
     ],
 

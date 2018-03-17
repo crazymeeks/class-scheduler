@@ -33,5 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);        
         $this->call(PermissionRoleTableSeeder::class);        
         $this->call(FacultyRoleTableSeeder::class);        
+        $this->call(CreateRoomTableSeeder::class);        
+        $this->call(CreateFacultyPrioritySubjectTableSeeder::class);        
     }
 }

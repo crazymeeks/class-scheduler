@@ -44,4 +44,15 @@ class Subject extends Model
     {
         return $this->belongsTo('Scheduler\App\Models\SubjectType');
     }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'Active');
+    }
 }
