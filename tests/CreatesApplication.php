@@ -20,16 +20,16 @@ trait CreatesApplication
 
         //Config::set('database.default', 'sqlite_testing');
         
-        /*$app['config']->set('database.default', 'sqlite_testing');
+        $app['config']->set('database.default', 'sqlite_testing');
         Artisan::call('migrate:refresh');
         Artisan::call('migrate');
-        Artisan::call("db:seed", ['--database' => 'sqlite_testing']);*/
+        Artisan::call("db:seed", ['--database' => 'sqlite_testing']);
         
         // Real test DB
-        $app['config']->set('database.default', 'testing_db_class_scheduler');
-        // Artisan::call('migrate:refresh');
-        // Artisan::call('migrate');
-        // Artisan::call("db:seed", ['--database' => 'testing_db_class_scheduler']);
+        /*$app['config']->set('database.default', 'testing_db_class_scheduler');
+        Artisan::call('migrate:refresh');
+        Artisan::call('migrate');
+        Artisan::call("db:seed", ['--database' => 'testing_db_class_scheduler']);*/
         
         Hash::setRounds(4);
 
