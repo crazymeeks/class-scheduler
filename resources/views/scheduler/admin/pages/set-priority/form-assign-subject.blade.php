@@ -17,85 +17,90 @@
 			<div class="form-body">
 				<h3 class="form-section">{{$form_title}}</h3>
 				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Faculty ID </label>
+					<label class="control-label col-md-3" for="inputSuccess">Subject Code</label>
 					<div class="col-md-4">
-						<label>{{$faculty->faculty_id_number}}</label>
+						<label>{{$subject->code}}</label>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Faculty Name </label>
+					<label class="control-label col-md-3" for="inputSuccess">Description</label>
 					<div class="col-md-4">
-						<label>{{$faculty->firstname . ' ' . $faculty->lastname}}</label>
+						<label>{{$subject->short_description}}</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Program</label>
+					<div class="col-md-4">
+						<label>
+						@foreach($subject->programs as $sp)
+						{{$sp->code . ' | '}}
+						@endforeach
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Unit </label>
+					<div class="col-md-4">
+						<div class="alert alert-success">
+							<label>{{$subject->units}}</label>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Type </label>
 					<div class="col-md-4">
 						<div class="alert alert-success">
-							<label>{{$faculty->faculty_type->type}}</label>
+							<label>{{$subject->subject_type->name}}</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3" for="inputSuccess">Year Level </label>
+					<div class="col-md-4">
+						<div class="alert alert-success">
+							<label>{{$subject->level->level}}</label>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Status</label>
 					<div class="col-md-4">
-						<div class="<?php echo $faculty->status == 1 ? 'alert alert-info' : 'alert alert-warning';?>">
-							<label>{{$faculty->status == 1 ? 'Active' : 'Inactive'}}</label>
+						<div class="<?php echo $subject->status == 'Active' ? 'alert alert-info' : 'alert alert-warning';?>">
+							<label>{{$subject->status}}</label>
 						</div>
 					</div>
 				</div>
-				<!--div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Programs</label>
-					<div class="col-md-4">
-						<select class="form-control programs" name="programs">
-							<option>-Select-</option>
-							@foreach($programs as $program)
-							<option value="{{$program->id}}">{{$program->code}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+				
 				<div class="form-group">
-					<label class="control-label col-md-3" for="inputSuccess">Year Level</label>
-					<div class="col-md-4">
-						<select class="form-control levels" name="levels">
-							<option>-Select-</option>
-							@foreach($levels as $level)
-							<option value="{{$level->id}}">{{$level->level}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div-->
-				<div class="form-group">
-					<label class="control-label col-md-3">Subjects <span class="required">
+					<label class="control-label col-md-3">Faculties <span class="required">
 					* </span>
 					</label>
 					<div class="col-md-4">
-						<select multiple="multiple" class="multi-select" id="my_multi_select1" name="subjects[]">
+						<select multiple="multiple" class="multi-select" id="my_multi_select1" name="faculties[]">
 							<option></option>
-							@foreach($subjects as $subject)
+							@foreach($faculties as $faculty)
 							<?php
 
 							$fps = isset($fps) ? $fps : null;
 
-							$callback = function($subject) use($fps){
-								if (is_null($subject)) {
+							$callback = function($faculty) use($fps){
+								if (is_null($faculty)) {
 									return;
 								}
 								$subject_faculty = [];
 
 								foreach($fps as $fs){
-									$subject_faculty[] = $fs->subject_id;
+									$subject_faculty[] = $fs->faculty_id;
 								}
 
-								return in_array($subject->id, $subject_faculty) ? 'selected' : '';
+								return in_array($faculty->id, $subject_faculty) ? 'selected' : '';
 							};
 							?>
-							<option <?php echo $callback($subject);?> value="{{$subject->id}}">{{$subject->code . ' | ' . $subject->subject_type->name}}</option>
+							<option <?php echo $callback($faculty);?> value="{{$faculty->id}}">{{$faculty->lastname . ' ' . $faculty->firstname . ' | ' . $faculty->priority_level}}</option>
 							@endforeach
 						</select>
 						<span class="help-block">
-						Provide select programs </span>
+						Provide select faculties </span>
 					</div>
 				</div>
 			</div>

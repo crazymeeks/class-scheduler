@@ -120,7 +120,7 @@
         processing: true,
         serverSide: true,
         ajax: {
-            url: '{{ url("admin/set-priority/get-faculties")  }}',
+            url: '{{ url("admin/set-priority/ajax-get-faculties")  }}',
             data: function (d) {
                 d.programs = $('select[name=programs]').val();
                 d.levels = $('select[name=levels]').val();

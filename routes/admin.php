@@ -91,14 +91,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		Route::group(['prefix' => 'set-priority', 'namespace' => 'Priority'], function(){
 
 			Route::get('/faculties', 'SetPriorityController@subjectToFacultyView');
-			Route::get('/get-faculties', 'SetPriorityController@getFaculties');
+			Route::get('/ajax-get-faculties', 'SetPriorityController@getFaculties');
 			// Add faculty load/subject
-			Route::get('faculty/{id}', 'SetPriorityController@assignSubjectToFacultyView');
+			Route::get('faculty/{id}', 'SetPriorityController@formAssignSubjectToFacultyView');
 			Route::post('/', 'SetPriorityController@assign');
 
 			// this is for Integration test only
 			// Remove this
 			Route::post('/delete', 'SetPriorityController@delete');
+
+
+			Route::get('/subjects', 'SetPriorityController@assignSubjectView');
+			Route::get('/ajax-get-subjects', 'SetPriorityController@getSubjects');
+			Route::get('subject/{id}', 'SetPriorityController@formAssignSubjectView');
+			Route::post('subjects', 'SetPriorityController@assign');
+
 		});
 	});
 });

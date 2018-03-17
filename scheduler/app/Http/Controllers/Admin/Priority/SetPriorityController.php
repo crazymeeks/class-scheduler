@@ -52,9 +52,18 @@ class SetPriorityController extends Controller
             'levels'     => Level::all(),
             'subjects'   => Subject::all(),
         ];
-    	return admin_view('pages.set-priority.subject-faculty-index', $data);
+    	return admin_view('pages.set-priority.assign-faculty', $data);
 	}
 
+    /**
+     * Get list of faculties.
+     *
+     * Used by datatable on ajax request
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return mixed
+     */
 	public function getFaculties(Request $request)
 	{
 		$faculties = Faculty::with(['faculty_type', 'programs', 'subjects', 'levels'])->active()->get();
@@ -78,13 +87,103 @@ class SetPriorityController extends Controller
 	}
 
     /**
+     * Display assign subject view
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function assignSubjectView(Request $request)
+    {
+
+        // $subjects = Subject::with(['level', 'programs', 'subject_type'])->active()->get();
+        // return $subjects;
+        $data = [
+            'breadcrumb' => 'Set Priority > Assign Subject',
+            'page_title' => 'Lists',
+            'programs'   => Program::all(),
+            'levels'     => Level::all(),
+            'subjects'   => Subject::all(),
+        ];
+        return admin_view('pages.set-priority.assign-subject', $data);
+    }
+
+    /**
+     * Get list of subjects.
+     *
+     * Used by datatable on ajax request
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return mixed
+     */
+    public function getSubjects(Request $request)
+    {
+        $faculties = Subject::with(['level', 'programs', 'subject_type'])->active()->get();
+
+        return DataTables::of($faculties)
+                        ->filter(function($instance) use($request){
+                            if ($request->has('programs') && $request->programs != 'all') {
+                                $instance->collection = $instance->collection->filter(function($row) use($request){
+                                    foreach($row['programs'] as $programs){
+                                        if ($programs['id'] == $request->programs) {
+                                            return true;
+                                        }
+                                        $programs = null;
+                                        $row = [];
+                                    }
+                                    return false;
+                                });
+                            }
+                        })
+                        ->make(true);
+    }
+
+    /**
      * Add load/subject to faculty
      *
      * @param  \Illuminate\Http\Request
      *
      * @return  \Illuminate\Http\Response
      */
-    public function assignSubjectToFacultyView(Request $request, $id)
+    public function formAssignSubjectView(Request $request, $id)
+    {
+
+        if (! $this->can('can_edit_faculty')) {
+            return admin_view('pages.no-permission');
+        }
+
+        $subject = Subject::find($id);
+       
+        $subject->level;
+        $subject->programs;
+        $subject->subject_type;
+       
+        
+        $data = [
+            'subject'      => $subject,
+            'page_title'   => 'Subject::Update',
+            'url'          => url('/admin/set-priority/subjects'),
+            'form_title'   => 'Update subject priority',
+            'status'       => ['Inactive', 'Active'],
+            'faculties'    => Faculty::active()->get(),
+            
+            'id'           => $id,
+            // faculty_priority_subject
+            'fps'          => FacultyPrioritySubject::where('subject_id', $id)->get(),
+        ];
+        //return $data;
+        return admin_view('pages.set-priority.form-assign-subject', $data);
+    }
+
+    /**
+     * Add load/subject to faculty
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function formAssignSubjectToFacultyView(Request $request, $id)
     {
 
         if (! $this->can('can_edit_faculty')) {
@@ -105,7 +204,7 @@ class SetPriorityController extends Controller
             'faculty'     => $faculty,
             'page_title'  => 'Faculty::Update',
             'url'         => url('/admin/set-priority'),
-            'form_title'  => 'Update faculty load',
+            'form_title'  => 'Update faculty priority',
             'status'      => ['Inactive', 'Active'],
             'programs'     => Program::all(),
             'facultytypes' => FacultyType::all(),
@@ -116,7 +215,7 @@ class SetPriorityController extends Controller
             'fps'          => FacultyPrioritySubject::where('faculty_id', $id)->get(),
         ];
         
-        return admin_view('pages.set-priority.subject-faculty', $data);
+        return admin_view('pages.set-priority.form-assign-faculty', $data);
     }
 
     /**

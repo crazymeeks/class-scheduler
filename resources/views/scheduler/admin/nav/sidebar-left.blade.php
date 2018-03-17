@@ -83,7 +83,7 @@
 						Assign Faculty</a>
 					</li>
 					<li>
-						<a href="ecommerce_orders.html">
+						<a href="{{url('/admin/set-priority/subjects')}}">
 						<i class="icon-basket"></i>
 						Assign Subject</a>
 					</li>
