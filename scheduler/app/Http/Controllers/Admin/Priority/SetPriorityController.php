@@ -11,6 +11,7 @@ use Scheduler\App\Models\Faculty;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\FacultyType;
+use Scheduler\App\Models\FacultyPrioritySubject;
 use Illuminate\Database\Eloquent\Model;
 use Scheduler\App\Http\Controllers\Controller;
 class SetPriorityController extends Controller
@@ -106,8 +107,11 @@ class SetPriorityController extends Controller
      * @param  Scheduler\App\Repositories\FacultyRepository $repo
      * 
      * @return \Illuminate\Http\Response
+     *
+     * Use this code later for generating faculty subject
+     * using ant colony
      */
-    public function assign(Request $request)
+    /*public function assign(Request $request)
     {
 
         // assign faculty to subject
@@ -138,20 +142,126 @@ class SetPriorityController extends Controller
         return redirect("admin/set-priority/$redirect")->with('error', 'Can not update faculty load');
 
         
-    }
+    }*/
 
     /**
-     * Assign subject to faculty
+     * Assign subject priority to faculty
      * 
      * @param  \Illuminate\Http\Request $request
      * 
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    protected function faculty(Request $request)
+    public function assign(Request $request)
     {
+        // assign faculty to subject
+        if ($request->has('subjects')) {
+            $request->validate(['subjects' => 'required|array']);
+            return $this->setPrioritySubject($request, 'subjects');
+        }elseif($request->has('faculties')) {
+            $request->validate(['faculties' => 'required|array']);
+            return $this->setPrioritySubject($request, 'faculties');
+        }
+    }
+
+    /**
+     * Set priority subject
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param  string $entity    This must be 'faculties' and 'subjects' only
+     * 
+     * @return  mixed
+     */
+    private function setPrioritySubject(Request $request, $entity)
+    {
+
+
+        $lists = DB::table('faculty_priority_subject');
+
+        if ( $entity == 'subjects' ) {
+            $lists = $lists->whereIn('subject_id', $request->{$entity})
+                  ->where('faculty_id', $request->id)
+                  ->get();
+
+            $nameId = 'subject_id';
+            $primaryId = 'faculty_id';
+            $ids = $this->getIds($lists, $nameId);
+
+        }else{
+             $lists = $lists->whereIn('faculty_id', $request->{$entity})
+                ->where('subject_id', $request->id)
+                ->get();
+
+            $nameId = 'faculty_id';
+            $primaryId = 'subject_id';
+            $ids = $this->getIds($lists, $nameId);
+        }
+
+        $collectionIds = $this->collectIds($request, $ids, $entity);
+        
+        $data = [];
+        // prepare the data for bulk insert
+        foreach($collectionIds as $id){
+            $data[] = array($primaryId => $request->id, $nameId => $id);
+        }
+
+        if (count($data) > 0) {
+            FacultyPrioritySubject::insert($data);
+
+            if ($request->has('api')) {
+                return response()->json(['message' => 'Faculty load priority has been updated'], 200);
+            }
+            
+            return redirect("admin/set-priority/$redirect")->with('success', 'Priority has been set to ' . $model->firstname . ' ' . $model->lastname);
+        }
+
+        // no information is process
+        if ($request->has('api')) {
+            return response()->json(['message' => 'No priority has has been set'], 422);
+        }
+
+        return redirect("admin/set-priority/$redirect")->with('success', 'No priority has has been set ' . $model->firstname . ' ' . $model->lastname);
         
     }
 
+    /**
+     * Get request data and get the unique value from it
+     * 
+     * @param  Illuminate\Http\Request $request
+     * @param  array  $ids
+     * @param  string $entity
+     * 
+     * @return array
+     */
+    private function collectIds(Request $request, $ids, $entity)
+    {
+         if (count($ids) > count($request->{$entity})) {
+            $collection = collect($ids);
+            $diff = $collection->diff($request->{$entity});
+        }else{
+            $collection = collect($request->{$entity});
+            $diff = $collection->diff($ids);
+        }
+        return $diff->all();
+    }
+
+    /**
+     * Get the ids to be inserted
+     * in faculty_priority_subject table
+     * 
+     * @param  \Illumiate\Database\Query\Builder $lists
+     * @param  string $nameId The foreign key name in the faculty_priority_subject table
+     * 
+     * @return array
+     */
+    private function getIds($lists, $nameId)
+    {
+        $ids = [];
+        foreach($lists as $list){
+            $ids[] = $list->{$nameId};
+        }
+
+        return $ids;
+    }
 
     /**
 	 * Update faculty load
@@ -161,6 +271,9 @@ class SetPriorityController extends Controller
 	 * @param  string $relation    The model's relation
      * 
 	 * @return bool
+     * 
+     * Use this code later for generating faculty subject
+     * using ant colony
 	 */
 	private function updateFacultyLoad(Request $request, Model $model, $relation)
 	{
