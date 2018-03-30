@@ -107,5 +107,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			Route::post('subjects', 'SetPriorityController@assign');
 
 		});
+
+		/**
+		 * Room Management
+		 */
+		Route::group(['namespace' => 'Room'], function(){
+
+			//Route::post('/', 'RoomController@manage');
+			Route::resources(['rooms' => 'RoomController']);
+
+		});
 	});
 });

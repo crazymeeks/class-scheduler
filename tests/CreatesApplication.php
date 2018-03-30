@@ -19,17 +19,19 @@ trait CreatesApplication
         $app->make(Kernel::class)->bootstrap();
 
         //Config::set('database.default', 'sqlite_testing');
+        $db_driver = getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'sqlite_testing';
         
-        /*$app['config']->set('database.default', 'sqlite_testing');
+
+        $app['config']->set('database.default', $db_driver);
         Artisan::call('migrate:refresh');
         Artisan::call('migrate');
-        Artisan::call("db:seed", ['--database' => 'sqlite_testing']);*/
+        Artisan::call("db:seed", ['--database' => $db_driver]);
         
         // Real test DB
-        $app['config']->set('database.default', 'testing_db_class_scheduler');
-        // Artisan::call('migrate:refresh');
-        // Artisan::call('migrate');
-        // Artisan::call("db:seed", ['--database' => 'testing_db_class_scheduler']);
+        /*$app['config']->set('database.default', 'testing_db_class_scheduler');
+        Artisan::call('migrate:refresh');
+        Artisan::call('migrate');
+        Artisan::call("db:seed", ['--database' => 'testing_db_class_scheduler']);*/
         
         Hash::setRounds(4);
 
