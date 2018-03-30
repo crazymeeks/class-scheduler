@@ -3,9 +3,13 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Http\Request;
 use Scheduler\App\Models\Room;
+use Scheduler\App\Http\Requests\RoomRequest;
+use Scheduler\App\Repositories\RoomRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+
 class RoomManagementTest extends TestCase
 {
 
@@ -19,7 +23,13 @@ class RoomManagementTest extends TestCase
 	{
 		$data = $this->getData();
 
-		$room = Room::create($data);
+		$repo = new RoomRepository(new Room());
+		
+		$request = $this->requestData();
+
+		$repo->saveFormRequest($request);
+		exit;
+		//$room = Room::create();
 		
 		$this->assertEquals($data['type'], Room::first()->type);
 
@@ -35,5 +45,19 @@ class RoomManagementTest extends TestCase
 		];
 
 		return $data;
+	}
+
+	private function requestData()
+	{
+		$request = new Request;
+
+		$request->replace([
+			'name' => str_random(),
+			'type' => 'Lab',
+			'description' => str_random(),
+			'status'      => 1,
+		]);
+
+		return $request;
 	}
 }
