@@ -37,7 +37,7 @@ class RoomManagementTest extends TestCase
      */
     public function it_can_update_room()
     {
-       $request = $this->requestData();
+        $request = $this->requestData();
 
         $response = $this->json('PUT', $this->apiUrl() . '1', $request->toArray());
         
@@ -52,16 +52,13 @@ class RoomManagementTest extends TestCase
      */
     public function it_can_soft_delete_room()
     {
-        $repo = new RoomRepository();
 
-        $response = $repo->delete(Room::find(1));
-
-
-        $room = Room::onlyTrashed()->get();
+        $request = $this->requestData();
         
-        $this->assertTrue($response);
+        $response = $this->json('DELETE', $this->apiUrl() . '1', $request->toArray());
 
-        $this->assertCount(1, $room);
+        $response->assertStatus(302)
+                 ->assertSessionHas('success', 'Room has been deleted');
 
     }
 

@@ -38,14 +38,6 @@ class RoomManagementTest extends TestCase
 	 */
 	public function it_can_update_room()
 	{
-		// $data = $this->getData();
-
-		// $response = $this->json('PUT', $this->apiUrl() . '2', $data);
-
-		// $decodedResponse = json_decode($response->content(), true);
-		
-		// $this->assertEquals(201, $response->status());
-
 
 		$repo = new RoomRepository();
 		
@@ -64,7 +56,6 @@ class RoomManagementTest extends TestCase
 		$repo = new RoomRepository();
 
 		$response = $repo->delete(Room::find(1));
-
 
 		$room = Room::onlyTrashed()->get();
 		

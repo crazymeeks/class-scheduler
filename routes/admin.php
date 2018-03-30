@@ -115,6 +115,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 
 			//Route::post('/', 'RoomController@manage');
 			Route::resources(['rooms' => 'RoomController']);
+
 		});
 	});
 });

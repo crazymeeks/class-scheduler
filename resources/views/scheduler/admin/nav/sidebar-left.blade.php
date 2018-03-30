@@ -70,6 +70,13 @@
 			</li>
 			<!-- BEGIN ANGULARJS LINK -->
 			<li>
+				<a href="{{url('/admin/rooms')}}">
+				<i class="icon-paper-plane"></i>
+				<span class="title">
+				Room Management </span>
+				</a>
+			</li>
+			<li>
 				<a href="javascript:;">
 				<i class="icon-paper-plane"></i>
 				<span class="title">
