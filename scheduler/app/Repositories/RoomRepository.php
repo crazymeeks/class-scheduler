@@ -7,27 +7,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Scheduler\App\Models\Room;
 use Scheduler\App\Models\Faculty;
-//use Scheduler\App\Http\Requests\RoomRequest;
+use Scheduler\App\Http\Requests\RoomRequest;
 class RoomRepository
 {
 
-
-	/**
-	 * The model
-	 * 
-	 * @var Scheduler\App\Models\Room
-	 */
-	protected $room;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param Scheduler\App\Models\Room $room
-	 */
-	public function __construct(Room $room)
-	{
-		$this->room = $room;
-	}
 
 	/**
 	 * Save faculty from form request
@@ -39,12 +22,9 @@ class RoomRepository
 	 *
 	 * @throws  \Exception
 	 */
-	public function saveFormRequest(Request $request)
+	public function saveFormRequest(RoomRequest $request, Room $room)
 	{
 
-		// echo "<pre>";
-		// print_r($request->all());exit;
-		$room = $this->room;
 		DB::transaction(function() use ($room, $request){
 
 			$room->fill($request->toArray());
@@ -59,9 +39,9 @@ class RoomRepository
 	 * 
 	 * @return bool
 	 */
-	public function delete()
+	public function delete(Room $room)
 	{
-		return $this->room->delete();
+		return $room->delete();
 	}
 
 }

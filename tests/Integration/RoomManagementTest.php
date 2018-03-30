@@ -3,7 +3,6 @@
 namespace Tests\Integration;
 
 use Tests\TestCase;
-use Illuminate\Http\Request;
 use Scheduler\App\Models\Room;
 use Scheduler\App\Http\Requests\RoomRequest;
 use Scheduler\App\Repositories\RoomRepository;
@@ -21,23 +20,14 @@ class RoomManagementTest extends TestCase
 	 */
 	public function it_can_add_room()
 	{
-		/*$data = $this->getData();
-
-		$response = $this->json('POST', $this->apiUrl(), $data);
-		$decodedResponse = json_decode($response->content(), true);
-		
-		$this->assertEquals(201, $response->status());
-
-		$this->assertArrayHasKey('status', $decodedResponse);*/
-
 
 		$data = $this->getData();
 
-		$repo = new RoomRepository(new Room());
+		$repo = new RoomRepository();
 		
 		$request = $this->requestData();
 
-		$repo->saveFormRequest($request);
+		$repo->saveFormRequest($request, new Room());
 
 		$this->assertDatabaseHas('rooms', $request->toArray());
 		
@@ -57,11 +47,11 @@ class RoomManagementTest extends TestCase
 		// $this->assertEquals(201, $response->status());
 
 
-		$repo = new RoomRepository(Room::find(1));
+		$repo = new RoomRepository();
 		
 		$request = $this->updatedData();
 
-		$repo->saveFormRequest($request);
+		$repo->saveFormRequest($request, Room::find(1));
 
 		$this->assertDatabaseHas('rooms', $request->toArray());
 	}
@@ -71,9 +61,9 @@ class RoomManagementTest extends TestCase
 	 */
 	public function it_can_soft_delete_room()
 	{
-		$repo = new RoomRepository(Room::find(1));
+		$repo = new RoomRepository();
 
-		$response = $repo->delete();
+		$response = $repo->delete(Room::find(1));
 
 
 		$room = Room::onlyTrashed()->get();
@@ -99,7 +89,7 @@ class RoomManagementTest extends TestCase
 
 	private function requestData()
 	{
-		$request = new Request;
+		$request = new RoomRequest;
 
 		$request->replace([
 			'name' => str_random(),
@@ -113,7 +103,7 @@ class RoomManagementTest extends TestCase
 
 	private function updatedData()
 	{
-		$request = new Request;
+		$request = new RoomRequest;
 
 		$request->replace([
 			'name' => str_random(),

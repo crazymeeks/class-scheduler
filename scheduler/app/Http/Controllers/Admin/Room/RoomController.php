@@ -4,6 +4,8 @@ namespace Scheduler\App\Http\Controllers\Admin\Room;
 
 use Illuminate\Http\Request;
 use Scheduler\App\Models\Room;
+use Scheduler\App\Http\Requests\RoomRequest;
+use Scheduler\App\Repositories\RoomRepository;
 use Scheduler\App\Http\Controllers\Controller;
 
 class RoomController extends Controller
@@ -16,18 +18,19 @@ class RoomController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoomRequest $request, RoomRepository $repo)
     {
-        $this->validateData($request);
+        try {
 
-        $room = Room::create($request->all());
+            $repo->saveFormRequest($request, new Room());
 
-        if ($request->has('api')) {
-            return response()->json($room, 201);
+            return redirect("admin/rooms")->with('success', 'Room has been added');
+            
+        } catch (Exception $e) {
+
+            return redirect("admin/rooms")->with('error', $e->getMessage());
+
         }
-
-        return redirect("admin/rooms")->with('success', 'Room has been added');
-
     }
 
     /**
@@ -38,47 +41,19 @@ class RoomController extends Controller
      * 
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(RoomRequest $request, RoomRepository $repo, $id)
     {
-        
-        $this->validateData($request);
-        
+
+        $room = Room::find($id);
+
         try {
-            $room = Room::find($id);
 
-            $room->name = $request->name;
-            $room->description = $request->description;
-            $room->status = $request->status;
-            $room->type = $request->type;
-
-            if ( $room->save() ) {
-                if ( $request->has('api') ) {
-                    return response()->json($room, 201);
-                }
-                return redirect("admin/rooms")->with('success', 'Room has been updated');
-            }
-        } catch (\ErrorException $e) {
-
-            if ( $request->has('api') ) {
-                return response()->json('Unable to update room', 422);
-            }
-            return redirect("admin/rooms")->with('success', 'Unable to update room');
+            $repo->saveFormRequest($request, $room);
+            return redirect("admin/rooms")->with('success', 'Room has been updated');
+            
+        } catch (Exception $e) {
+            return redirect("admin/rooms")->with('error', $e->getMessage());
         }
-    }
 
-    /**
-     * Validate data
-     * 
-     * @param  \Illuminate\Http\Request $request
-     * 
-     * @return void
-     */
-    private function validateData(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'status' => 'required|integer',
-        ]);
     }
 }
