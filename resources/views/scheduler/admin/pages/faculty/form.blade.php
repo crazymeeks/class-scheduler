@@ -182,9 +182,9 @@
 																$st = function($value) use($key, $faculty){
 
 																	if(isset($faculty) && $faculty->status == $key){
-																		return 'value="' . $key . '" selected';
+																		return "value=" . $key . " selected";
 																	}
-																	return 'value="' . $key . '"';
+																	return "value=" . $key . "";
 																};
 																
 																?>
