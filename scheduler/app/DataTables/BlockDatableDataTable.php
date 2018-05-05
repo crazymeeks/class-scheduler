@@ -41,7 +41,7 @@ class BlockDatableDataTable extends DataTable
         
         // $buttons .= "<a href='" . url('admin/faculty/' . $query->id) . "/load' class='btn btn-xs green faculty-assign-load'>Assign Load<i class='fa fa-plus'></i></a>";
 
-        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-xs red remove-faculty'>Remove<i class='fa fa-times'></i></a>";
+        $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-xs red remove-block'>Remove<i class='fa fa-times'></i></a>";
 
         return $buttons;
     }
