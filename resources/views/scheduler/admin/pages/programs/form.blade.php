@@ -1,5 +1,7 @@
 @extends('scheduler.admin.template.main')
 
+@include('scheduler.admin.metronic_assets.multiselect')
+
 @section('content')
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -61,6 +63,44 @@
 				@endif
 
 			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3">Select Blocks <span class="required">
+				* </span>
+				</label>
+				<div class="col-md-4">
+					<select multiple="multiple" class="multi-select" id="my_multi_select1" name="blocks[]">
+						<?php
+
+						$program_block = function($program){
+							if (is_null($program)) {
+							
+								return null;
+							}
+							$blks = [];
+							foreach($program->blocks as $pblock){
+								$blks[] = $pblock->id;
+							}
+							return $blks;
+						};
+
+						$blks = $program_block($program);
+						
+						?>
+
+
+						@foreach($blocks as $block)
+							<option <?php echo isset($program) && in_array($block->id, $blks) ? 'selected' : '';?> value="{{$block->id}}">{{$block->code}}</option>
+						@endforeach
+					</select>
+					<?php if ($errors->first('blocks')):?>
+						<div class="alert alert-danger"><strong>Error!</strong>
+							<?php echo $errors->first('blocks'); ?>
+						</div>
+					<?php else:?>
+						<span class="help-block">Please select blocks</span>
+					<?php endif;?>
+				</div>
+			</div>
 			<div class="form-actions">
 				<div class="row">
 					<div class="col-md-offset-3 col-md-9">
@@ -75,6 +115,7 @@
 </div>
 
 @endsection
+
 
 @section('js_page_level_scripts')
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/institution/form.js')}}"></script>

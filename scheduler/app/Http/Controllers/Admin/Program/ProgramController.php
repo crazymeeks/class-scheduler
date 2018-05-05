@@ -5,6 +5,7 @@ namespace Scheduler\App\Http\Controllers\Admin\Program;
 use DB;
 use Closure;
 use Illuminate\Http\Request;
+use Scheduler\App\Models\Block;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Institution;
 use Scheduler\App\Http\Controllers\Controller;
@@ -39,9 +40,11 @@ class ProgramController extends Controller
     public function create(Request $request)
     {
         $institutions = Institution::all();
+        $blocks = Block::all();
         $data = [
             'breadcrumb'   => 'Program',
             'page_title'   => 'Program::create',
+            'blocks'       => $blocks,
             'institutions' => $institutions,
             'url'          => url('admin/programs/save/'),
         ];
@@ -59,12 +62,15 @@ class ProgramController extends Controller
     public function edit(Request $request, $id)
     {
         $program = Program::find($id);
+        $program->blocks;
         $institutions = Institution::all();
+        $blocks = Block::all();
         $data = [
             'breadcrumb'   => 'Program',
             'page_title'   => 'Program::update',
             'program'      => $program,
             'institutions' => $institutions,
+            'blocks'       => $blocks,
             'url'          => url('admin/programs/save/' . $id),
         ];
 

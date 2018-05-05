@@ -2,7 +2,7 @@
 
 namespace Scheduler\App\Http\Controllers\Traits;
 
-
+use DB;
 use Illuminate\Http\Request;
 use Scheduler\App\Models\Program as ProgramModel;
 
@@ -37,7 +37,7 @@ trait Program
 	public function saveProgram(Request $request, $id = null)
 	{
 
-
+		
 		$this->validateData($request, $id);
 
 		$program = new ProgramModel;
@@ -52,13 +52,32 @@ trait Program
 			$errorMessage = 'Error occured while updating program. Please try again';
 		}
 
-		$program->fill($request->toArray());
+		// $program->fill($request->toArray());
 
-		$program->institution_id = $request->institution;
+		// $program->institution_id = $request->institution;
 
 		$location = $request->has('redirect_flag') ? 'admin/institution/' . $request->institution . '/view-program' : 'admin/programs';
 
+		try {
+			DB::transaction(function() use ($program, $request){
+
+				$program->fill($request->toArray());
+				$program->institution_id = $request->institution;
+
+				$program->save();
+				
+				$program->blocks()->sync($request->blocks);
+
+			});	
+			
+
+		} catch (\Exception $e) {
+			return redirect($location)->with('error', $e->getMessage());
+		}
+		return redirect($location)->with('success', $successMessage);
+		
 		if ($program->save()) {
+
     		return redirect($location)->with('success', $successMessage);
 		}
 		
@@ -80,9 +99,10 @@ trait Program
                     : 'required|unique:programs';
 
 		$request->validate([
-            'institution' => 'required',
-            'code' => $code_validate,
+            'institution'       => 'required',
+            'code'              => $code_validate,
             'short_description' => 'required',
+            'blocks'            => 'required',
         ]);
 	}
 
