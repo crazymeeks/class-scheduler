@@ -75,7 +75,7 @@ class RequestDataProvider
 			$blocks[] = $a;
 		}
 
-		$block = $name[rand(0,1)] . rand(1,6) . 'BLK' . $blocks[rand(1,6)];
+		$block = $name[rand(0,1)] . rand(1,6) . 'BLK' . $blocks[rand(1,5)];
 
 		return $block;
 	}

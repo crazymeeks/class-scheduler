@@ -96,7 +96,7 @@ class BlockController extends Controller
             
         } catch (DBTransactionException $e) {
 
-            return redirect("admin/blocks")->with('error', $e->getMessage(), $e->getCode());
+            return redirect("admin/blocks")->with('error', $e->getMessage());
         }
     }
 
@@ -118,7 +118,7 @@ class BlockController extends Controller
             return redirect("admin/blocks")->with('success', 'Block has been updated');
         } catch (DBTransactionException $e) {
 
-            return redirect("admin/blocks")->with('error', $e->getMessage(), $e->getCode());
+            return redirect("admin/blocks")->with('error', $e->getMessage());
 
         }
     }

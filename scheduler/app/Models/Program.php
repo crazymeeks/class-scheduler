@@ -4,7 +4,7 @@ namespace Scheduler\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Scheduler\App\Models\Semester;
 class Program extends Model
 {
     use SoftDeletes;
@@ -36,6 +36,11 @@ class Program extends Model
     public function subjects()
     {
         return $this->belongsToMany('Scheduler\App\Models\Subject');
+    }
+
+    public function semesters()
+    {
+        return $this->belongsToMany(Semester::class);
     }
 
     /**
