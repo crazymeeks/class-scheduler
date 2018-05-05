@@ -2,10 +2,10 @@
 
 namespace Scheduler\App\DataTables;
 
-use Scheduler\App\Models\Faculty;
+use Scheduler\App\Models\Block;
 use Yajra\DataTables\Services\DataTable;
 
-class FacultyDataTable extends DataTable
+class BlockDatableDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -18,13 +18,14 @@ class FacultyDataTable extends DataTable
         return datatables($query)
             ->addColumn('action', function($query){
                 return $this->dataTableActionButtons($query);
-            })->editColumn('status', function(Faculty $faculty){
-                return $faculty->status == 0 ? 'Inactive' : 'Active';
-            })->editColumn('faculty_id_number', function(Faculty $faculty){
-                return '<a href="' . url('admin/faculty/' . $faculty->id . '/edit') . '">' . $faculty->faculty_id_number . '</a>'; 
             })
-            ->rawColumns(['faculty_id_number', 'action']);
+            ->addColumn('levels', function(Block $block){
+                return $block->levels->map(function($level){
+                    return $level->level;
+                })->implode(',');
+            });
     }
+
 
     /**
      * Datatable Action buttons
@@ -36,8 +37,8 @@ class FacultyDataTable extends DataTable
     protected function dataTableActionButtons($query)
     {
 
-        $buttons = "<a href='" . url('admin/faculty/' . $query->id) . "/edit' class='btn btn-xs green'><i class='fa fa-edit'>Edit</i></a>";
-        $buttons .= "<a data-id='" . $query->id . "' href='#basic' class='btn btn-xs blue btn-view-faculty-load' data-toggle='modal'>View Load<i class='fa fa-search'></i></a>";
+        $buttons = "<a href='" . url('admin/blocks/' . $query->id) . "/edit' class='btn btn-xs green'><i class='fa fa-edit'>Edit</i></a>";
+        
         // $buttons .= "<a href='" . url('admin/faculty/' . $query->id) . "/load' class='btn btn-xs green faculty-assign-load'>Assign Load<i class='fa fa-plus'></i></a>";
 
         $buttons .= "<a href='#' data-id='" . $query->id . "' class='btn btn-xs red remove-faculty'>Remove<i class='fa fa-times'></i></a>";
@@ -51,10 +52,10 @@ class FacultyDataTable extends DataTable
      * @param \Scheduler\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Faculty $model)
+    public function query(Block $model)
     {
         return $model->newQuery()
-                     ->with(['institution', 'faculty_type']);
+                     ->with(['levels']);
     }
 
     /**
@@ -68,7 +69,7 @@ class FacultyDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addAction(['width' => '220px'])
-                    ->parameters($this->getBuilderParameters());                
+                    ->parameters($this->getBuilderParameters());
     }
 
     /**
@@ -78,16 +79,9 @@ class FacultyDataTable extends DataTable
      */
     protected function getColumns()
     {
-
         return [
-
-            'faculty_id_number' => ['title' => 'ID #'],
-            'lastname' => ['title' => 'Lastname'],
-            'firstname' => ['firstname' => 'Firstname'],
-            'email' => ['title' => 'Email'],
-            'status' => ['title' => 'Status'],
-            'institution.name' => ['title' => 'Institution'],
-            'faculty_type.type' => ['title' => 'Faculty type'],
+            'code',
+            'levels',
         ];
     }
 
@@ -98,6 +92,6 @@ class FacultyDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Faculty_' . date('YmdHis');
+        return 'BlockDatable_' . date('YmdHis');
     }
 }

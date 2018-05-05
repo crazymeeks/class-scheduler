@@ -41,7 +41,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '192.168.0.2'),
+            'host' => env('DB_HOST', '192.168.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'class_scheduler'),
             'username' => env('DB_USERNAME', 'root'),
@@ -56,7 +56,7 @@ return [
 
         'testing_db_class_scheduler' => [
             'driver' => 'mysql',
-            'host' => '192.168.1.1',
+            'host' => '192.168.0.1',
             'port' => '3306',
             'database' => 'testing_db_class_scheduler',
             'username' => 'root',

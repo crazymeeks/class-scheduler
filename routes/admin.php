@@ -44,6 +44,33 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		});
 
 		/**
+		 * Manage blocks
+		 */
+		Route::group(['prefix' => 'blocks', 'namespace' => 'Block'], function(){
+
+			Route::get('/', 'BlockController@indexView');
+
+			/**
+			 * Create new block
+			 */
+			Route::get('create', 'BlockController@create');
+			Route::get('{id}/edit', 'BlockController@edit');
+			// Route::get('{id}/view-program', 'InstitutionController@viewPrograms');
+			// Route::get('program-manage-block/{id}', 'InstitutionController@viewManageBlocks');
+
+			Route::post('/save', 'BlockController@save');
+			Route::delete('{id}/delete', 'BlockController@delete');
+			Route::put('{id}/update', 'BlockController@update');
+			// Route::post('program-block-save/{id}', 'InstitutionController@saveProgramBlock');
+
+			/**
+			 * Create new Program under an institution
+			 */
+			//Route::get('{id}/view-program/create', 'InstitutionController@createProgram');			
+
+		});
+
+		/**
 		 * Manage Faculty
 		 */
 		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){
