@@ -60,9 +60,9 @@
 
 @endif
 
-<script type="text/javascript" src="{{admin_asset('/pages/scripts/faculty/form.js')}}"></script>
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/block/form.js')}}"></script>
 <script type="text/javascript">
-	Faculty.initAll();
+	Block.initAll();
 </script>
 @append
 
