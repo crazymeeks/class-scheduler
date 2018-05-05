@@ -55,18 +55,29 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 			 */
 			Route::get('create', 'BlockController@create');
 			Route::get('{id}/edit', 'BlockController@edit');
-			// Route::get('{id}/view-program', 'InstitutionController@viewPrograms');
-			// Route::get('program-manage-block/{id}', 'InstitutionController@viewManageBlocks');
 
 			Route::post('/save', 'BlockController@save');
 			Route::delete('{id}/delete', 'BlockController@delete');
-			Route::put('{id}/update', 'BlockController@update');
-			// Route::post('program-block-save/{id}', 'InstitutionController@saveProgramBlock');
+			Route::put('{id}/update', 'BlockController@update');			
+
+		});
+
+		/**
+		 * Manage Semester
+		 */
+		Route::group(['prefix' => 'semesters', 'namespace' => 'Semester'], function(){
+
+			Route::get('/', 'SemesterController@indexView');
 
 			/**
-			 * Create new Program under an institution
+			 * Create new semester
 			 */
-			//Route::get('{id}/view-program/create', 'InstitutionController@createProgram');			
+			// Route::get('create', 'BlockController@create');
+			// Route::get('{id}/edit', 'BlockController@edit');
+
+			Route::post('/save', 'SemesterController@save');
+			Route::delete('{id}/delete', 'SemesterController@delete');
+			Route::put('{id}/update', 'SemesterController@update');			
 
 		});
 
