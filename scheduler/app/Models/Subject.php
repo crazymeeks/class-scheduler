@@ -2,6 +2,7 @@
 
 namespace Scheduler\App\Models;
 
+use Scheduler\App\Models\Semester;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,7 +12,8 @@ class Subject extends Model
 
     protected $fillable = [
     	'name', 'code', 'short_description', 'subject_type_id',
-        'level_id', 'status', 'units', 'hours', 'deleted_at',
+        'semester_id',  'level_id', 'status', 'units', 'hours',
+        'deleted_at',
     ];
 
     /**
@@ -33,6 +35,11 @@ class Subject extends Model
     public function faculties()
     {
     	return $this->belongsToMany('Scheduler\App\Models\Faculty');//, 'faculty_subject', 'subject_id', 'faculty_id_number');
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
     }
 
     public function level()

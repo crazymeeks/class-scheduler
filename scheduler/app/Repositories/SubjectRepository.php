@@ -27,6 +27,8 @@ class SubjectRepository
 				$subject->name = $request->subject_name;
 				$subject->level_id = $request->year_level;
 				$subject->subject_type_id = $request->type;
+				$subject->semester_id = $request->semester;
+				
 				$subject->save();
 				
 				$subject->programs()->sync($request->programs);

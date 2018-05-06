@@ -2,9 +2,11 @@
 
 namespace Scheduler\App\Models;
 
+use Scheduler\App\Models\Program;
+use Scheduler\App\Models\Subject;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Scheduler\App\Models\Program;
+
 class Semester extends Model
 {
     
@@ -28,5 +30,10 @@ class Semester extends Model
     {
     	return $this->belongsToMany(Program::class);
     }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }    
 
 }

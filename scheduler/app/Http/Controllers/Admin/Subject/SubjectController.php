@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Scheduler\App\Models\Level;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\Program;
+use Scheduler\App\Models\Semester;
 use Scheduler\App\Models\SubjectType;
 use Yajra\DataTables\Facades\DataTables;
 use Scheduler\App\DataTables\SubjectDataTable;
@@ -30,6 +31,11 @@ class SubjectController extends Controller
     	return $dataTable->render($this->admin_view . 'pages.subjects.index', $data);
     }
 
+    /**
+     * Display create page
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         
@@ -39,9 +45,12 @@ class SubjectController extends Controller
             'form_title'  => 'Create Subject',
             'programs'         => Program::all(),
             'levels'           => Level::all(),
+            'subject'          => new Subject(),
             'subject_types'    => SubjectType::all(),
+            'semesters'        => Semester::all(),
         ];
-            return admin_view('pages.subjects.form', $data);
+        
+        return admin_view('pages.subjects.form', $data);
 
     }
 
@@ -62,6 +71,7 @@ class SubjectController extends Controller
         // this will automatically add programs object
         // in subject model
         $subject->programs;
+        $subject->semester;
 
         $data = [
             'subject'          => $subject,
@@ -73,9 +83,9 @@ class SubjectController extends Controller
             'programs'         => Program::all(),
             'levels'           => Level::all(),
             'subject_types'    => SubjectType::all(),
+            'semesters'        => Semester::all(),
         ];
 
-        //return $data;
         return admin_view('pages.subjects.form', $data);
     }
 
@@ -103,6 +113,7 @@ class SubjectController extends Controller
      */
     public function update(Request $request, SubjectRepository $repo, $id)
     {
+
         $subject = Subject::find($id);
 
         $this->validateRequestSubjectData($request, $id);
@@ -176,7 +187,9 @@ class SubjectController extends Controller
         $request->validate([
             'units'             => 'required|numeric',
             'subject_name'      => 'required',
+            'semester'          => 'required',
             'code'              => 'required',
+            'programs'          => 'required',
             //'hours'             => 'required|numeric',
             'short_description' => 'required',
             'type'              => 'required',

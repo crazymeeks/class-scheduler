@@ -13,6 +13,20 @@ class SemesterController extends Controller
     
 
     /**
+     * Display index page
+     */
+    public function indexView()
+    {
+        $data = [
+            'breadcrumb' => 'Semester Management',
+            'page_title' => 'Lists',
+            'semesters'  => Semester::paginate(4),
+        ];
+
+        return view($this->admin_view . 'pages.semester.index', $data);
+    }
+
+    /**
      * Save new model
      *
      * @param  Scheduler\App\Http\Requests\SemesterFormRequest $request

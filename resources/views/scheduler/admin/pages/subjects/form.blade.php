@@ -19,7 +19,7 @@
 					<label class="control-label col-md-3" for="inputSuccess">Subject name <span class="required">
 					* </span></label>
 					<div class="col-md-4">
-						<input type="text" class="form-control" name="subject_name" value="@if(isset($subject)){{$subject->name}}@else{{old('subject_name')}}@endif">
+						<input type="text" class="form-control" name="subject_name" value="{{old('subject_name', $subject->name)}}">
 						<div class="has-error"><span class="help-block">{{$errors->first('subject_name')}}</span></div>
 					</div>
 				</div>
@@ -27,7 +27,7 @@
 					<label class="control-label col-md-3" for="inputSuccess">Code <span class="required">
 					* </span></label>
 					<div class="col-md-4">
-						<input type="text" class="form-control" name="code" value="@if(isset($subject)){{$subject->code}}@else{{old('code')}}@endif">
+						<input type="text" class="form-control" name="code" value="{{old('code', $subject->code)}}">
 						<div class="has-error"><span class="help-block">{{$errors->first('code')}}</span></div>
 					</div>
 				</div>
@@ -35,8 +35,8 @@
 					<label class="control-label col-md-3" for="inputSuccess">Description <span class="required">
 					* </span></label>
 					<div class="col-md-4">
-						<textarea class="form-control" name="short_description"><?php if(isset($subject)):echo $subject->short_description;else: echo old('short_description');?><?php endif;?></textarea>
-						<div class="has-error"><span class="help-block">{{$errors->first('code')}}</span></div>
+						<textarea class="form-control" name="short_description">{{old('short_description',$subject->short_description)}}</textarea>
+						<div class="has-error"><span class="help-block">{{$errors->first('short_description')}}</span></div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -63,7 +63,7 @@
 							@endforeach
 						</select>
 						<span class="help-block">
-						Provide select programs </span>
+						Provide select type </span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -90,7 +90,7 @@
 							@endforeach
 						</select>
 						<span class="help-block">
-						Provide select programs </span>
+						Provide select status </span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -117,22 +117,40 @@
 							@endforeach
 						</select>
 						<span class="help-block">
-						Provide select programs </span>
+						Provide select level </span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Units <span class="required">
 					* </span></label>
 					<div class="col-md-4">
-						<input type="number" class="form-control" name="units" value="@if(isset($subject)){{$subject->units}}@else{{old('units')}}@endif">
+						<input type="number" class="form-control" name="units" value="{{old('units', $subject->units)}}">
 						<div class="has-error"><span class="help-block">{{$errors->first('units')}}</span></div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="inputSuccess">Hours</label>
 					<div class="col-md-4">
-						<input type="number" class="form-control" name="hours" value="@if(isset($subject)){{$subject->hours}}@else{{old('hours')}}@endif">
+						<input type="number" class="form-control" name="hours" value="{{old('hours', $subject->hours)}}">
 						<div class="has-error"><span class="help-block">{{$errors->first('hours')}}</span></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-md-3">Semester <span class="required">
+					* </span>
+					</label>
+					<div class="col-md-4">
+						<select class="form-control" name="semester">
+							<option></option>
+							@foreach($semesters as $semester)
+							
+								<option <?php echo ($semester->id !== $subject->semester_id ?:'selected'); ?> value="{{$semester->id}}">{{$semester->semester}}</option>
+
+							@endforeach
+						</select>
+						<span class="help-block">
+						Provide select level </span>
 					</div>
 				</div>
 				
@@ -164,8 +182,13 @@
 							<option <?php echo $callback($program);?> value="{{$program->id}}">{{$program->code}}</option>
 							@endforeach
 						</select>
-						<span class="help-block">
-						Provide select programs </span>
+						@if($errors->first('programs'))
+						<div class="has-error">
+							<span class="help-block">{{$errors->first('programs')}}</span>
+						</div>
+						@else
+						<span class="help-block">Provide select programs</span>
+						@endif
 					</div>
 				</div>
 			</div>
