@@ -15,7 +15,7 @@ class CreateSemesterTable extends Migration
     {
         Schema::create('semesters', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('semester')->unsigned()->default(1)->comment('The school semester');
+            $table->string('semester', 15)->default('1st semester')->comment('The school semester');
             $table->softDeletes();
             $table->timestamps();
         });

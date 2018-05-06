@@ -83,6 +83,13 @@
 				</a>
 			</li>
 			<li>
+				<a href="{{url('/admin/semesters')}}">
+				<i class="icon-paper-plane"></i>
+				<span class="title">
+				Semester Management </span>
+				</a>
+			</li>
+			<li>
 				<a href="javascript:;">
 				<i class="icon-paper-plane"></i>
 				<span class="title">

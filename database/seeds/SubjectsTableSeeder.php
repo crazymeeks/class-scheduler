@@ -15,6 +15,7 @@ class SubjectsTableSeeder extends Seeder
         DB::table('subjects')->insert([
             'level_id'          => 1,
             'subject_type_id'   => 1,
+            'semester_id'       => 1,
             'units'             => '3',
             'name'              => 'Programming Language 1',
             'code'              => 'PL 1',
@@ -23,6 +24,7 @@ class SubjectsTableSeeder extends Seeder
         DB::table('subjects')->insert([
             'level_id'          => 1,
             'subject_type_id'   => 1,
+            'semester_id'       => 2,
             'units'             => '6',
             'name'              => 'Programming Language 2',
             'code'              => 'PL 2',

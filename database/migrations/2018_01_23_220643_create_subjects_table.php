@@ -17,6 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->increments('id');
             $table->integer('level_id')->unsigned();
             $table->integer('subject_type_id')->unsigned();
+            $table->integer('semester_id')->unsigned();
             $table->string('units', 10)->comment('Subjects unit');
             $table->string('name', 100);
             $table->string('code', 20);
@@ -27,6 +28,7 @@ class CreateSubjectsTable extends Migration
 
             $table->foreign('level_id')->references('id')->on('levels');
             $table->foreign('subject_type_id')->references('id')->on('subject_types');
+            $table->foreign('semester_id')->references('id')->on('semesters');
         });
     }
 
