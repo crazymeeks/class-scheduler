@@ -12,9 +12,36 @@ use Scheduler\App\Http\Controllers\Controller;
 use Scheduler\App\Repositories\ClassSizeRepository;
 use Scheduler\App\Http\Requests\ClassSizeFormRequest;
 use Scheduler\App\Exceptions\DBTransactionException;
+use Yajra\DataTables\DataTables;
 
 class ClassSizeController extends Controller
 {
+
+	/**
+	 * Display index
+	 */
+	public function indexView()
+	{
+
+		$data = [
+            'breadcrumb' => 'Class size Management',
+            'page_title' => 'Lists',
+        ];
+
+        return admin_view('pages.semester.class-size.index', $data);
+    	//return $dataTable->render($this->admin_view . 'pages.semester.class-size.index', $data);
+	}
+
+	/**
+	 * Get data and display in datatable
+	 *
+	 * 
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function getData()
+	{
+		return DataTables::of(ClassSize::with(['program', 'block', 'level', 'semester']))->make(true);
+	}
 
 	/**
 	 * Display create from
@@ -25,7 +52,7 @@ class ClassSizeController extends Controller
 		$data = [
             'breadcrumb' => 'Class size Management',
             'page_title' => 'Class size::create',
-            'url'        => url('/admin/class-size/'),
+            'url'        => url('/admin/class-size/save'),
             'programs'   => Program::all(),
             'blocks'     => Block::all(),
             'semesters'  => Semester::all(),
@@ -51,14 +78,15 @@ class ClassSizeController extends Controller
 		$data = [
             'breadcrumb' => 'Class size Management',
             'page_title' => 'Class size::create',
-            'url'        => url('/admin/class-size/'),
+            'url'        => url('/admin/class-size/' . $id . '/update'),
+            'method'     => 'PUT',
             'programs'   => Program::all(),
             'blocks'     => Block::all(),
             'semesters'  => Semester::all(),
             'levels'     => Level::all(),
             'classSize'  => $classSize,
         ];
-        return $data;
+        //return $data;
 		return admin_view('pages.semester.class-size.form', $data);
 	}
     

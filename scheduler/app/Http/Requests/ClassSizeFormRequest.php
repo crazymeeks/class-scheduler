@@ -24,7 +24,11 @@ class ClassSizeFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'semester' => 'required',
+            'program' => 'required',
+            'level' => 'required',
+            'block' => 'required',
+            'size' => 'required|integer',
         ];
     }
 }
