@@ -4,6 +4,7 @@ namespace Scheduler\App\Models;
 
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Subject;
+use Scheduler\App\Models\ClassSize;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,6 +35,11 @@ class Semester extends Model
     public function subjects()
     {
         return $this->hasMany(Subject::class);
-    }    
+    }
+
+    public function class_sizes()
+    {
+        return $this->hasMany(ClassSize::class);
+    }
 
 }

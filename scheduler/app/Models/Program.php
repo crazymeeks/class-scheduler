@@ -2,9 +2,10 @@
 
 namespace Scheduler\App\Models;
 
+use Scheduler\App\Models\Semester;
+use Scheduler\App\Models\ClassSize;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Scheduler\App\Models\Semester;
 class Program extends Model
 {
     use SoftDeletes;
@@ -49,5 +50,10 @@ class Program extends Model
     public function institution()
     {
     	return $this->belongsTo('Scheduler\App\Models\Institution');
+    }
+
+    public function class_sizes()
+    {
+        return $this->hasMany(ClassSize::class);
     }
 }

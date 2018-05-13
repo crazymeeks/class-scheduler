@@ -82,6 +82,25 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		});
 
 		/**
+		 * Manage Semester Class size
+		 */
+		Route::group(['prefix' => 'class-size', 'namespace' => 'Semester'], function(){
+
+			Route::get('/', 'ClassSizeController@indexView');
+
+			/**
+			 * Create new semester
+			 */
+			Route::get('create', 'ClassSizeController@create');
+			Route::get('{id}/edit', 'ClassSizeController@edit');
+			Route::get('/index-data', 'ClassSizeController@getData');
+			Route::post('/save', 'ClassSizeController@save');
+			Route::delete('{id}/delete', 'ClassSizeController@delete');
+			Route::put('{id}/update', 'ClassSizeController@update');			
+
+		});
+
+		/**
 		 * Manage Faculty
 		 */
 		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){

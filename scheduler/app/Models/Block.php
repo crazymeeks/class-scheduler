@@ -2,6 +2,7 @@
 
 namespace Scheduler\App\Models;
 
+use Scheduler\App\Models\ClassSize;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,5 +32,10 @@ class Block extends Model
     public function levels()
     {
         return $this->belongsToMany('Scheduler\App\Models\Level');
+    }
+
+    public function class_sizes()
+    {
+        return $this->hasMany(ClassSize::class);
     }
 }

@@ -521,7 +521,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{ global_plugins('/uniform/jquery.uniform.min.js') }}" type="text/javascript"></script>
 <script src="{{ global_plugins('/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-print-1.5.1/datatables.min.js"></script>
+<!-- script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-print-1.5.1/datatables.min.js"></script -->
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/datatable.min.js')}}"></script>
 <script type="text/javascript" src="{{admin_asset('/pages/scripts/sweetalert.js')}}"></script>
 <script type="text/javascript" src="{{jsvendor('/toastr/build/toastr.min.js')}}"></script>
 <script type="text/javascript">
