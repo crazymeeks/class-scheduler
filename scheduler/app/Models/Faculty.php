@@ -2,10 +2,18 @@
 
 namespace Scheduler\App\Models;
 
+use Scheduler\App\Models\Role;
+use Scheduler\App\Models\Level;
+use Scheduler\App\Models\Program;
+use Scheduler\App\Models\Subject;
+use Scheduler\App\Models\Specialty;
+use Scheduler\App\Models\YearActive;
+use Scheduler\App\Models\Institution;
+use Scheduler\App\Models\FacultyType;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Notifications\Notifiable;
+use Scheduler\App\Models\FixedClassSchedule;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Faculty extends Authenticatable
@@ -37,32 +45,32 @@ class Faculty extends Authenticatable
      */
     public function subjects()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Subject')->withPivot('year_created');//, 'faculty_subject', 'faculty_id_number', 'subject_id');
+    	return $this->belongsToMany(Subject::class)->withPivot('year_created');//, 'faculty_subject', 'faculty_id_number', 'subject_id');
     }
 
     public function specialties()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Specialty');//, 'faculty_specialty', 'faculty_id_number', 'specialty_id');
+    	return $this->belongsToMany(Specialty::class);//, 'faculty_specialty', 'faculty_id_number', 'specialty_id');
     }
 
     public function programs()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Program');//, 'faculty_program', 'faculty_id_number', 'program_id');
+    	return $this->belongsToMany(Program::class);//, 'faculty_program', 'faculty_id_number', 'program_id');
     }
 
     public function levels()
     {
-    	return $this->belongsToMany('Scheduler\App\Models\Level');//, 'faculty_level', 'faculty_id_number', 'level_id');
+    	return $this->belongsToMany(Level::class);//, 'faculty_level', 'faculty_id_number', 'level_id');
     }
 
     public function year_actives()
     {
-        return $this->belongsToMany('Scheduler\App\Models\YearActive');//, 'faculty_year_active', 'faculty_id_number', 'year_active_id');
+        return $this->belongsToMany(YearActive::class);//, 'faculty_year_active', 'faculty_id_number', 'year_active_id');
     }
 
     public function roles()
     {
-        return $this->belongsToMany('Scheduler\App\Models\Role');
+        return $this->belongsToMany(Role::class);
     }
 
     /**
@@ -70,12 +78,17 @@ class Faculty extends Authenticatable
      */
     public function faculty_type()
     {
-    	return $this->belongsTo('Scheduler\App\Models\FacultyType');
+    	return $this->belongsTo(FacultyType::class);
     }
 
     public function institution()
     {
-    	return $this->belongsTo('Scheduler\App\Models\Institution');
+    	return $this->belongsTo(Institution::class);
+    }
+
+    public function fixed_class_schedules()
+    {
+        return $this->hasMany(FixedClassSchedule::class);
     }
 
     /**

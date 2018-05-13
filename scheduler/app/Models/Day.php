@@ -6,23 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Scheduler\App\Models\FixedClassSchedule;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Room extends Model
+class Day extends Model
 {
-    
-    use SoftDeletes;
+
+	use SoftDeletes;	
+
+	protected $fillable = [
+		'code', 'delete_at'
+	];
+
 
 	/**
-	 * Fillable fields
-	 * 
-	 * @var array
-	 */
-    protected $fillable = [
-    	'name', 'type', 'description',
-    	'status', 'deleted_at'
-    ];
-
-
-    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

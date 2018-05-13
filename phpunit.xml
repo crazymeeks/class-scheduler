@@ -18,6 +18,9 @@
         <testsuite name="Semester">
             <directory suffix="Test.php">./tests/Semester</directory>
         </testsuite>
+        <testsuite name="FixedClassSchedules">
+            <directory suffix="Test.php">./tests/FixedClassSchedules</directory>
+        </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>

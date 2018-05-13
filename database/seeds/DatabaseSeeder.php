@@ -36,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FacultyRoleTableSeeder::class);        
         $this->call(CreateRoomTableSeeder::class);        
         $this->call(CreateFacultyPrioritySubjectTableSeeder::class);        
+        $this->call(DaysTableSeeder::class);        
     }
 }
