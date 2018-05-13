@@ -110,11 +110,24 @@
 				</ul>
 			</li>
 			<li>
-				<a href="javascript:;">
-				<i class="icon-basket"></i>
-				<span class="title">Schedules</span>
-				</a>
-			</li>
+					<a href="javascript:;">
+					<i class="icon-basket"></i>
+					<span class="title">Schedules</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="/admin/class-size">
+							<i class="icon-home"></i>
+							Class Size</a>
+						</li>
+						<li>
+							<a href="ecommerce_orders.html">
+							<i class="icon-basket"></i>
+							Set Fix schedules</a>
+						</li>
+					</ul>
+				</li>
 			<!-- END ANGULARJS LINK -->
 			<li class="heading">
 				<h3 class="uppercase">Account Settings</h3>

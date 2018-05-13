@@ -4,6 +4,7 @@ namespace Scheduler\App\Models;
 
 use Scheduler\App\Models\Semester;
 use Illuminate\Database\Eloquent\Model;
+use Scheduler\App\Models\FixedClassSchedule;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subject extends Model
@@ -52,6 +53,11 @@ class Subject extends Model
         return $this->belongsTo('Scheduler\App\Models\SubjectType');
     }
 
+    public function fixed_class_schedules()
+    {
+        return $this->hasMany(FixedClassSchedule::class);
+    }
+
     /**
      * Scope a query to only include active users.
      *
@@ -62,4 +68,5 @@ class Subject extends Model
     {
         return $query->where('status', 'Active');
     }
+
 }
