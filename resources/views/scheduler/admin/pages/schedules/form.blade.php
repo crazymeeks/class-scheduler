@@ -88,7 +88,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-3" for="inputSuccess">Day <span class="required">*</span></label>
 				<div class="col-md-4">
-					<select name="subject" class="form-control">
+					<select name="day" class="form-control">
 						<option></option>
 						@foreach($days as $day)
 						<option <?php echo $day->id === $fixedSchedule->day_id ? 'selected' : ''?> value="{{$day->id}}">{{$day->code}}</option>
