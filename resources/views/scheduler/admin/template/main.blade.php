@@ -582,6 +582,36 @@ License: You must have a valid license purchased only from themeforest(the above
 @yield('js_page_level_scripts')
 @yield('metronic_main_js')
 
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ global_asset('/scripts/metronic.js') }}" type="text/javascript"></script>
+<script src="{{ admin_layout('/scripts/layout.js') }}" type="text/javascript"></script>
+<script src="{{ admin_layout('/scripts/quick-sidebar.js') }}" type="text/javascript"></script>
+<script src="{{ admin_layout('/scripts/demo.js') }}" type="text/javascript"></script>
+<script src="{{ admin_asset('/pages/scripts/index.js') }}" type="text/javascript"></script>
+<script src="{{ admin_asset('/pages/scripts/tasks.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+
+<script type="text/javascript">
+jQuery(document).ready(function() {    
+   Metronic.init(); // init metronic core componets
+   Layout.init(); // init layout
+   QuickSidebar.init(); // init quick sidebar
+   Demo.init(); // init demo features
+   Index.init();   
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+});
+</script>
+
+
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
