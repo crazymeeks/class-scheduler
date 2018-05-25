@@ -120,6 +120,7 @@ class FixScheduleController extends Controller
      */
     public function update($id, FixedClassScheduleFormRequest $request, FixedClassScheduleRepository $repo)
     {
+
     	try {
     		$repo->saveFromRequest($request, FixedClassSchedule::find($id));
 
