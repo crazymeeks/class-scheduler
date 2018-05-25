@@ -30,7 +30,7 @@ class Faculty extends Authenticatable
     ];
 
     protected $hidden = [
-        'remember_token'
+        'remember_token', 'password'
     ];
 
      /**

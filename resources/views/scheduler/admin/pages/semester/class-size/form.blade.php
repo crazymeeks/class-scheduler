@@ -28,7 +28,7 @@
 							<option <?php echo $semester->id === $classSize->semester_id ? 'selected' : ''?> value="{{$semester->id}}">{{$semester->semester}}</option>
 							@endforeach
 						</select>
-						<div class="has-error"><span class="help-block">{{$errors->first('program')}}</span></div>						
+						<div class="has-error"><span class="help-block">{{$errors->first('semester')}}</span></div>						
 						<span class="help-block">Select semester </span>
 					</div>
 				</div>

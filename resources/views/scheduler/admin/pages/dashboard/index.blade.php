@@ -2149,34 +2149,3 @@
 <!-- END PAGE LEVEL PLUGINS -->
 @append
 
-@section('js_page_level_scripts')
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="{{ global_asset('/scripts/metronic.js') }}" type="text/javascript"></script>
-<script src="{{ admin_layout('/scripts/layout.js') }}" type="text/javascript"></script>
-<script src="{{ admin_layout('/scripts/quick-sidebar.js') }}" type="text/javascript"></script>
-<script src="{{ admin_layout('/scripts/demo.js') }}" type="text/javascript"></script>
-<script src="{{ admin_asset('/pages/scripts/index.js') }}" type="text/javascript"></script>
-<script src="{{ admin_asset('/pages/scripts/tasks.js') }}" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-@append
-
-
-@section('metronic_main_js')
-
-<script type="text/javascript">
-jQuery(document).ready(function() {    
-   Metronic.init(); // init metronic core componets
-   Layout.init(); // init layout
-   QuickSidebar.init(); // init quick sidebar
-   Demo.init(); // init demo features
-   Index.init();   
-   Index.initDashboardDaterange();
-   Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
-   Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
-   Index.initMiniCharts();
-   Tasks.initDashboardWidget();
-});
-</script>
-@append

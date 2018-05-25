@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Semester;
+namespace Tests\FixedClassSchedules;
 
 use Tests\TestCase;
 use Scheduler\App\Models\FixedClassSchedule;

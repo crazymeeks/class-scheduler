@@ -101,6 +101,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		});
 
 		/**
+		 * Manage Fix Class Schedules
+		 */
+		Route::group(['prefix' => 'fixed-class-schedule', 'namespace' => 'Schedules'], function(){
+
+			Route::get('create', 'FixScheduleController@create');
+			Route::get('{id}/edit', 'FixScheduleController@edit');
+
+			Route::post('/save', 'FixScheduleController@save');
+			Route::delete('{id}/delete', 'FixScheduleController@delete');
+			Route::put('{id}/update', 'FixScheduleController@update');
+		});
+
+		/**
 		 * Manage Faculty
 		 */
 		Route::group(['prefix' => 'faculty', 'namespace' => 'Faculty'], function(){

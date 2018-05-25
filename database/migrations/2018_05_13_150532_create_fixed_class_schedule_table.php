@@ -27,6 +27,47 @@ class CreateFixedClassScheduleTable extends Migration
             $table->string('end_time', 8);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('semester_id')
+                  ->references('id')
+                  ->on('semesters')
+                  ->onDelete('cascade');
+
+            $table->foreign('program_id')
+                  ->references('id')
+                  ->on('programs')
+                  ->onDelete('cascade');
+
+            $table->foreign('level_id')
+                  ->references('id')
+                  ->on('levels')
+                  ->onDelete('cascade');
+
+            $table->foreign('block_id')
+                  ->references('id')
+                  ->on('blocks')
+                  ->onDelete('cascade');
+
+            $table->foreign('subject_id')
+                  ->references('id')
+                  ->on('subjects')
+                  ->onDelete('cascade');
+
+            $table->foreign('day_id')
+                  ->references('id')
+                  ->on('days')
+                  ->onDelete('cascade');
+
+            $table->foreign('room_id')
+                  ->references('id')
+                  ->on('rooms')
+                  ->onDelete('cascade');
+
+            $table->foreign('faculty_id')
+                  ->references('id')
+                  ->on('faculties')
+                  ->onDelete('cascade');
+
         });
     }
 
