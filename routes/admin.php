@@ -105,6 +105,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 		 */
 		Route::group(['prefix' => 'fixed-class-schedule', 'namespace' => 'Schedules'], function(){
 
+			Route::get('/', 'FixScheduleController@indexView');
+			Route::get('/index-data', 'FixScheduleController@getData');
 			Route::get('create', 'FixScheduleController@create');
 			Route::get('{id}/edit', 'FixScheduleController@edit');
 

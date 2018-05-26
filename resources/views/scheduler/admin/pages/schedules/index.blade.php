@@ -17,15 +17,21 @@
 @section('content')
 	@include('scheduler.admin.pages.page-help')
 	<div class="portlet-body">
-		<a href="/admin/class-size/create" class="btn green">Create <i class="fa fa-plus"></i></a>
+		<a href="/admin/fixed-class-schedule/create" class="btn green">Create <i class="fa fa-plus"></i></a>
 		<div class="table-responsive">
 			<table class="table table-bordered" id="class-size-table">
 				<thead>
 					<tr>
+						<th>Semester</th>
 						<th>Program</th>
 						<th>Level</th>
 						<th>Block</th>
-						<th>Size</th>
+						<th>Subject</th>
+						<th>Day</th>
+						<th>Room</th>
+						<th>Faculty</th>
+						<th>Start Time</th>
+						<th>End Time</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -76,8 +82,8 @@
 	@append
 @endif
 
-<script type="text/javascript" src="{{admin_asset('/pages/scripts/class-size/form.js')}}"></script>
+<script type="text/javascript" src="{{admin_asset('/pages/scripts/schedule/form.js')}}"></script>
 <script type="text/javascript">
-	ClassSize.initAll();
+	FixSchedule.initAll();
 </script>
 @append
