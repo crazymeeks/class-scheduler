@@ -104,7 +104,7 @@
 					<select name="room" class="form-control">
 						<option></option>
 						@foreach($rooms as $room)
-						<option <?php echo $room->id === $fixedSchedule->room_id ? 'selected' : ''?> value="{{$day->id}}">{{$room->name}}</option>
+						<option <?php echo $room->id === $fixedSchedule->room_id ? 'selected' : ''?> value="{{$room->id}}">{{$room->type . ' ' . $room->name}}</option>
 						@endforeach
 					</select>
 					<div class="has-error"><span class="help-block">{{$errors->first('room')}}</span></div>						
@@ -160,7 +160,7 @@
 		 * Cancel
 		 */
 		$('.btn-cancel').on('click', function(){
-			window.location.href = appBaseUrl() + 'admin/class-size';
+			window.location.href = appBaseUrl() + 'admin/fixed-class-schedule';
 		});
 	});
 </script>

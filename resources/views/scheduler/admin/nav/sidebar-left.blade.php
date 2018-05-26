@@ -122,7 +122,7 @@
 							Class Size</a>
 						</li>
 						<li>
-							<a href="ecommerce_orders.html">
+							<a href="{{url('/admin/fixed-class-schedule')}}">
 							<i class="icon-basket"></i>
 							Set Fix schedules</a>
 						</li>

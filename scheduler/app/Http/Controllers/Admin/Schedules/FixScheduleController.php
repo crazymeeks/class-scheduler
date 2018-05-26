@@ -7,6 +7,7 @@ use Scheduler\App\Models\Day;
 use Scheduler\App\Models\Room;
 use Scheduler\App\Models\Level;
 use Scheduler\App\Models\Block;
+use Yajra\DataTables\DataTables;
 use Scheduler\App\Models\Program;
 use Scheduler\App\Models\Subject;
 use Scheduler\App\Models\Faculty;
@@ -21,6 +22,31 @@ class FixScheduleController extends Controller
     
 
     /**
+     * Display index
+     */
+    public function indexView()
+    {
+
+    	$data = [
+            'breadcrumb' => 'Fix Schedules',
+            'page_title' => 'Lists',
+        ];
+
+        return admin_view('pages.schedules.index', $data);
+    	
+    }
+
+    /**
+     * Get data and display to datatable
+     * 
+     * @return DataTable
+     */
+    public function getData()
+    {
+    	return DataTables::of(FixedClassSchedule::with(['program', 'block', 'level', 'semester', 'subject', 'day', 'faculty', 'room']))->make(true);
+    }
+
+    /**
      * Display create form
      *
      * @return  \Illuminate\Http\Response
@@ -28,6 +54,23 @@ class FixScheduleController extends Controller
     public function create()
     {
 
+    	$data = [
+            'breadcrumb' => 'Schedule Management',
+            'page_title' => 'Fix Schedule::update',
+            'url'        => url('/admin/fixed-class-schedule/save'),
+           	'fixedSchedule' => new FixedClassSchedule(),
+           	'semesters' => Semester::all(),
+           	'programs' => Program::all(),
+           	'levels' => Level::all(),
+           	'blocks' => Block::all(),
+           	'subjects' => Subject::all(),
+           	'days' => Day::all(),
+           	'rooms' => Room::all(),
+           	'faculties' => Faculty::all(),
+        ];
+
+
+    	return admin_view('pages.schedules.form', $data);
     }
 
     /**
